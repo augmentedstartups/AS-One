@@ -24,8 +24,9 @@ docker build -t [IMAGE_NAME]:[TAG]
 2. Run Docker Contaner
 
 ```
-docker run --env="DISPLAY" --net=host -v ${PWD}:/workbase/ --name gui -it [IMAGE_NAME]:[TAG]
+docker run --gpus all --env="DISPLAY" --net=host -v [PATH_TO_LOCAL_DIR]:/workbase/  -it [IMAGE_NAME]:[TAG]
 ```
+- PATH_TO_LOCAL_DIR = Path to detectron2 directory or use `${PWD}` if already in that directory
 
 3. In Docker terminal run demo.py file
 
