@@ -6,8 +6,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # install apt packages
 RUN apt-get update -y 
-RUN apt-get update -y && \
-        apt-get install git gcc \
+RUN apt-get install git gcc \
         g++ python3-opencv \
         vim -y
 
