@@ -1,50 +1,5 @@
 # ASOne
-
-## Docker Installation for Windows Systems
-(Supported for Windows 10 and 11 only)
-**Note**: It is recommended to use WSL2 as backend. <br/>
-
-### Steps to Install Docker Interactively on Windows:
-
-1. Kindly read the requirements section carefully, Given below!
-2. Go to [Docker Official Website](https://docs.docker.com/desktop/install/windows-install/)
-3. Download the installer file (Docker Desktop Installer.exe) from the website
-4. Open the installer and Use WSL 2 instead of Hyper-V option on the Configuration Page is Selected
-5. If your admin account is different to your user account, you must add the user to the docker-users<br/>
-   group. Run Computer Management as an administrator and navigate to Local Users and Groups > Groups ><br/> docker-users. Right-click to add the user to the group. Log out and log back in for the changes to<br/>
-   take effect.
-6. And You Are All Done!
-### Steps to Install Docker from Command line on Windows:
-
-After downloading Docker Desktop Installer.exe, run the following command in a terminal to <br/> 
-install Docker Desktop:
-```
-"Docker Desktop Installer.exe" install
-```
-If you’re using PowerShell you should run it as:
-```
-Start-Process '.\win\build\Docker Desktop Installer.exe' -Wait install
-```
-And the install command accepts the following flags:
-
--  --quiet: Suppresses information output when running the installer
--  --accept-license: Accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run.
-
--  --allowed-org=[org name]: requires the user to sign in and be part of the specified Docker Hub organization when running the application
-
-- --backend=[backend name]: selects the backend to use for Docker Desktop, hyper-v or wsl-2 (default)
-
-If your admin account is different to your user account, you must add the user to the docker-users group:
-```
-net localgroup docker-users <user> /add
-```
-
-
-
-
-
-
-
+## Docker Installation Instructions For Windows 
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
 
@@ -69,12 +24,73 @@ Type **winver** in RUN to check the version of the installed windows.
 
 - Download and install the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
 
+## WSL Installation
+**Follow the steps given below to install WSL(Windows subsystem Linux):**
+Open PowerShell as administrator and run the commands given below:
+1.  Enabling the Virtual Machine Platform
+```
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+2. Enabling the Windows Subsystem for Linux
+```
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+```
+Do restart to your system here.
+3. Then just download the [Standalone WSL 2.0 Linux Kernel Update](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) and install it.
+4. Then download the [Linux distribution from Microsoft Store](https://apps.microsoft.com/store/detail/ubuntu-20044-lts/9MTTCL66CPXJ) and install it. After installing it, type UNIX Username and Password.
+5. Run the following commands in PowerShell
+```
+wsl --install
+```
+The above command only works if WSL is not installed at all, if you run wsl --install and see the 
+WSL help text then run this command to check online availabe distributions:
+```
+wsl --list --online
+```
+Or run this command
+```
+wsl -l --all
+```
+6. To install additional Linux distributions after the initial install, you may also use the following
+   command and you can find the distribution name by running the command above.
+```
+wsl --install -d <Distribution Name>
+```
+7. To check the verion of wsl
+```
+wsl -l -v
+```
+8. To update or downgrade the version=1 or version=2
+```
+wsl --set-version <distro name> 2
+```
 
+## Docker Installation for Windows Systems
+(Supported for Windows 10 and 11 only) <br/>
+**Note**: It is recommended to use WSL2 as backend. <br/>
 
+### Steps to Install Docker from Command line on Windows:
+**Note** Kindly read the requirements section carefully, Given below!
+After downloading [Docker Desktop Installer.exe](https://docs.docker.com/desktop/install/windows-install/), run the following command in a terminal to <br/> 
+Install Docker Desktop:
+```
+"Docker Desktop Installer.exe" install
+```
+If you’re using PowerShell you should run it as:
+```
+Start-Process '.\win\build\Docker Desktop Installer.exe' -Wait install
+```
+And the install command accepts the following flags:
 
+-  --quiet: Suppresses information output when running the installer
+-  --accept-license: Accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run.
+- --backend=[backend name]: selects the backend to use for Docker Desktop, hyper-v or wsl-2 (default)
 
-
-
+If your admin account is different to your user account, you must add the user to the docker-users group:
+```
+net localgroup docker-users <user> /add
+```
+***And You Are All Done!***
 
 ## Setup detectron2
 1. Clone the Repo
