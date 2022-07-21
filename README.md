@@ -63,7 +63,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
-## Docker Installation Instructions For Windows
+## Windows
 #### Table of Contents  
 - [System Requirements](#system-requirements)  
 - [WSL Installation](#wsl-installation)
