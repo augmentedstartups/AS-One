@@ -35,10 +35,10 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 ```
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 ```
-Do restart to your system here.
-3. Then just download the [Standalone WSL 2.0 Linux Kernel Update](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) and install it.
-4. Then download the [Linux distribution from Microsoft Store](https://apps.microsoft.com/store/detail/ubuntu-20044-lts/9MTTCL66CPXJ) and install it. After installing it, type UNIX Username and Password.
-5. Run the following commands in PowerShell
+Do restart to your system here. <br/>
+3. Download the [Standalone WSL 2.0 Linux Kernel Update](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) and install it. <br/>
+4. Download the [Linux distribution from Microsoft Store](https://apps.microsoft.com/store/detail/ubuntu-20044-lts/9MTTCL66CPXJ) and install it. After installing it, type UNIX Username and Password.<br/>
+5. Run the following commands in PowerShell<br/>
 ```
 wsl --install
 ```
