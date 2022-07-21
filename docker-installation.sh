@@ -30,6 +30,6 @@ echo "Installing Docker Engine..."
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 
-sudo docker --verison
+sudo docker --version
 
 echo "Docker Engine Installed Successfully!"
