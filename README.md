@@ -5,8 +5,17 @@
 - [Setting Up detectron2](#setting-up-detectron2)
 - [Docker Building](#docker-building)
 
+
 ## Docker Installation
 
+### Install using Shell Script
+
+```
+chmod a+x docker-installation.sh
+./docker-installation.sh 
+```
+
+### Manuall Install
 1. Run following command to remove all old versions on docker
 
 ```
