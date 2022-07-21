@@ -95,7 +95,7 @@ Type **winver** in RUN to check the version of the installed windows.
 
 - Download and install the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
 
-## WSL Installation
+### WSL Installation
 **Follow the steps given below to install WSL(Windows subsystem Linux):**
 Open PowerShell as administrator and run the commands given below:
 1.  Enabling the Virtual Machine Platform
@@ -136,11 +136,11 @@ wsl -l -v
 wsl --set-version ubuntu-20.04 2
 ```
 
-## Docker Installation
+### Docker Installation
 (Supported for Windows 10 and 11 only) <br/>
 **Note**: It is recommended to use WSL2 as backend. <br/>
 
-### Steps to Install Docker from Command line on Windows:
+#### Steps to Install Docker from Command line on Windows:
 -------------------------------------------------------------------------------------------------------------
 
 After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in a terminal to <br/> 
