@@ -1,12 +1,53 @@
 # ASOne
 
 ## Docker Installation for Windows Systems
+(Supported for Windows 10 and 11 only)
+### Steps to Install Docker Interactively on Windows:
+**Note**: It is recommended to use WSL2 as backend. <br/>
 
-### Steps to Install Docker on Windows:
-- Kindly read the requirements section carefully, Given below!
-- Go to [Docker Official Website](https://docs.docker.com/desktop/install/windows-install/)
-- Download the installer file from the website
-- Open the installer and make sure to select both the checkboxes
+1. Kindly read the requirements section carefully, Given below!
+2. Go to [Docker Official Website](https://docs.docker.com/desktop/install/windows-install/)
+3. Download the installer file (Docker Desktop Installer.exe) from the website
+4. Open the installer and Use WSL 2 instead of Hyper-V option on the Configuration Page is Selected
+5. If your admin account is different to your user account, you must add the user to the <br/>
+   docker-users group. Run Computer Management as an administrator and navigate to Local Users and <br/> 
+   Groups > Groups > docker-users. Right-click to add the user to the group. Log out and log back in <br/> 
+   for the changes to take effect.
+6. And You Are All Done!
+### Steps to Install Docker from Command line on Windows:
+
+After downloading Docker Desktop Installer.exe, run the following command in a terminal to <br/> 
+install Docker Desktop:
+```
+"Docker Desktop Installer.exe" install
+```
+If you’re using PowerShell you should run it as:
+```
+Start-Process '.\win\build\Docker Desktop Installer.exe' -Wait install
+```
+And the install command accepts the following flags:
+```
+  --quiet: suppresses information output when running the installer
+```
+```
+  --accept-license: accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run
+```
+```
+  --allowed-org=<org name>: requires the user to sign in and be part of the specified Docker Hub organization when running the application
+```
+```
+--backend=<backend name>: selects the backend to use for Docker Desktop, hyper-v or wsl-2 (default)
+```
+If your admin account is different to your user account, you must add the user to the docker-users group:
+```
+net localgroup docker-users <user> /add
+```
+
+
+
+
+
+
 
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
