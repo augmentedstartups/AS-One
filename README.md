@@ -1,23 +1,23 @@
 # ASOne
 
 ## Docker Installation for Windows Systems
+
+### Steps to Install Docker on Windows:
+- Kindly read the requirements section carefully, Given below!
+- Go to [Docker Official Website](https://docs.docker.com/desktop/install/windows-install/)
+- Download the installer file from the website
+- Open the installer and make sure to select both the checkboxes
+
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
 
-Steps to Install Docker on Windows:
-- Kindly read the requirements section carefully!
-- Go to [Docker Official Website](https://docs.docker.com/desktop/install/windows-install/)
-- Download the installer file from the website.
-- Open the installer and make sure to select both the checkboxes.
-
-- **With WSL 2 backend**
-
+**With WSL 2 backend**
 Type **winver** in RUN to check the version of the installed windows.
 
 - Windows 11 64-bit: Home or Pro version 21H2 or higher,\
-  or Enterprise or Education version 21H2 or     higher.
+  or Enterprise or Education version 21H2 or     higher
 - Windows 10 64-bit: Home or Pro 21H1 (build 19043) or higher,\
-  or Enterprise or Education 20H2 (build 19042) or higher.
+  or Enterprise or Education 20H2 (build 19042) or higher
 - Enable the WSL 2 feature on Windows. For detailed instructions,\
   refer to the [wsl installation](https://docs.microsoft.com/en-us/windows/wsl/install)
 
@@ -29,9 +29,9 @@ Type **winver** in RUN to check the version of the installed windows.
 - 4GB system RAM
 
 - BIOS-level hardware virtualization support must be enabled in the \
-  BIOS settings. For more information, see [Virtualization](https://docs.docker.com/desktop/troubleshoot/topics/).
+  BIOS settings. For more information, see [Virtualization](https://docs.docker.com/desktop/troubleshoot/topics/)
 
-- Download and install the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package).
+- Download and install the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
 
 
 
