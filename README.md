@@ -28,7 +28,7 @@ Start-Process '.\win\build\Docker Desktop Installer.exe' -Wait install
 And the install command accepts the following flags:
 
 -  --quiet: Suppresses information output when running the installer
--  --accept-license: Accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/    docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run.
+-  --accept-license: Accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run.
 
 -  --allowed-org=[org name]: requires the user to sign in and be part of the specified Docker Hub organization when running the application
 
