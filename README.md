@@ -11,7 +11,7 @@
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
 
-**With WSL 2 backend**
+**With WSL 2 backend** <br/>
 Type **winver** in RUN to check the version of the installed windows.
 
 - Windows 11 64-bit: Home or Pro version 21H2 or higher,\
@@ -21,8 +21,7 @@ Type **winver** in RUN to check the version of the installed windows.
 - Enable the WSL 2 feature on Windows. For detailed instructions,\
   refer to the [wsl installation](https://docs.microsoft.com/en-us/windows/wsl/install)
 
-- The following hardware prerequisites are required to successfully\
-  run WSL 2 on Windows 10 or Windows 11:  
+ **Hardware Requirements to run WSL 2 on Windows 10 or Windows 11** <br/>  
 
 - 64-bit processor with Second Level Address Translation (SLAT)
 
