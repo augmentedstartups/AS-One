@@ -36,7 +36,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 ```
   Restart your system. <br/>
-  3. Download the [Standalone WSL 2.0 Linux Kernel Update](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package) and install it. <br/>
+  3. Download the [Standalone WSL 2.0 Linux Kernel Update]([https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)) and install it. <br/>
   4. Download the [Linux distribution from Microsoft Store](https://apps.microsoft.com/store/detail/ubuntu-20044-lts/9MTTCL66CPXJ) and install it. After installing it, type UNIX Username and Password.<br/>
 5. Run the following commands in PowerShell
 ```
@@ -54,7 +54,7 @@ wsl -l --all
 6. To install additional Linux distributions after the initial install, you may also use the following
    command and you can find the distribution name by running the command above.
 ```
-wsl --install -d <Distribution Name>
+wsl --install -d ubuntu-20.04
 ```
 7. To check the verion of wsl
 ```
@@ -62,7 +62,7 @@ wsl -l -v
 ```
 8. To upgrade or downgrade the version=2 or version=1
 ```
-wsl --set-version <distro name> 2
+wsl --set-version ubuntu-20.04 2
 ```
 
 ## Docker Installation for Windows Systems
