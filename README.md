@@ -101,7 +101,7 @@ cd detectron2
 ```
 docker run --gpus all --env="DISPLAY" --net=host -v [PATH_TO_LOCAL_DIR]:/workspace/  -it [IMAGE_NAME]:[TAG]
 ```
-  - PATH_TO_LOCAL_DIR = Path to detectron2 directory or use `${PWD}` if already in that directory
+  - `PATH_TO_LOCAL_DIR` = Path to detectron2 directory or use `${PWD}` if already in that directory
 
 2. In Docker terminal run demo.py file
 
@@ -111,6 +111,6 @@ python demo/demo.py --input [PATH_TO_TEST_IMAGE]  --output [PATH_TO_OUTPUT_IMAGE
   MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
 ```
 
-- PATH_TO_TEST_IMAGE = Path of test image
-- PATH_TO_OUTPUT_IMAGE = Path of Results
-- DEVICE = device to use i.e. cpu or gpu
+- `PATH_TO_TEST_IMAGE` = Path of test image
+- `PATH_TO_OUTPUT_IMAGE` = Path of Results
+- `DEVICE` = device to use i.e. cpu or gpu
