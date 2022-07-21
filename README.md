@@ -76,8 +76,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 docker build -t [IMAGE_NAME]:[TAG]
 ```
 
-  - IMAGE_NAME = Asign a name to image
-  - TAG = Asign a tag to image
+  - `IMAGE_NAME` = Asign a name to image
+  - `TAG` = Asign a tag to image
 
 ## Docker Demo
 
