@@ -1,5 +1,36 @@
 # ASOne
 
+## Docker Installation for Windows Systems
+### System Requirements
+Windows machine must meet the following requirements to successfully install the docker:
+- **With WSL 2 backend**
+Type winver in RUN to check the version of installed windows.
+
+- Windows 11 64-bit: Home or Pro version 21H2 or higher,\
+  or Enterprise or Education version 21H2 or     higher.
+- Windows 10 64-bit: Home or Pro 21H1 (build 19043) or higher,\
+  or Enterprise or Education 20H2 (build 19042) or higher.
+- Enable the WSL 2 feature on Windows. For detailed instructions,\
+  refer to the Microsoft documentation.
+
+- The following hardware prerequisites are required to successfully\
+  run WSL 2 on Windows 10 or Windows 11:\
+
+- 64-bit processor with Second Level Address Translation (SLAT)
+
+- 4GB system RAM
+
+BIOS-level hardware virtualization support must be enabled in the BIOS settings. For more information, see Virtualization.
+
+Download and install the Linux kernel update package.
+
+
+
+
+
+
+
+
 ## Setup detectron2
 1. Clone the Repo
 ```
