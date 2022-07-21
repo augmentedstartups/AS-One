@@ -60,7 +60,7 @@ wsl --install -d <Distribution Name>
 ```
 wsl -l -v
 ```
-8. To update or downgrade the version=1 or version=2
+8. To upgrade or downgrade the version=2 or version=1
 ```
 wsl --set-version <distro name> 2
 ```
@@ -70,7 +70,8 @@ wsl --set-version <distro name> 2
 **Note**: It is recommended to use WSL2 as backend. <br/>
 
 ### Steps to Install Docker from Command line on Windows:
-**Note** Kindly read the requirements section carefully, Given below!
+**Note** Kindly read the requirements section carefully!
+-------------------------------------------------------------------------------------------------------------
 After downloading [Docker Desktop Installer.exe](https://docs.docker.com/desktop/install/windows-install/), run the following command in a terminal to <br/> 
 Install Docker Desktop:
 ```
