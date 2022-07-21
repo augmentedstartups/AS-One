@@ -136,7 +136,7 @@ wsl -l -v
 wsl --set-version ubuntu-20.04 2
 ```
 
-## Docker Installation for Windows Systems
+## Docker Installation
 (Supported for Windows 10 and 11 only) <br/>
 **Note**: It is recommended to use WSL2 as backend. <br/>
 
