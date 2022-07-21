@@ -73,7 +73,7 @@ wsl --set-version ubuntu-20.04 2
 -------------------------------------------------------------------------------------------------------------
 **Note** **Kindly read the requirements section carefully!**
 
-After downloading [Docker Desktop Installer.exe](https://docs.docker.com/desktop/install/windows-install/), run the following command in a terminal to <br/> 
+After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in a terminal to <br/> 
 Install Docker Desktop:
 ```
 "Docker Desktop Installer.exe" install
@@ -84,9 +84,9 @@ Start-Process 'path\to\Docker Desktop Installer.exe' -Wait install
 ```
 And the install command accepts the following flags:
 
--  --quiet: Suppresses information output when running the installer
--  --accept-license: Accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run.
-- --backend=[backend name]: selects the backend to use for Docker Desktop, hyper-v or wsl-2 (default)
+-  `--quiet`: Suppresses information output when running the installer
+-  `--accept-license`: Accepts the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/) now, rather than requiring it to be accepted when the application is first run.
+- `--backend=[backend name]`: selects the backend to use for Docker Desktop, hyper-v or wsl-2 (default)
 
 If your admin account is different to your user account, you must add the user to the docker-users group:
 ```
