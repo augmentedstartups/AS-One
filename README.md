@@ -142,7 +142,6 @@ wsl --set-version ubuntu-20.04 2
 
 ### Steps to Install Docker from Command line on Windows:
 -------------------------------------------------------------------------------------------------------------
-**Note** **Kindly read the requirements section carefully!**
 
 After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in a terminal to <br/> 
 Install Docker Desktop:
