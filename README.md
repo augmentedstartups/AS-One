@@ -70,8 +70,9 @@ wsl --set-version <distro name> 2
 **Note**: It is recommended to use WSL2 as backend. <br/>
 
 ### Steps to Install Docker from Command line on Windows:
-**Note** Kindly read the requirements section carefully!
 -------------------------------------------------------------------------------------------------------------
+**Note** **Kindly read the requirements section carefully!**
+
 After downloading [Docker Desktop Installer.exe](https://docs.docker.com/desktop/install/windows-install/), run the following command in a terminal to <br/> 
 Install Docker Desktop:
 ```
@@ -79,7 +80,7 @@ Install Docker Desktop:
 ```
 If you’re using PowerShell you should run it as:
 ```
-Start-Process '.\win\build\Docker Desktop Installer.exe' -Wait install
+Start-Process 'path\to\Docker Desktop Installer.exe' -Wait install
 ```
 And the install command accepts the following flags:
 
