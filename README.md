@@ -68,13 +68,6 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 ## Windows
-#### Table of Contents  
-- [System Requirements](#system-requirements)  
-- [WSL Installation](#wsl-installation)
-- [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
-- [Setting up detectron2](#setting-up-detectron2)
-- [Setting up Docker](#setting-up-docker)
-
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
 
