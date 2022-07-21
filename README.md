@@ -1,5 +1,12 @@
 # ASOne
-## Docker Installation Instructions For Windows 
+## Docker Installation Instructions For Windows
+#### Table of Contents  
+- [System Requirements](#system-requirements)  
+- [WSL Installation](#wsl-installation)
+- [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
+- [Setting up detectron2](#setting-up-detectron2)
+- [Setting up Docker](#setting-up-docker)
+
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
 
@@ -94,7 +101,7 @@ net localgroup docker-users <user> /add
 ```
 ***And You Are All Done!***
 
-## Setup detectron2
+## Setting up detectron2
 1. Clone the Repo
 ```
 git clone https://github.com/facebookresearch/detectron2.git
@@ -105,7 +112,7 @@ cd detectron2
 ```
 3. Download some sample images in this folder
 
-## Docker Setup
+## Setting up Docker
 
 1. Build docker contanier
 ```
