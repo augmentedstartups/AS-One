@@ -1,12 +1,12 @@
 # ASOne
 
 #### Table of Contents  
-- [Docker Installation](#docker-installation)  
+- [Docker Installation on Ubuntu](#docker-installation-on-ubuntu)  
 - [Setting Up detectron2](#setting-up-detectron2)
 - [Docker Building](#docker-building)
 
 
-## Docker Installation
+## Docker Installation on Ubuntu
 
 ### Install using Shell Script
 
