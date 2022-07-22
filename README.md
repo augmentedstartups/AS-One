@@ -2,7 +2,7 @@
 ## Docker Installation Instructions For Windows
 #### Table of Contents  
 - [System Requirements](#system-requirements)  
-- [WSL Installation](#wsl-installation)
+- [Enable WSL Feature](#enable-wsl-feature)
 - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
 - [Setting up detectron2](#setting-up-detectron2)
 - [Setting up Docker](#setting-up-docker)
@@ -29,9 +29,7 @@ Type **winver** in RUN to check the version of the installed windows.
 - BIOS-level hardware virtualization support must be enabled in the \
   BIOS settings. For more information, see [Virtualization](https://docs.docker.com/desktop/troubleshoot/topics/)
 
-- Download and install the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
-
-## WSL Installation
+## Enable WSL 2 Feature
 **Follow the steps given below to install WSL(Windows subsystem Linux):**
 Open PowerShell as administrator and run the commands given below:
 1.  Enabling the Virtual Machine Platform
@@ -43,33 +41,15 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 ```
   Restart your system. <br/>
-  3. Download the [Standalone WSL 2.0 Linux Kernel Update](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi) and install it. <br/>
-  4. Download the [Linux distribution from Microsoft Store](https://apps.microsoft.com/store/detail/ubuntu-20044-lts/9MTTCL66CPXJ) and install it. After installing it, type UNIX Username and Password.<br/>
-5. Run the following commands in PowerShell
-```
-wsl --install
-```
-The above command only works if WSL is not installed at all, if you run wsl --install and see the 
-WSL help text then run this command to check online availabe distributions:
-```
-wsl --list --online
-```
-Or run this command
-```
-wsl -l --all
-```
-6. To install additional Linux distributions after the initial install, you may also use the following
-   command and you can find the distribution name by running the command above.
-```
-wsl --install -d ubuntu-20.04
-```
-7. To check the verion of wsl
+3. Download and install the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
+  
+4. To check the verion of wsl run these commands in PowerShell
 ```
 wsl -l -v
 ```
-8. To upgrade or downgrade the version=2 or version=1
+5. To upgrade or downgrade the version=2 or version=1
 ```
-wsl --set-version ubuntu-20.04 2
+wsl --set-default-version 2
 ```
 
 ## Docker Installation for Windows Systems
@@ -80,7 +60,7 @@ wsl --set-version ubuntu-20.04 2
 -------------------------------------------------------------------------------------------------------------
 **Note** **Kindly read the requirements section carefully!**
 
-After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in a terminal to <br/> 
+After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in command line window to <br/> 
 Install Docker Desktop:
 ```
 "Docker Desktop Installer.exe" install
