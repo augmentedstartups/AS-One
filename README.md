@@ -94,9 +94,10 @@ cd detectron2
 
 ## Setting up Docker
 
-1. Build docker contanier
+1. Build docker contanier <br/>
+Write a command like, "docker build -t yolov5:latest ."   
 ```
-docker build -t [IMAGE_NAME]:[TAG]
+docker build -t [IMAGE_NAME]:[TAG] .
 ```
 
 - IMAGE_NAME = Asign a name to image
