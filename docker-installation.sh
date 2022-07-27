@@ -32,4 +32,10 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 sudo docker --version
 
+sudo xhost +local:docker
+
+sudo groupadd docker
+sudo gpasswd -a $USER docker
+newgrp docker
+
 echo "Docker Engine Installed Successfully!"
