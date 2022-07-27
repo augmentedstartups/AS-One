@@ -14,7 +14,8 @@
   - [Docker Build](#docker-build)
   - [Docker Demo](#docker-demo-1)
     - [Setup Detectron](#setup-detectron)
-    - [Run Demo](#run-demo)
+    - [Demo using docker compose](#demo-using-docker-compose-file)
+    - [Demo using docker](#demo-using-docker)
 
 # Docker Installation
 
@@ -226,13 +227,13 @@ cd detectron2
 docker compose run linux
 ```
 
-2. RUn container with gpu
+2. Run container with gpu
 
 ```
 docker compose run linux-gpu
 ```
 
-- To test web-cam is working properly (test web-cam):
+- To test `DISPLAY` is shared with docker properly:
 
 ```
 python main.py
