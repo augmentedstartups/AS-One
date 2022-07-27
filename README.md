@@ -218,7 +218,27 @@ cd detectron2
 
 3. Download some sample images in this folder
 
-#### Run Demo
+#### Demo Using Docker Compose File
+
+1. Run container without gpu
+
+```
+docker compose run linux
+```
+
+2. RUn container with gpu
+
+```
+docker compose run linux-gpu
+```
+
+- To test web-cam is working properly (test web-cam):
+
+```
+python main.py
+```
+
+#### Demo Using Docker
 
 1. Run Docker Contaner
 
