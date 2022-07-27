@@ -2,7 +2,7 @@
 ## Docker Installation Instructions For Windows
 #### Table of Contents  
 - [System Requirements](#system-requirements)  
-- [Enable WSL Feature](#enable-wsl-feature)
+- [Enable WSL 2 Feature](#enable-wsl-2-feature)
 - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
 - [Setting up detectron2](#setting-up-detectron2)
 - [Setting Environment Variable](#setting-environment-variable)
