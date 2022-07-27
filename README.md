@@ -111,13 +111,13 @@ cd detectron2
 1. Run container without gpu
 
 ```
-docker compose --env-linux run linux
+docker compose run linux
 ```
 
 2. RUn container with gpu
 
 ```
-docker compose --env-linux run linux-gpu
+docker compose run linux-gpu
 ```
 
 - To test web-cam is working properly (test web-cam):

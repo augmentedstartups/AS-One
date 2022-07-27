@@ -34,4 +34,8 @@ sudo docker --version
 
 sudo xhost +local:docker
 
+sudo groupadd docker
+sudo gpasswd -a $USER docker
+newgrp docker
+
 echo "Docker Engine Installed Successfully!"
