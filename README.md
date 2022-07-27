@@ -114,13 +114,13 @@ cd detectron2
 docker compose run linux
 ```
 
-2. RUn container with gpu
+2. Run container with gpu
 
 ```
 docker compose run linux-gpu
 ```
 
-- To test web-cam is working properly (test web-cam):
+- To test `DISPLAY` is shared with docker properly:
 
 ```
 python main.py
