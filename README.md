@@ -5,6 +5,7 @@
 - [Enable WSL Feature](#enable-wsl-feature)
 - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
 - [Setting up detectron2](#setting-up-detectron2)
+- [Setting Environment Variable](#setting-environment-variable)
 - [Setting up Docker](#setting-up-docker)
 
 ### System Requirements
@@ -92,6 +93,31 @@ cd detectron2
 ```
 3. Download some sample images in this folder
 
+## Setting Environment Variable
+1. To make such complex installation easier, install chocolatey (Command line application installer). Open command prompt as administrator and run the following command.
+```
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+```
+2. Install VcXsrv (Windows X Server) Tool
+```
+choco install vcxsrv
+```
+3. 
+- Open XLaunch and select Multiple windows
+- Select the option Start no client
+- In Extra Settings, select the option 
+  1. Clipboard
+  2. Primary Selection
+  3. Native opengl
+- Save configuration file for later use
+4. Open PowerShell and run the command to check ipv4 if you get multiple addresses then copy the first one.
+```
+ipconfig | ? { $_ -match 'Ipv4' }
+```
+5. Run the following command and type like this  `DISPLAY=192.168.168.128:0.0`
+```
+set DISPLAY=<ipv4>:0.0
+```
 ## Setting up Docker
 
 1. Build docker contanier <br/>
@@ -100,15 +126,18 @@ Write a command like, "docker build -t yolov5:latest ."
 docker build -t [IMAGE_NAME]:[TAG] .
 ```
 
-- IMAGE_NAME = Asign a name to image
-- TAG = Asign a tag to image
+- IMAGE_NAME = Assign a name to image
+- TAG = Assign a tag to image
 
 2. Run Docker Contaner
 
 ```
-docker run --gpus all --env="DISPLAY" --net=host -v [PATH_TO_LOCAL_DIR]:/workspace/  -it [IMAGE_NAME]:[TAG]
+docker run --gpus all --env=%DISPLAY% --net=host -v [PATH_TO_LOCAL_DIR]:/workspace/  -it [IMAGE_NAME]:[TAG]
 ```
 - PATH_TO_LOCAL_DIR = Path to detectron2 directory or use `${PWD}` if already in that directory
+
+Example: `docker run --env DISPLAY=%DISPLAY% --net=host -v C:\asone\detectron2\:/workspace/ -it asone:first` <br/>
+Example command uses CPU only.
 
 3. In Docker terminal run demo.py file
 
