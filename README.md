@@ -24,6 +24,12 @@ chmod a+x docker-installation.sh
 ./docker-installation.sh
 ```
 
+- [NOTE] If there is an error while installing docker, try removing apt-lists and resinstalling.
+
+```
+sudo rm -rf /var/lib/apt/lists/*
+```
+
 #### Manuall Install
 
 1. Run following command to remove all old versions on docker
