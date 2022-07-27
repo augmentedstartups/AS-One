@@ -32,4 +32,6 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 sudo docker --version
 
+sudo xhost +local:docker
+
 echo "Docker Engine Installed Successfully!"
