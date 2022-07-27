@@ -6,7 +6,7 @@ services:
         volumes:
             - ${PWD}:/workspace
             # - $HOME/.Xauthority:/root/.Xauthority:rw
-            - /dev/video0:/dev/video0
+            # - /dev/video0:/dev/video0
         network_mode: host
         restart: always
         privileged: true
@@ -19,7 +19,7 @@ services:
         volumes:
             - ${PWD}:/workspace
             # - $HOME/.Xauthority:/root/.Xauthority:rw
-            - /dev/video0:/dev/video0
+            # - /dev/video0:/dev/video0
         network_mode: host
         privileged: true
         environment:
