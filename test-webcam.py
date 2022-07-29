@@ -3,7 +3,8 @@ import numpy as np
 
 img = np.zeros((400, 600, 3))
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('http://192.168.18.5:56000/mjpeg')
+# cap.open("")
 
 while True:
     if not cap.isOpened():
@@ -12,7 +13,7 @@ while True:
 
     # Capture frame-by-frame
     ret, frame = cap.read()
-
+    print(frame)
     # Display the resulting frame
     cv2.imshow('Video', frame)
 
