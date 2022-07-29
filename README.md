@@ -5,7 +5,7 @@
 - [Enable WSL 2 Feature](#enable-wsl-2-feature)
 - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
 - [Setting up detectron2](#setting-up-detectron2)
-- [Setting Environment Variable](#setting-environment-variable)
+- [Setting Environment Variable and Configuring Devices](#setting-environment-variable-and-configuring-devices)
 - [Setting up Docker](#setting-up-docker)
 
 ### System Requirements
