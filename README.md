@@ -93,15 +93,16 @@ cd detectron2
 3. Download some sample images in this folder
 
 ## Setting Environment Variable and Configuring Devices
-1. Install chocolatey (Command line application installer). Open command prompt as administrator and run the following command.
+1. Install [chocolatey](https://chocolatey.org/install) (Command line application installer).
+2.  Open command prompt as administrator and run the following command.
 ```
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
-2. Install VcXsrv (Windows X Server) Tool
+3. Install VcXsrv (Windows X Server) Tool
 ```
 choco install vcxsrv
 ```
-3. 
+4. 
 - Open XLaunch and select Multiple windows
 - Select the option Start no client
 - In Extra Settings, select the option 
@@ -109,17 +110,17 @@ choco install vcxsrv
   2. Primary Selection
   3. Native opengl
 - Save configuration file for later use
-4. Open PowerShell and run the command to check ipv4 if you get multiple addresses then copy the first one.
+5. Open PowerShell and run the command to check ipv4 if you get multiple addresses then copy the first one.
 ```
 ipconfig | ? { $_ -match 'Ipv4' }
 ```
-5. Run the following command in cmd and type like this  
+6. Run the following command in cmd and type like this  
 ` setx DISPLAY 192.168.168.128:0.0`
 ```
 setx DISPLAY <ipv4>:0.0
 ```
 
-6. 
+7. 
  - Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) and select extract all
  - Open cam2ip.exe and see "Listening on: 56000" 
  - IP stream will be on `http://localhost:56000/mjpeg`
