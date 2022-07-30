@@ -120,7 +120,7 @@ setx DISPLAY <ipv4>:0.0
 ```
 
 6. 
- - Open cam2ip.exe and select extract all
+ - Open (cam2ip.exe)[cam2ip-1.6-64bit-cv/cam2ip.exe] and select extract all
  - Open cam2ip.exe and see "Listening on: 56000" 
  - IP stream will be on `http://localhost:56000/mjpeg`
 ## Setting up Docker
