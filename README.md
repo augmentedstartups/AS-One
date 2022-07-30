@@ -59,9 +59,9 @@ wsl --set-default-version 2
 
 ### Steps to Install Docker from Command line on Windows:
 -------------------------------------------------------------------------------------------------------------
-**Note** **Kindly read the requirements section carefully!**
+**Note**
 
-After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in command line window to <br/> 
+After downloading [Docker Desktop Installer.exe](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe), run the following command in `cmd` to <br/> 
 Install Docker Desktop:
 ```
 "Docker Desktop Installer.exe" install
@@ -94,7 +94,7 @@ cd detectron2
 3. Download some sample images in this folder
 
 ## Setting Environment Variable and Configuring Devices
-1. To make such complex installation easier, install chocolatey (Command line application installer). Open command prompt as administrator and run the following command.
+1. Install chocolatey (Command line application installer). Open command prompt as administrator and run the following command.
 ```
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
@@ -121,28 +121,31 @@ setx DISPLAY <ipv4>:0.0
 ```
 
 6. 
- - Download the [cam2ip cv2](https://github.com/gen2brain/cam2ip/releases/download/1.6/cam2ip-1.6-64bit-cv2.zip) binaries
  - Open cam2ip.exe and select extract all
  - Open cam2ip.exe and see "Listening on: 56000" 
  - IP stream will be on `http://localhost:56000/mjpeg`
 ## Setting up Docker
 
 1. Build docker contanier <br/>
-Write a command like, "docker build -t yolov5:latest ."   
+   
 ```
-docker build -t [IMAGE_NAME]:[TAG] .
+docker build -t [IMAGE_NAME]:[TAG]
 ```
 
-- IMAGE_NAME = Assign a name to image
-- TAG = Assign a tag to image
+- `IMAGE_NAME` = Assign a name to image
+- `TAG` = Assign a tag to image
 
+A valid command will be
+```
+docker build -t yolov5:latest
+```
 2. Run Docker Contaner
 
 ```
 docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v [PATH_TO_LOCAL_DIR]:/workspace/  -it [IMAGE_NAME]:[TAG]
 ```
 
-- PATH_TO_LOCAL_DIR = Path to detectron2 directory or use `${PWD}` if already in that directory
+- `PATH_TO_LOCAL_DIR` = Path to detectron2 directory or use `${PWD}` if already in that directory
 
 Example: `docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v C:\asone\detectron2\:/workspace/ -it asone:first` <br/>
 
@@ -160,6 +163,6 @@ python demo/demo.py --input [PATH_TO_TEST_IMAGE]  --output [PATH_TO_OUTPUT_IMAGE
   MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
 ```
 
-- PATH_TO_TEST_IMAGE = Path of test image
-- PATH_TO_OUTPUT_IMAGE = Path of Results
-- DEVICE = device to use i.e. cpu or gpu
+- `PATH_TO_TEST_IMAGE` = Path of test image
+- `PATH_TO_OUTPUT_IMAGE` = Path of Results
+- `DEVICE` = device to use i.e. cpu or gpu
