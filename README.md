@@ -80,7 +80,6 @@ If your admin account is different to your user account, you must add the user t
 ```
 net localgroup docker-users <user> /add
 ```
-***And You Are All Done!***
 
 ## Setting up detectron2
 1. Clone the Repo
