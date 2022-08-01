@@ -121,15 +121,14 @@ setx DISPLAY <ipv4>:0.0
 ```
 
 7. 
- - Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) and select extract all
- - Open cam2ip.exe and see "Listening on: 56000" 
+ - Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) see "Listening on: 56000" 
  - IP stream will be on `http://localhost:56000/mjpeg`
 ## Setting up Docker
 
 1. Build docker contanier <br/>
    
 ```
-docker build -t [IMAGE_NAME]:[TAG]
+docker build -t [IMAGE_NAME]:[TAG] .
 ```
 
 - `IMAGE_NAME` = Assign a name to image
@@ -137,7 +136,7 @@ docker build -t [IMAGE_NAME]:[TAG]
 
 A valid command will be
 ```
-docker build -t yolov5:latest
+docker build -t yolov5:latest .
 ```
 2. Run Docker Contaner
 
