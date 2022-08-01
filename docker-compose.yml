@@ -5,18 +5,23 @@ services:
         image: "asone:latest"
         volumes:
             - ${PWD}:/workspace
-            - $HOME/.Xauthority:/root/.Xauthority:rw
-        network_mode: "host"
+            # - $HOME/.Xauthority:/root/.Xauthority:rw
+            # - /dev/video0:/dev/video0
+        network_mode: host
         restart: always
+        privileged: true
         environment:
             DISPLAY: $DISPLAY
+       
     linux-gpu:
         build: .
         image: "asone:latest"
         volumes:
             - ${PWD}:/workspace
-            - $HOME/.Xauthority:/root/.Xauthority:rw
-        network_mode: "host"
+            # - $HOME/.Xauthority:/root/.Xauthority:rw
+            # - /dev/video0:/dev/video0
+        network_mode: host
+        privileged: true
         environment:
             DISPLAY: $DISPLAY
         deploy:
