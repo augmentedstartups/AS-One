@@ -107,11 +107,6 @@ net localgroup docker-users <user> /add
 ```
 git clone https://github.com/facebookresearch/detectron2.git
 ```
-2. Goto the detectron2 directory
-```
-cd detectron2
-```
-3. Download some sample images in this folder
 
 ## Setting Environment Variable and Configuring Devices
 1. Install [chocolatey](https://chocolatey.org/install) (Command line application installer).
@@ -147,7 +142,11 @@ setx DISPLAY <ipv4>:0.0
  - IP stream will be on `http://localhost:56000/mjpeg`
 ## Setting up Docker
 
-1. Build docker contanier <br/>
+1. Goto asone directory
+```
+cd asone
+```
+2. Build docker contanier <br/>
    
 ```
 docker build -t [IMAGE_NAME]:[TAG] .
@@ -160,15 +159,15 @@ A valid command will be
 ```
 docker build -t yolov5:latest .
 ```
-2. Run Docker Contaner
+3. Run Docker Contaner
 
 ```
 docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v [PATH_TO_LOCAL_DIR]:/workspace/  -it [IMAGE_NAME]:[TAG]
 ```
 
-- `PATH_TO_LOCAL_DIR` = Path to detectron2 directory or use `${PWD}` if already in that directory
+- `PATH_TO_LOCAL_DIR` = Path to asone directory or use `${PWD}` if already in that directory
 
-Example: `docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v C:\asone\detectron2\:/workspace/ -it asone:first` <br/>
+Example: `docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v C:\asone\asone\:/workspace/ -it asone:first` <br/>
 
 
 or run the following command to run docker.
@@ -176,12 +175,10 @@ or run the following command to run docker.
 docker compose run windows
 ```
 
-3. In Docker terminal run demo.py file
+4. In Docker terminal run test-webcam.py or test-display.py file
 
 ```
-python demo/demo.py --input [PATH_TO_TEST_IMAGE]  --output [PATH_TO_OUTPUT_IMAGE] \
-  --opts MODEL.DEVICE [DEVICE] \ 
-  MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
+python test-webcam.py or python test-display.py
 ```
 
 - `PATH_TO_TEST_IMAGE` = Path of test image
