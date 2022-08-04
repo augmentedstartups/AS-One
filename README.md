@@ -122,7 +122,7 @@ docker compose run linux
 docker compose run linux-gpu
 ```
 
-- To test `DISPLAY` is shared with docker properly:
+- To test DISPLAY is shared with docker properly:
 
 ```
 python main.py
