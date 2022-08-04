@@ -154,7 +154,7 @@ python demo/demo.py --input [PATH_TO_TEST_IMAGE]  --output [PATH_TO_OUTPUT_IMAGE
 - `PATH_TO_TEST_IMAGE` = Path of test image
 - `PATH_TO_OUTPUT_IMAGE` = Path of Results
 - `DEVICE` = device to use i.e. `cpu` or `gpu`
-
+e.g.
 ```
 python demo/demo.py --input test.jpeg  --output result.jpg \
   --opts MODEL.DEVICE gpu \
