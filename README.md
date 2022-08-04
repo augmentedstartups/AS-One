@@ -34,7 +34,7 @@ Type **winver** in RUN to check the version of the installed windows.
 ## Installation with Batch and Configuring Devices
 1. Download the [enable_feature.bat](enable_feature.bat) and run it as administrator.
 - Reboot your system.
-2. Download the installation.bat and run it as administrator.
+2. Download the [installation.bat](installation.bat) and run it as administrator.
 - Again Reboot your system.
 3. Open XLaunch and select Multiple windows
 - Select the option Start no client
