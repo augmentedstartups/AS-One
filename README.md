@@ -32,7 +32,7 @@ Type **winver** in RUN to check the version of the installed windows.
   BIOS settings. For more information, see [Virtualization](https://docs.docker.com/desktop/troubleshoot/topics/)
 
 ## Installation with Batch and Configuring Devices
-1. Download the enable_feature.bat and run it as administrator.
+1. Download the [enable_feature.bat](enable_feature.bat) and run it as administrator.
 - Reboot your system.
 2. Download the installation.bat and run it as administrator.
 - Again Reboot your system.
