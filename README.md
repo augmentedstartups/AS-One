@@ -1,7 +1,8 @@
 # ASOne
 ## Docker Installation Instructions For Windows
 #### Table of Contents  
-- [System Requirements](#system-requirements)  
+- [System Requirements](#system-requirements) 
+- [Installation with Batch and Configuring Devices](#installation-with-batch-and-configuring-devices)  
 - [Enable WSL 2 Feature](#enable-wsl-2-feature)
 - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
 - [Setting up detectron2](#setting-up-detectron2)
@@ -29,6 +30,26 @@ Type **winver** in RUN to check the version of the installed windows.
 
 - BIOS-level hardware virtualization support must be enabled in the \
   BIOS settings. For more information, see [Virtualization](https://docs.docker.com/desktop/troubleshoot/topics/)
+
+## Installation with Batch and Configuring Devices
+1. Download the enable_feature.bat and run it as administrator.
+- Reboot your system.
+2. Download the installation.bat and run it as administrator.
+- Again Reboot your system.
+3. Open XLaunch and select Multiple windows
+- Select the option Start no client
+- In Extra Settings, select the option 
+  1. Clipboard
+  2. Primary Selection
+  3. Native opengl
+  4. Disable access control
+- Save configuration file for later use
+4. Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) see "Listening on: 56000" 
+ - IP stream will be on `http://localhost:56000/mjpeg`
+
+ Now go to [Setting up Docker](#setting-up-docker). 
+
+
 
 ## Enable WSL 2 Feature
 **Follow the steps given below to install WSL(Windows subsystem Linux):**
@@ -109,6 +130,7 @@ choco install vcxsrv
   1. Clipboard
   2. Primary Selection
   3. Native opengl
+  4. Disable access control
 - Save configuration file for later use
 5. Open PowerShell and run the command to check ipv4 if you get multiple addresses then copy the first one.
 ```
