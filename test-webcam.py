@@ -3,7 +3,15 @@ import numpy as np
 
 img = np.zeros((400, 600, 3))
 
-cap = cv2.VideoCapture('http://192.168.18.5:56000/mjpeg')
+##Fetch IP Address
+# importing socket module
+import socket
+# getting the hostname by socket.gethostname() method
+hostname = socket.gethostname()
+# getting the IP address using socket.gethostbyname() method
+ip_address = socket.gethostbyname(hostname)
+# printing the hostname and ip_address
+cap = cv2.VideoCapture(f'http://{ip_address}:56000/mjpeg')
 # cap.open("")
 
 while True:
