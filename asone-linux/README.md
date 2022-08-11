@@ -73,7 +73,7 @@ docker compose run linux
 2. Run container with GPU
 
 ```
-docker compose run linux-GPU
+docker compose run linux-gpu
 ```
 
 - To test DISPLAY is shared with docker properly:
