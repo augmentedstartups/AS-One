@@ -26,7 +26,7 @@ chmod a+x docker-installation.sh
 sudo rm -rf /var/lib/apt/lists/*
 ```
 
-- In case shell script keeps failing or you want to install manually follow steps in [Manual Installation](Manual-Installation.md)
+- In case shell script keeps failing or you want to install manually follow steps in [Manual Installation](Instructions/Manual-Installation.md)
 
 
 # Test Docker
@@ -60,9 +60,9 @@ Try this:
 sudo xhost +local:docker
 ```
 
-- To build and run docker container manually follow instructions for [Manual Build](Manual-Build.md)
+- To build and run docker container manually follow instructions for [Manual Build](Instructions/Manual-Build.md)
 
 
 ## Test Detectron2
 
-To test detectron2 follow instuctions in [Demo Detectron2](Demo-Detectron2.md)
+To test detectron2 follow instuctions in [Demo Detectron2](Instructions/Demo-Detectron2.md)
