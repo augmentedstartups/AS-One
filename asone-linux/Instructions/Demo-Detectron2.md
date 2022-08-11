@@ -10,7 +10,7 @@
 
 # Docker Installation
 
-- If you haven't installed docker first install it by following provided instructions [here](README.md)
+- If you haven't installed docker first install it by following provided instructions [here](../)
 
 ## Docker Demo
 
