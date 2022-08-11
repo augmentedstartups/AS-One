@@ -39,6 +39,7 @@ sudo reboot
 #### Install using Shell Script
 
 ```
+cd asone-linux
 chmod a+x docker-installation.sh
 ./docker-installation.sh
 ```
