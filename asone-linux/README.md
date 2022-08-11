@@ -31,6 +31,11 @@ sudo apt-get install nvidia-driver-YYY nvidia-dkms-YYY
 
 e.g `sudo apt-get install nvidia-driver-510 nvidia-dkms-510`
 
+- `Reboot` your system after installing nvidia-drivers.
+```
+sudo reboot
+```
+
 #### Install using Shell Script
 
 ```
