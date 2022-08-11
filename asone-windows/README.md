@@ -3,11 +3,14 @@
 #### Table of Contents  
 - [System Requirements](#system-requirements) 
 - [Installation with Batch and Configuring Devices](#installation-with-batch-and-configuring-devices)  
-- [Enable WSL 2 Feature](#enable-wsl-2-feature)
-- [Docker Installation for Windows Systems](#docker-installation-for-windows-systems)
-- [Setting up detectron2](#setting-up-detectron2)
-- [Setting Environment Variable and Configuring Devices](#setting-environment-variable-and-configuring-devices)
 - [Setting up Docker](#setting-up-docker)
+- [Setting up detectron2](#setting-up-detectron2)
+
+<!-- - [Enable WSL 2 Feature](#enable-wsl-2-feature) -->
+<!-- - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems) -->
+
+<!-- - [Setting Environment Variable and Configuring Devices](#setting-environment-variable-and-configuring-devices) -->
+
 
 ### System Requirements
 Windows machine must meet the following requirements to successfully install the docker:
@@ -51,7 +54,7 @@ Type **winver** in RUN to check the version of the installed windows.
 
 
 
-## Enable WSL 2 Feature
+<!-- ## Enable WSL 2 Feature
 **Follow the steps given below to install WSL(Windows subsystem Linux):**
 Open PowerShell as administrator and run the commands given below:
 1.  Enabling the Virtual Machine Platform
@@ -72,8 +75,8 @@ wsl -l -v
 5. To upgrade or downgrade the version=2 or version=1
 ```
 wsl --set-default-version 2
-```
-
+``` -->
+<!-- 
 ## Docker Installation for Windows Systems
 (Supported for Windows 10 and 11 only) <br/>
 **Note**: It is recommended to use WSL2 as backend. <br/>
@@ -100,14 +103,10 @@ And the install command accepts the following flags:
 If your admin account is different to your user account, you must add the user to the docker-users group:
 ```
 net localgroup docker-users <user> /add
-```
+``` -->
 
-## Setting up detectron2
-1. Clone the Repo
-```
-git clone https://github.com/facebookresearch/detectron2.git
-```
 
+<!-- 
 ## Setting Environment Variable and Configuring Devices
 1. Install [chocolatey](https://chocolatey.org/install) (Command line application installer).
 2.  Open command prompt as administrator and run the following command.
@@ -139,7 +138,7 @@ setx DISPLAY <ipv4>:0.0
 
 7. 
  - Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) see "Listening on: 56000" 
- - IP stream will be on `http://localhost:56000/mjpeg`
+ - IP stream will be on `http://localhost:56000/mjpeg` -->
 ## Setting up Docker
 
 1. Goto asone directory
@@ -184,3 +183,9 @@ python test-webcam.py or python test-display.py
 - `PATH_TO_TEST_IMAGE` = Path of test image
 - `PATH_TO_OUTPUT_IMAGE` = Path of Results
 - `DEVICE` = device to use i.e. cpu or gpu
+
+## Setting up detectron2
+1. Clone the Repo
+```
+git clone https://github.com/facebookresearch/detectron2.git
+```
