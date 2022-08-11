@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+    windows:
+        build: .
+        container_name: ASONE
+        image: "asone:v2"
+        volumes:
+            - ${PWD}:/workspace
+            # - $HOME/.Xauthority:/root/.Xauthority:rw
+            # - /dev/video0:/dev/video0
+        network_mode: host
+        restart: always
+        privileged: true
+        ports: 
+            - "56000:56000"
+        environment:
+            DISPLAY: ${DISPLAY}
+       
+

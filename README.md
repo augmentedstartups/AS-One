@@ -1,6 +1,6 @@
 # ASOne
 
 #### Table of Contents
-- Installtion
+- Installation
     - [Linux](asone-linux)
     - [Windows](asone-windows)
