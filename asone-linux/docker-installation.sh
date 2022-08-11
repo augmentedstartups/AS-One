@@ -33,9 +33,6 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 sudo docker --version
 
-sudo apt-get install -y nvidia-docker2
-sudo systemctl restart docker
-
 sudo xhost +local:docker
 
 sudo groupadd docker
