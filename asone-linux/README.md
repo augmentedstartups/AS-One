@@ -44,7 +44,18 @@ chmod a+x docker-installation.sh
 ./docker-installation.sh
 ```
   - For systems with `GPU` run following commands after installing docker.
+
+  Setup the package repository and the GPG key:
   ```
+   distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+      && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+      && curl -s -L https://nvidia.github.io/libnvidia-container/experimental/$distribution/libnvidia-container.list | \
+         sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+         sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+  ```
+  Install the `nvidia-docker2` package (and dependencies) after updating the package listing:
+  ```
+  sudo apt-get update
   sudo apt-get install -y nvidia-docker2
   sudo systemctl restart docker
 
@@ -55,6 +66,7 @@ chmod a+x docker-installation.sh
 
 ```
 sudo rm -rf /var/lib/apt/lists/*
+./docker-installation.sh
 ```
 
 - In case shell script keeps failing or you want to install manually follow steps in [Manual Installation](Instructions/Manual-Installation.md)
