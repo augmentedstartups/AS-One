@@ -1,0 +1,7 @@
+.env/
+*.mp4
+
+**__pycache__**
+
+*.onnx
+*.pt
