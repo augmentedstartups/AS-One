@@ -1,0 +1,85 @@
+import copy
+import cv2
+from loguru import logger
+import os
+import time
+import asone.utils as utils
+
+
+class ASOne:
+    def __init__(self,
+                 tracker: str = 'byte_track',
+                 detector: str = 'yolov5s',
+                 use_cuda: bool = True,
+                 use_onnx: bool = True) -> None:
+
+        self.use_cuda = use_cuda
+        self.use_onnx = use_onnx
+
+        # get detector object
+        self.detector = self.get_detector(detector)
+        self.tracker = self.get_tracker(tracker)
+
+    def get_detector(self, detector: str):
+        return utils.get_detector(detector, use_cuda=self.use_cuda, use_onnx=self.use_onnx)
+
+    def get_tracker(self, tracker: str):
+        return utils.get_tracker(tracker, self.detector)
+
+    def start_tracking(self, video_path, output_dir='results', save_result=True, display=False):
+
+        cap = cv2.VideoCapture(video_path)
+        width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+
+        if save_result:
+            os.makedirs(output_dir, exist_ok=True)
+            save_path = os.path.join(output_dir, os.path.basename(video_path))
+            logger.info(f"video save path is {save_path}")
+
+            video_writer = cv2.VideoWriter(
+                save_path,
+                cv2.VideoWriter_fourcc(*"mp4v"),
+                fps,
+                (int(width), int(height)),
+            )
+
+        frame_id = 1
+        tic = time.time()
+
+        while True:
+            start_time = time.time()
+
+            ret, frame = cap.read()
+            if not ret:
+                break
+            debug_image = copy.deepcopy(frame)
+
+            debug_image = self.tracker.inference(frame)
+            elapsed_time = time.time() - start_time
+
+            logger.info(
+                'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
+                                                 elapsed_time * 1000), )
+
+            if display:
+                cv2.imshow(' Sample', debug_image)
+
+            video_writer.write(debug_image)
+            frame_id += 1
+
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                break
+
+
+        tac = time.time()
+        print(f'Total Time Taken: {tac - tic:.2f}')
+
+
+if __name__ == '__main__':
+    # asone = ASOne(tracker='norfair')
+    asone = ASOne()
+
+    asone.start_tracking('video2.mp4', display=False)
