@@ -64,27 +64,3 @@ class YOLOv6:
         self.boxes, self.scores, self.class_ids = process_output(outputs, img_height, img_width )
         return self.boxes, self.scores, self.class_ids 
 
-
-# if __name__ == '__main__':
-#     from imread_from_url import imread_from_url
-
-#     model_path = "../models/yolov6s.onnx"
-
-#     # Initialize YOLOv6 object detector
-#     yolov6_detector = YOLOv6(model_path, conf_thres=0.3, iou_thres=0.5)
-
-#     img = imread_from_url(
-#         "https://upload.wikimedia.org/wikipedia/commons/a/af/Motorcyclists_lane_splitting_in_Bangkok%2C_Thailand.jpg")
-
-#     # Detect Objects
-#     yolov6_detector(img)
-
-#     # Draw detections
-#     combined_img = yolov6_detector.draw_detections(img)
-#     cv2.namedWindow("Output", cv2.WINDOW_NORMAL)
-#     cv2.imshow("Output", combined_img)
-    # cv2.waitKey(0)
-
-    
-
-
