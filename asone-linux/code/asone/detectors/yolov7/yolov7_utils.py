@@ -40,7 +40,7 @@ def process_output(output, ori_shape, input_shape, conf_threshold, iou_threshold
         scores = scores[scores > conf_threshold]
 
         if len(scores) == 0:
-            return [], [], []
+            return []
 
         # Get the class with the highest confidence
         # class_ids = np.argmax(predictions[:, 5:], axis=1)
