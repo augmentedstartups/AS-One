@@ -6,7 +6,7 @@ import os
 class YOLOv7Detector:
     def __init__(self,
                  weights=os.path.join(os.path.dirname(
-                     os.path.abspath(__file__)), './weights/yolov7-tiny.onnx'),
+                     os.path.abspath(__file__)), './weights/yolov7.onnx'),
                  use_cuda=True, use_onnx=False) -> None:
 
         if use_onnx:
