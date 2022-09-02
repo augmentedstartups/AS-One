@@ -15,9 +15,9 @@ class YOLOv5Detector:
         if use_onnx:
             if use_cuda:
                 providers = [
-                    'CUDAExecutionProvider',
-                    'CPUExecutionProvider'
-                ]
+                            'CUDAExecutionProvider',
+                            'CPUExecutionProvider'
+                            ]
             else:
                 providers = ['CPUExecutionProvider']
 
@@ -50,7 +50,10 @@ class YOLOv5Detector:
         if isinstance(pred, np.ndarray):
             pred = torch.tensor(pred, device=self.device)
         pred = non_max_suppression(
-            pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
+                                pred, conf_thres, 
+                                iou_thres, classes, 
+                                agnostic_nms, 
+                                max_det=max_det)
 
         for i, det in enumerate(pred):  # per image
             if len(det):

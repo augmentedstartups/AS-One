@@ -12,9 +12,9 @@ class YOLOv7Detector:
         if use_onnx:
             if use_cuda:
                 providers = [
-                    'CUDAExecutionProvider',
-                    'CPUExecutionProvider'
-                ]
+                            'CUDAExecutionProvider',
+                            'CPUExecutionProvider'
+                            ]
             else:
                 providers = ['CPUExecutionProvider']
 
