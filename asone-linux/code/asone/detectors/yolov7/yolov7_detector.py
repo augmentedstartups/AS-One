@@ -1,13 +1,17 @@
 from .yolov7_utils import prepare_input, process_output
 import onnxruntime
 import os
+from asone import utils
 
 
 class YOLOv7Detector:
     def __init__(self,
                  weights=os.path.join(os.path.dirname(
-                     os.path.abspath(__file__)), './weights/yolov7.onnx'),
+                     os.path.abspath(__file__)), './weights/yolov7-tiny.onnx'),
                  use_cuda=True, use_onnx=False) -> None:
+
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
 
         if use_onnx:
             if use_cuda:

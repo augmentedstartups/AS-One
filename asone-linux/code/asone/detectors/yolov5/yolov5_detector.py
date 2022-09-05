@@ -5,13 +5,17 @@ import numpy as np
 import torch
 import onnxruntime
 import os
+from asone import utils
 
 class YOLOv5Detector:
     def __init__(self,
                  weights=os.path.join(os.path.dirname(
-                     os.path.abspath(__file__)), './weights/yolov5s.onnx'),
+                     os.path.abspath(__file__)), 'weights/yolov5s.onnx'),
                  use_cuda=True, use_onnx=False) -> None:
 
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
+        
         if use_onnx:
             if use_cuda:
                 providers = [

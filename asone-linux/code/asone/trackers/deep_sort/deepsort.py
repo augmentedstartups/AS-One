@@ -3,11 +3,16 @@ import numpy as np
 import os
 from asone import utils
 
+
 class DeepSort:
-    def __init__(self, detector, cfg=os.path.join(os.path.dirname(
+    def __init__(self, detector, weights=os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "tracker/deep/checkpoint/ckpt.t7"), cfg=os.path.join(os.path.dirname(
             os.path.abspath(__file__)), 'tracker/configs/deep_sort.yaml'), use_cuda=True):
 
-        self.tracker = build_tracker(cfg, use_cuda=use_cuda)
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
+
+        self.tracker = build_tracker(weights, cfg, use_cuda=use_cuda)
         self.detector = detector
         self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
 
@@ -38,7 +43,8 @@ class DeepSort:
         object_id = []
 
         if dets_xyxy is not None:
-            dets_xywh = np.array([np.array(utils.xyxy_to_xywh(det)) for det in dets_xyxy[:, :4]])
+            dets_xywh = np.array([np.array(utils.xyxy_to_xywh(det))
+                                 for det in dets_xyxy[:, :4]])
 
             outputs = self.tracker.update(
                 dets_xywh, dets_xyxy[:, -2].tolist(), dets_xyxy[:, -1].tolist(), image_info['im0'])
