@@ -1,7 +1,15 @@
 import numpy as np
 import cv2
 
-class_names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+class_names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat',
+              'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat',
+              'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 
+              'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 
+              'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 
+              'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich',
+              'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch', 'potted plant',
+              'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven',
+              'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
 
 # Create a list of colors for each class where each color is a tuple of 3 integer values
 rng = np.random.default_rng(3)
@@ -30,13 +38,15 @@ def nms(boxes, scores, iou_threshold):
     return keep_boxes
 
 
-def process_output(self, output):
+def process_output(output,  img_height, img_width,    
+                   input_width, input_height,
+                   conf_thres, iou_thres):
     predictions = np.squeeze(output)
 
     # Filter out object confidence scores below threshold
     obj_conf = predictions[:, 4]
-    predictions = predictions[obj_conf > self.conf_threshold]
-    obj_conf = obj_conf[obj_conf > self.conf_threshold]
+    predictions = predictions[obj_conf > conf_thres]
+    obj_conf = obj_conf[obj_conf > conf_thres]
 
     # Multiply class confidence with bounding box confidence
     predictions[:, 5:] *= obj_conf[:, np.newaxis]
@@ -45,17 +55,18 @@ def process_output(self, output):
     scores = np.max(predictions[:, 5:], axis=1)
 
     # Filter out the objects with a low score
-    predictions = predictions[obj_conf > self.conf_threshold]
-    scores = scores[scores > self.conf_threshold]
+    predictions = predictions[obj_conf > conf_thres]
+    scores = scores[scores > conf_thres]
 
     # Get the class with the highest confidence
     class_ids = np.argmax(predictions[:, 5:], axis=1)
 
     # Get bounding boxes for each object
-    boxes = self.extract_boxes(predictions)
+    boxes = extract_boxes(predictions, img_height, img_width,    
+                               input_width, input_height)
 
     # Apply non-maxima suppression to suppress weak, overlapping bounding boxes
-    indices = nms(boxes, scores, self.iou_threshold)
+    indices = nms(boxes, scores, iou_thres)
 
     return boxes[indices], scores[indices], class_ids[indices]
 
@@ -89,11 +100,9 @@ def xywh2xyxy(x):
     y[..., 3] = x[..., 1] + x[..., 3] / 2
     return y
 
-def prepare_input(image):
-    # img_height, img_width = image.shape[:2]
-
+def prepare_input(image, input_width, input_height):
+  
     input_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
     # Resize input image
     input_img = cv2.resize(input_img, (input_width, input_height))
 
@@ -104,13 +113,14 @@ def prepare_input(image):
 
     return input_tensor
 
-def extract_boxes(predictions):
+def extract_boxes(predictions, img_height, img_width,    
+                 input_width, input_height):
     # Extract boxes from predictions
     boxes = predictions[:, :4]
 
     # Scale boxes to original image dimensions
-    boxes /= np.array([self.input_width, self.input_height, self.input_width, self.input_height])
-    boxes *= np.array([self.img_width, self.img_height, self.img_width, self.img_height])
+    boxes /= np.array([input_width, input_height, input_width, input_height])
+    boxes *= np.array([img_width, img_height, img_width, img_height])
 
     # Convert boxes to xyxy format
     boxes = xywh2xyxy(boxes)
