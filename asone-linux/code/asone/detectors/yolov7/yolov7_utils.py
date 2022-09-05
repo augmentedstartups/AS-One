@@ -22,14 +22,14 @@ def process_output(output, ori_shape, input_shape, conf_threshold, iou_threshold
         # Filter out object confidence scores below threshold
         # obj_conf = predictions[:, 4]
         obj_conf = predictions[:, 6]
-        predictions = predictions[obj_conf > conf_threshold]
-        obj_conf = obj_conf[obj_conf > conf_threshold]
+        # predictions = predictions[obj_conf > conf_threshold]
+        # obj_conf = obj_conf[obj_conf > conf_threshold]
 
         # print(obj_conf[0])
 
         # Multiply class confidence with bounding box confidence
         # predictions[:, 5] *= obj_conf[:, np.newaxis]
-        predictions[:, 5] *= obj_conf
+        # predictions[:, 6] *= obj_conf
 
         # Get the scores
         # scores = np.max(predictions[:, 5:], axis=1)
@@ -40,7 +40,7 @@ def process_output(output, ori_shape, input_shape, conf_threshold, iou_threshold
         scores = scores[scores > conf_threshold]
 
         if len(scores) == 0:
-            return [], [], []
+            return []
 
         # Get the class with the highest confidence
         # class_ids = np.argmax(predictions[:, 5:], axis=1)

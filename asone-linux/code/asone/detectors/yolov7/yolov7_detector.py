@@ -6,7 +6,7 @@ import os
 class YOLOv7Detector:
     def __init__(self,
                  weights=os.path.join(os.path.dirname(
-                     os.path.abspath(__file__)), './weights/yolov7-tiny.onnx'),
+                     os.path.abspath(__file__)), './weights/yolov7.onnx'),
                  use_cuda=True, use_onnx=False) -> None:
 
         if use_onnx:
@@ -38,11 +38,11 @@ class YOLOv7Detector:
 
         outputs = self.model.run([self.model.get_outputs()[0].name], {
                                  input_name: input_tensor})
-        dets = process_output(
+        dets_xyxy = process_output(
             outputs, image0.shape[:2], input_shape, conf_thres, iou_thres)
 
         image_info = {
             'width': image0.shape[1],
             'height': image0.shape[0],
         }
-        return dets, image_info
+        return dets_xyxy, image_info

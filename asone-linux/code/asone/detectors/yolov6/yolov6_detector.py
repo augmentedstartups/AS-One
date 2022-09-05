@@ -4,14 +4,14 @@ import cv2
 import os
 import numpy as np
 import onnxruntime
-from yolov6_utils import prepare_input, process_output 
+from .yolov6_utils import prepare_input, process_output 
 
 
 class YOLOv6Detector:
     def __init__(self, weights=
                        os.path.join
                        (os.path.dirname
-                       (os.path.abspath(__file__)), './weights/yolov5s.onnx'),
+                       (os.path.abspath(__file__)), './weights/yolov6t.onnx'),
                  use_cuda=True, use_onnx=True) -> None:
 
         if use_onnx:
@@ -23,10 +23,10 @@ class YOLOv6Detector:
             else:
                 providers = ['CPUExecutionProvider']
       
-        self.session = onnxruntime.InferenceSession(weights,
+        self.model = onnxruntime.InferenceSession(weights,
                                                     providers = providers)
         # Get Model Input
-        model_inputs = self.session.get_inputs()
+        model_inputs = self.model.get_inputs()
         self.input_names = [model_inputs[i].name for i in range(len(model_inputs))]
         
         # Input shape
@@ -35,11 +35,13 @@ class YOLOv6Detector:
         self.input_width = self.input_shape[3]
         
         # Get Model Output
-        model_outputs = self.session.get_outputs()
+        model_outputs = self.model.get_outputs()
         self.output_names = [model_outputs[i].name for i in range(len(model_outputs))]
 
     def detect(self, image: list,
                conf_thres: float = 0.3,
+                input_shape=(640, 640),
+
                iou_thres: float = 0.5,) -> list:
         
         # Prepare Input
@@ -48,7 +50,7 @@ class YOLOv6Detector:
     
         # Perform Inference on the Image
         start = time.perf_counter()
-        outputs = self.session.run(self.output_names, {self.input_names[0]: input_tensor})[0] 
+        outputs = self.model.run(self.output_names, {self.input_names[0]: input_tensor})[0] 
 
         # Process Output
         boxes, scores, class_ids = process_output(outputs, img_height, img_width,
@@ -58,9 +60,14 @@ class YOLOv6Detector:
         for box in range(len(boxes)):
             pred = np.append(boxes[box], scores[box])
             pred = np.append(pred, class_ids[box])
-            det.append(pred)  
+            det.append(pred)
+  
         det = np.array(det)
-        return det
+        image_info = {
+            'width': image.shape[1],
+            'height': image.shape[0],
+        }
+        return det, image_info
 
 
 

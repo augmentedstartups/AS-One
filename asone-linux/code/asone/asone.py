@@ -49,30 +49,41 @@ class ASOne:
         frame_id = 1
         tic = time.time()
 
+        prevTime = 0
+
         while True:
             start_time = time.time()
 
             ret, frame = cap.read()
             if not ret:
                 break
-            debug_image = copy.deepcopy(frame)
+            im0 = copy.deepcopy(frame)
 
-            debug_image = self.tracker.inference(frame)
+            bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
+                frame)
             elapsed_time = time.time() - start_time
 
             logger.info(
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000), )
 
-            if display:
-                cv2.imshow(' Sample', debug_image)
+            im0 = utils.draw_boxes(im0, bboxes_xyxy, class_ids, ids)
 
-            video_writer.write(debug_image)
+            currTime = time.time()
+            fps = 1 / (currTime - prevTime)
+            prevTime = currTime
+            cv2.line(im0, (20,25), (127,25), [85,45,255], 30)
+            cv2.putText(im0, f'FPS: {int(fps)}', (11, 35), 0, 1, [225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
+
+            if display:
+                cv2.imshow(' Sample', im0)
+            if save_result:
+                video_writer.write(im0)
+
             frame_id += 1
 
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 break
-
 
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
@@ -82,4 +93,4 @@ if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
     asone = ASOne()
 
-    asone.start_tracking('video2.mp4', display=False)
+    asone.start_tracking('video2.mp4', save_result=True, display=False)
