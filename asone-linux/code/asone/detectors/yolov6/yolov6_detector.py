@@ -7,7 +7,7 @@ import onnxruntime
 from yolov6_utils import prepare_input, process_output 
 
 
-class YOLOv6:
+class YOLOv6Detector:
     def __init__(self, weights=
                        os.path.join
                        (os.path.dirname
@@ -67,7 +67,7 @@ class YOLOv6:
 if __name__ == '__main__':
     model_path = "/home/ajmair/benchmarking/yolov6_wrapper/yolov6n.onnx"
     # Initialize YOLOv6 object detector
-    yolov6_detector = YOLOv6(model_path)
+    yolov6_detector = YOLOv6Detector(model_path)
     img = cv2.imread('/home/ajmair/benchmarking/yolov6_wrapper/persons.jpeg')
     # Detect Objects
     result =  yolov6_detector.detect(img)

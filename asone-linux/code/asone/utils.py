@@ -1,11 +1,13 @@
 from asone.detectors import YOLOv5Detector
 from asone.detectors import YOLOv7Detector
+from asone.detectors import YOLOv6Detector
 from asone.trackers import ByteTrack
 from asone.trackers import NorFair
 
 detectors={
     'yolov5s' : YOLOv5Detector,
-    'yolov7' : YOLOv7Detector
+    'yolov7' : YOLOv7Detector,
+    'yolov6' : YOLOv6Detector
 }
 
 trackers={
