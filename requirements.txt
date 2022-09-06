@@ -1,15 +1,12 @@
-Cython
-numpy
-cython-bbox
 lap
 loguru
 norfair
 onnxruntime-gpu
 opencv-python
 scipy
---extra-index-url https://download.pytorch.org/whl/cu113
 torch
 torchaudio
 torchvision
 pyyaml
 easydict
+gdown

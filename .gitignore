@@ -1,7 +1,9 @@
 .env/
 *.mp4
-
 **__pycache__**
-
 *.onnx
 *.pt
+**byte_track_results**
+**deep_sort_results**
+**nor_fair_results**
+test_env/

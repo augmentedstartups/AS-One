@@ -1,9 +1,5 @@
-import sys
-import os
-sys.path.append(os.path.dirname(__file__))
+from asone.trackers.byte_track.bytetracker import ByteTrack
+from asone.trackers.deep_sort.deepsort import DeepSort
+from asone.trackers.nor_fair.norfair import NorFair
 
-
-from byte_track.bytetracker import ByteTrack
-from deep_sort.deepsort import DeepSort
-from nor_fair.norfair import NorFair
-
+__all__ = ['ByteTrack', 'DeepSort', 'NorFair']

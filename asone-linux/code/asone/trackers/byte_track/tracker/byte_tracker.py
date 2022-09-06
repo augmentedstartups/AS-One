@@ -1,6 +1,6 @@
 import numpy as np
 from .kalman_filter import KalmanFilter
-import matching
+from asone.trackers.byte_track.tracker import matching
 from .basetrack import BaseTrack, TrackState
 
 class STrack(BaseTrack):

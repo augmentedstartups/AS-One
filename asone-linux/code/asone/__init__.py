@@ -1,7 +1,5 @@
-import sys
-import os
-sys.path.append(os.path.dirname(__file__))
+from .asone import ASOne
+import asone.detectors
+import asone.trackers
 
-
-from asone.asone import ASOne
-
+__all__ = ['ASOne', 'detectors', 'trackers']
