@@ -24,7 +24,7 @@ if platform.system() != 'Windows':
 from models.common import *
 from models.experimental import *
 from models.general import LOGGER, check_version, check_yaml, make_divisible, print_args
-from models.torch_utils import (fuse_conv_and_bn, initialize_weights, model_info, profile, scale_img, select_device,
+from utils.torch_utils import (fuse_conv_and_bn, initialize_weights, model_info, profile, scale_img, select_device,
                                time_sync)
 
 try:

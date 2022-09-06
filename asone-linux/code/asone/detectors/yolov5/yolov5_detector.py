@@ -1,4 +1,4 @@
-from models.yolov5_utils import (non_max_suppression,
+from utils.yolov5_utils import (non_max_suppression,
                                 scale_coords, letterbox,
                                 draw_detections)
 from models.experimental import attempt_load
@@ -7,33 +7,30 @@ import numpy as np
 import torch
 import onnxruntime
 import os
+import sys
 import cv2
 
 class YOLOv5Detector:
     def __init__(self,
-                 weights = os.path.join(os.path.dirname(
-                           os.path.abspath(__file__)), './weights/yolov5s.onnx')) -> None:
-      
+                 weights=None, use_onnx=True) -> None:
+        self.use_onnx = use_onnx
+        if weights == None:
+            weights = os.path.join(
+                        os.path.dirname(
+                        os.path.abspath(__file__)), './weights/yolov5n.pt'
+                        )
         self.weights = str(weights[0] if isinstance(weights, list) else weights)
-        self.weights_type = self.weights.split("/")[-1].split(".")[1]
-          # FP16
-        self.pt = True if self.weights_type == "pt" else False
-        self.onnx = True if self.pt is not True else False
-
-
-    def load_model(self, fp16=True, use_cuda=False):
+        
+    def load_model(self, fp16=False, use_cuda=True):
         self.use_cuda = use_cuda
         self.device = 'cuda' if self.use_cuda else 'cpu'
-        self.fp16 = fp16 & ((self.pt or self.onnx) and self.device != 'cpu')
-        print(self.fp16)
+        # Device: CUDA and if fp16=True only then fp16 works  
+        self.fp16 = fp16 & ((not self.use_onnx or self.use_onnx) and self.device != 'cpu')
     
         # Load onnx 
-        if self.onnx:
+        if self.use_onnx:
             if self.use_cuda:
-                providers = [
-                            'CUDAExecutionProvider',
-                            'CPUExecutionProvider'
-                            ]
+                providers = ['CUDAExecutionProvider','CPUExecutionProvider']
             else:
                 providers = ['CPUExecutionProvider']
             self.model = onnxruntime.InferenceSession(self.weights, providers=providers)
@@ -65,18 +62,19 @@ class YOLOv5Detector:
                agnostic_nms: bool = False,
                input_shape=(640, 640),
                max_det: int = 1000) -> list:
-        
+        # Load Model
         self.model = self.load_model()
-        image0, img = self.image_preprocessing(image, input_shape)
+        # Image Preprocessing
+        original_image, processed_image = self.image_preprocessing(image, input_shape)
         
         # Inference
-        if self.onnx:   
+        if self.use_onnx:   
             input_name = self.model.get_inputs()[0].name
-            pred = self.model.run([self.model.get_outputs()[0].name], {input_name: img})[0]
+            pred = self.model.run([self.model.get_outputs()[0].name], {input_name: processed_image})[0]
         else:
-            img = torch.from_numpy(img).to(self.device)
-            img = img.half() if self.fp16 else img.float() 
-            pred = self.model(img, augment=False, visualize=False)[0]
+            processed_image = torch.from_numpy(processed_image).to(self.device)
+            processed_image = processed_image.half() if self.fp16 else processed_image.float() 
+            pred = self.model(processed_image, augment=False, visualize=False)[0]
        
         # Post Processing
         if isinstance(pred, np.ndarray):
@@ -90,12 +88,12 @@ class YOLOv5Detector:
         for i, det in enumerate(pred):  # per image
             if len(det):
                 det[:, :4] = scale_coords(
-                    img.shape[2:], det[:, :4], image0.shape).round()
+                    processed_image.shape[2:], det[:, :4], original_image.shape).round()
                 pred[i] = det
         dets = pred[0].cpu().numpy()
         image_info = {
-            'width': image0.shape[1],
-            'height': image0.shape[0],
+            'width': original_image.shape[1],
+            'height': original_image.shape[0],
         }
 
         self.boxes = dets[:, :4]
@@ -108,9 +106,10 @@ class YOLOv5Detector:
                                self.class_ids, mask_alpha)
 
 if __name__ == '__main__':
-    model_path = "/home/ajmair/benchmarking/asone/asone-linux/code/asone/detectors/yolov5/weights/yolov5n.onnx"
+    
+    model_path = sys.argv[1]
     # Initialize YOLOv6 object detector
-    yolov5_detector = YOLOv5Detector(model_path)
+    yolov5_detector = YOLOv5Detector(model_path, use_onnx=False)
     img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
     # Detect Objects
     result =  yolov5_detector.detect(img)
