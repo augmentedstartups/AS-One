@@ -12,13 +12,11 @@ import cv2
 
 class YOLOv5Detector:
     def __init__(self,
-                 weights=None, use_onnx=True) -> None:
+                 weights=None, use_onnx=True):
         self.use_onnx = use_onnx
         if weights == None:
-            weights = os.path.join(
-                        os.path.dirname(
-                        os.path.abspath(__file__)), './weights/yolov5n.pt'
-                        )
+            weights = os.path.join("weights", "yolov5n.pt")
+        #If incase weighst is a list of paths then select path at first index
         self.weights = str(weights[0] if isinstance(weights, list) else weights)
         # Load Model
         self.model = self.load_model()
@@ -28,7 +26,6 @@ class YOLOv5Detector:
         self.device = 'cuda' if self.use_cuda else 'cpu'
         # Device: CUDA and if fp16=True only then half precision floating point works  
         self.fp16 = fp16 & ((not self.use_onnx or self.use_onnx) and self.device != 'cpu')
-    
         # Load onnx 
         if self.use_onnx:
             if self.use_cuda:
@@ -109,9 +106,9 @@ class YOLOv5Detector:
 
 if __name__ == '__main__':
     
-    model_path = sys.argv[1]
+    # model_path = sys.argv[1]
     # Initialize YOLOv6 object detector
-    yolov5_detector = YOLOv5Detector(model_path, use_onnx=False)
+    yolov5_detector = YOLOv5Detector(use_onnx=False)
     img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
     # Detect Objects
     result =  yolov5_detector.detect(img)
