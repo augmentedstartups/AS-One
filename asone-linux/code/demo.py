@@ -5,7 +5,7 @@ import argparse
 
 def main(args):
     asone = ASOne(tracker=args.tracker, detector=args.detector, use_cuda=args.use_cuda)
-    asone.start_tracking(args.video_path, display=True)
+    asone.start_tracking(args.video_path, display=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

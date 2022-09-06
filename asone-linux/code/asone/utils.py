@@ -1,6 +1,8 @@
 from asone.detectors import YOLOv5Detector
 from asone.detectors import YOLOv7Detector
 from asone.detectors import YOLOv6Detector
+from asone.detectors import YOLOrDetector
+from asone.detectors import YOLOxDetector
 from asone.trackers import ByteTrack
 from asone.trackers import NorFair
 from asone.trackers import DeepSort
@@ -13,7 +15,9 @@ import math
 detectors={
     'yolov5s' : YOLOv5Detector,
     'yolov7' : YOLOv7Detector,
-    'yolov6' : YOLOv6Detector
+    'yolov6' : YOLOv6Detector,
+    'yolor' : YOLOrDetector,
+    'yolox' : YOLOxDetector,
 }
 
 trackers = {
