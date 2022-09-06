@@ -20,11 +20,13 @@ class YOLOv5Detector:
                         os.path.abspath(__file__)), './weights/yolov5n.pt'
                         )
         self.weights = str(weights[0] if isinstance(weights, list) else weights)
+        # Load Model
+        self.model = self.load_model()
         
     def load_model(self, fp16=False, use_cuda=True):
         self.use_cuda = use_cuda
         self.device = 'cuda' if self.use_cuda else 'cpu'
-        # Device: CUDA and if fp16=True only then fp16 works  
+        # Device: CUDA and if fp16=True only then half precision floating point works  
         self.fp16 = fp16 & ((not self.use_onnx or self.use_onnx) and self.device != 'cpu')
     
         # Load onnx 
@@ -33,12 +35,11 @@ class YOLOv5Detector:
                 providers = ['CUDAExecutionProvider','CPUExecutionProvider']
             else:
                 providers = ['CPUExecutionProvider']
-            self.model = onnxruntime.InferenceSession(self.weights, providers=providers)
+                model = onnxruntime.InferenceSession(self.weights, providers=providers)
         else: #Load Pytorch
             model = attempt_load(self.weights, device=self.device, inplace=True, fuse=True)
             model.half() if self.fp16 else model.float()
-            self.model = model
-        return self.model
+        return model
 
     def image_preprocessing(self,
                             image: list,
@@ -50,8 +51,8 @@ class YOLOv5Detector:
         image = np.ascontiguousarray(image, dtype=np.float32)
         image /= 255  # 0 - 255 to 0.0 - 1.0
         if len(image.shape) == 3:
-            image = image[None]  # expand for batch dim
-        self.image = image  
+            image = image[None]  # expand for batch dim  
+        self.image = image
         return self.original_image, self.image
 
     def detect(self, 
@@ -62,44 +63,45 @@ class YOLOv5Detector:
                agnostic_nms: bool = False,
                input_shape=(640, 640),
                max_det: int = 1000) -> list:
-        # Load Model
-        self.model = self.load_model()
+     
         # Image Preprocessing
         original_image, processed_image = self.image_preprocessing(image, input_shape)
         
         # Inference
-        if self.use_onnx:   
+        if self.use_onnx:
+            # Input names of ONNX model on which it is exported   
             input_name = self.model.get_inputs()[0].name
+            # Run onnx model 
             pred = self.model.run([self.model.get_outputs()[0].name], {input_name: processed_image})[0]
         else:
             processed_image = torch.from_numpy(processed_image).to(self.device)
+            # Change image floating point precision if fp16 set to true
             processed_image = processed_image.half() if self.fp16 else processed_image.float() 
             pred = self.model(processed_image, augment=False, visualize=False)[0]
        
         # Post Processing
         if isinstance(pred, np.ndarray):
             pred = torch.tensor(pred, device=self.device)
-        pred = non_max_suppression(
-                                pred, conf_thres, 
-                                iou_thres, classes, 
-                                agnostic_nms, 
-                                max_det=max_det)
+        predictions = non_max_suppression(pred, conf_thres, 
+                                          iou_thres, classes, 
+                                          agnostic_nms, 
+                                          max_det=max_det)
      
-        for i, det in enumerate(pred):  # per image
-            if len(det):
-                det[:, :4] = scale_coords(
-                    processed_image.shape[2:], det[:, :4], original_image.shape).round()
-                pred[i] = det
-        dets = pred[0].cpu().numpy()
+        for i, prediction in enumerate(predictions):  # per image
+            if len(prediction):
+                prediction[:, :4] = scale_coords(
+                    processed_image.shape[2:], prediction[:, :4], original_image.shape).round()
+                predictions[i] = prediction
+        detections = predictions[0].cpu().numpy()
         image_info = {
             'width': original_image.shape[1],
             'height': original_image.shape[0],
         }
 
-        self.boxes = dets[:, :4]
-        self.scores = dets[:, 4:5]
-        self.class_ids = dets[:, 5:6]
-        return dets, image_info
+        self.boxes = detections[:, :4]
+        self.scores = detections[:, 4:5]
+        self.class_ids = detections[:, 5:6]
+        return detections, image_info
 
     def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
         return draw_detections(image, self.boxes, self.scores,
