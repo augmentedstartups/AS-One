@@ -1,82 +1,144 @@
-from json import detect_encoding
 import time
 import cv2
 import os
+import sys
 import numpy as np
+import torch
 import onnxruntime
-from .yolov6_utils import prepare_input, process_output 
+from yolov6.utils.yolov6_utils import (prepare_input, process_output,
+                         load_pytorch, non_max_suppression,
+                         draw_detections) 
 
 
 class YOLOv6Detector:
-    def __init__(self, weights=
-                       os.path.join
-                       (os.path.dirname
-                       (os.path.abspath(__file__)), './weights/yolov6t.onnx'),
-                 use_cuda=True, use_onnx=True) -> None:
+    def __init__(self,
+                 weights=None,
+                 use_onnx=False,
+                 use_cuda=True):
 
+        self.use_onnx = use_onnx
+        self.device = 'cuda' if use_cuda else 'cpu'
+        if weights == None:
+            weights = os.path.join("weights", "yolov5n.pt")
+        #If incase weighst is a list of paths then select path at first index
+        weights = str(weights[0] if isinstance(weights, list) else weights)
+        
+        # Load Model
+        self.model = self.load_model(use_cuda, weights)
+        
         if use_onnx:
+            # Get Some ONNX model details 
+            self.input_shape, self.input_height, self.input_width = self.ONNXModel_detail(self.model)
+            self.input_names, self.output_names = self.ONNXModel_names(self.model)
+
+
+    def load_model(self, use_cuda, weights, fp16=False):
+        # Device: CUDA and if fp16=True only then half precision floating point works  
+        self.fp16 = fp16 & ((not self.use_onnx or self.use_onnx) and self.device != 'cpu')
+        # Load onnx 
+        if self.use_onnx:
             if use_cuda:
-                providers = [
-                            'CUDAExecutionProvider',
-                            'CPUExecutionProvider'
-                            ]
+                providers = ['CUDAExecutionProvider','CPUExecutionProvider']
             else:
                 providers = ['CPUExecutionProvider']
-      
-        self.model = onnxruntime.InferenceSession(weights,
-                                                    providers = providers)
-        # Get Model Input
-        model_inputs = self.model.get_inputs()
-        self.input_names = [model_inputs[i].name for i in range(len(model_inputs))]
-        
-        # Input shape
-        self.input_shape = model_inputs[0].shape
-        self.input_height = self.input_shape[2]
-        self.input_width = self.input_shape[3]
-        
-        # Get Model Output
-        model_outputs = self.model.get_outputs()
-        self.output_names = [model_outputs[i].name for i in range(len(model_outputs))]
+            model = onnxruntime.InferenceSession(weights, providers=providers)
+        #Load Pytorch
+        else:
+            model = load_pytorch(weights, map_location=self.device)
+            model.half() if self.fp16 else model.float()
+        return model
 
+    def ONNXModel_detail(self, model):
+         # Get Model Input
+        model_inputs = model.get_inputs()
+        # Input shape
+        input_shape = model_inputs[0].shape
+        input_height = input_shape[2]
+        input_width = input_shape[3]
+        
+        return input_shape, input_height, input_width
+
+    def ONNXModel_names(self, model):
+        # Get Model Input
+        model_inputs = model.get_inputs()
+        input_names = [model_inputs[i].name for i in range(len(model_inputs))]
+        # Get Model Output
+        model_outputs = model.get_outputs()
+        output_names = [model_outputs[i].name for i in range(len(model_outputs))]
+        
+        return input_names, output_names  
+    
     def detect(self, image: list,
                conf_thres: float = 0.3,
-                input_shape=(640, 640),
-
+               classes: int = None,
+               input_shape=(640, 640),
+               agnostic_nms: bool = False,
+               max_det: int = 1000,
                iou_thres: float = 0.5,) -> list:
         
         # Prepare Input
         img_height, img_width = image.shape[:2]
-        input_tensor = prepare_input(image, self.input_width, self.input_height)
-    
+        processed_image = prepare_input(image, input_shape[0], input_shape[1])
+        
         # Perform Inference on the Image
-        start = time.perf_counter()
-        outputs = self.model.run(self.output_names, {self.input_names[0]: input_tensor})[0] 
+        if self.use_onnx:
+        # Run ONNX model 
+            prediction = self.model.run(self.output_names,
+                                    {self.input_names[0]: processed_image})[0] 
+        # Run Pytorch model
+        else:
+            processed_image = torch.from_numpy(processed_image).to(self.device)
+            # Change image floating point precision if fp16 set to true
+            processed_image = processed_image.half() if self.fp16 else processed_image.float() 
+            prediction = self.model(processed_image)
 
-        # Process Output
-        boxes, scores, class_ids = process_output(outputs, img_height, img_width,
-                                                 self.input_width, self.input_height,
+        # Post Procesing, non-max-suppression and rescaling
+        if self.use_onnx:
+            # Process ONNX Output
+            boxes, scores, class_ids = process_output(prediction, img_height, img_width,
+                                                 input_shape[1], input_shape[0],
                                                  conf_thres, iou_thres)
-        det = []
-        for box in range(len(boxes)):
-            pred = np.append(boxes[box], scores[box])
-            pred = np.append(pred, class_ids[box])
-            det.append(pred)
-  
-        det = np.array(det)
+            detection = []
+            for box in range(len(boxes)):
+                pred = np.append(boxes[box], scores[box])
+                pred = np.append(pred, class_ids[box])
+                detection.append(pred)
+            detection = np.array(detection)
+        else:
+            detection = non_max_suppression(prediction,
+                                     conf_thres,
+                                     iou_thres,
+                                    classes, agnostic_nms, max_det=max_det)[0]
+            
+            detection = detection.detach().cpu().numpy()
+            detection[:, :4] /= np.array([input_shape[1], input_shape[0], input_shape[1], input_shape[0]])
+            detection[:, :4] *= np.array([img_width, img_height, img_width, img_height])
+            
+        
+        self.boxes = detection[:, :4]
+        self.scores = detection[:, 4:5]
+        self.class_ids = detection[:, 5:6]
+            
         image_info = {
             'width': image.shape[1],
             'height': image.shape[0],
         }
-        return det, image_info
+
+        return detection, image_info
+
+    def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
+        return draw_detections(image, self.boxes, self.scores,
+                               self.class_ids, mask_alpha)
 
 
 
 if __name__ == '__main__':
-    model_path = "/home/ajmair/benchmarking/yolov6_wrapper/yolov6n.onnx"
+    model_path = sys.argv[1]
     # Initialize YOLOv6 object detector
-    yolov6_detector = YOLOv6Detector(model_path)
-    img = cv2.imread('/home/ajmair/benchmarking/yolov6_wrapper/persons.jpeg')
+    yolov6_detector = YOLOv6Detector(model_path, use_onnx=False, use_cuda=True)
+    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
     # Detect Objects
     result =  yolov6_detector.detect(img)
     print(result)
- 
+    bbox_drawn = yolov6_detector.draw_detections(img)
+    cv2.imwrite("hang.jpg", bbox_drawn)
