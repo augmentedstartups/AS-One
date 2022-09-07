@@ -13,7 +13,7 @@ import cv2
 class YOLOv5Detector:
     def __init__(self,
                  weights=None,
-                 use_onnx=True,
+                 use_onnx=False,
                  use_cuda=True):
 
         self.use_onnx = use_onnx
@@ -45,15 +45,14 @@ class YOLOv5Detector:
                             image: list,
                             input_shape=(640, 640))-> list:
 
-        self.original_image = image.copy()
+        original_image = image.copy()
         image = letterbox(image, input_shape, stride=32, auto=False)[0]
         image = image.transpose((2, 0, 1))[::-1]
         image = np.ascontiguousarray(image, dtype=np.float32)
         image /= 255  # 0 - 255 to 0.0 - 1.0
         if len(image.shape) == 3:
             image = image[None]  # expand for batch dim  
-        self.image = image
-        return self.original_image, self.image
+        return original_image, image
 
     def detect(self, 
                image: list,
@@ -112,7 +111,7 @@ if __name__ == '__main__':
     
     model_path = sys.argv[1]
     # Initialize YOLOv6 object detector
-    yolov5_detector = YOLOv5Detector(model_path, use_onnx=False)
+    yolov5_detector = YOLOv5Detector(model_path, use_onnx=False, use_cuda=True)
     img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
     # Detect Objects
     result =  yolov5_detector.detect(img)
