@@ -7,7 +7,7 @@ import cv2
 import os
 import sys
 
-from yolor_utils import non_max_suppression, scale_coords, letterbox, draw_detections
+from utils.yolor_utils import non_max_suppression, scale_coords, letterbox, draw_detections
 class YOLOrDetector:
     def __init__(self,
                  weights=None,
