@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from PIL import Image
 from torch.cuda import amp
 
-from utils.torch_utils import time_synchronized
+from yolov7.utils.torch_utils import time_synchronized
 
 
 ##### basic ####

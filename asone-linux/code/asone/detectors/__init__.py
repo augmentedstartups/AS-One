@@ -1,9 +1,13 @@
-import sys
-import os
-sys.path.append(os.path.dirname(__file__))
+from asone.detectors.yolov5 import YOLOv5Detector
+from asone.detectors.yolov6 import YOLOv6Detector
+from asone.detectors.yolov7 import YOLOv7Detector
+from asone.detectors.yolor import YOLOrDetector
+from asone.detectors.yolox import YOLOxDetector
 
-from .yolov5.yolov5_detector import YOLOv5Detector
-from .yolov7.yolov7_detector import YOLOv7Detector
-from .yolov6.yolov6_detector import YOLOv6Detector
-from .yolor.yolor_detector import YOLOrDetector
-from .yolox.yolox_detector import YOLOxDetector
+from asone.detectors.detector import Detector
+__all__ = ['Detector'
+           'YOLOv5Detector',
+           'YOLOv6Detector',
+           'YOLOv7Detector',
+           'YOLOrDetector',
+           'YOLOxDetector']

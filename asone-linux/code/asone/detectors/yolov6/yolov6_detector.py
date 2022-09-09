@@ -5,7 +5,7 @@ import sys
 import numpy as np
 import torch
 import onnxruntime
-from yolov6.utils.yolov6_utils import (prepare_input, process_output,
+from .yolov6_utils import (prepare_input, process_output,
                          load_pytorch, non_max_suppression,
                          draw_detections) 
 

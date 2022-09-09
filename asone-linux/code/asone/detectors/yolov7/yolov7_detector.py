@@ -1,6 +1,6 @@
-from utils.yolov7_utils import (prepare_input, process_output,
+from .utils.yolov7_utils import (prepare_input, process_output,
                                draw_detections, non_max_suppression)
-from models.experimental import attempt_load
+from .models.experimental import attempt_load
 
 import onnxruntime
 import torch

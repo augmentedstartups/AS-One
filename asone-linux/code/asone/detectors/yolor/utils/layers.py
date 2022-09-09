@@ -1,10 +1,8 @@
-import torch.nn.functional as F
-
-from utils.general import *
+from yolor.utils.general import *
 
 import torch
 from torch import nn
-
+import torch.nn.functional as F
 try:
     from mish_cuda import MishCuda as Mish
     

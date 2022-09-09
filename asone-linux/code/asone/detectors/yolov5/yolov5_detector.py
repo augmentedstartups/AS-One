@@ -1,7 +1,7 @@
-from utils.yolov5_utils import (non_max_suppression,
+from yolov5.utils.yolov5_utils import (non_max_suppression,
                                 scale_coords, letterbox,
                                 draw_detections)
-from models.experimental import attempt_load
+from yolov5.models.experimental import attempt_load
 
 import numpy as np
 import torch

@@ -10,7 +10,7 @@ import torch.nn as nn
 from torch.nn.parameter import Parameter
 import torch.nn.init as init
 import torch.nn.functional as F
-from yolov6.layers.dbb_transforms import *
+from .dbb_transforms import *
 
 
 class SiLU(nn.Module):
