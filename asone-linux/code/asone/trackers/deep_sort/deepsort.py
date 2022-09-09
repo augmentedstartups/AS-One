@@ -5,12 +5,24 @@ from asone import utils
 
 
 class DeepSort:
-    def __init__(self, detector, weights=os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "tracker/deep/checkpoint/ckpt.t7"), cfg=os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), 'tracker/configs/deep_sort.yaml'), use_cuda=True):
+    def __init__(self, detector, weights=None, use_cuda=True):
+
+        if weights is None:
+            weights = os.path.join(os.path.dirname(
+                os.path.abspath(__file__)), "tracker/deep/checkpoint/ckpt.t7")
 
         if not os.path.exists(weights):
             utils.download_weights(weights)
+
+        cfg = {
+            'MAX_DIST': 0.2,
+            'MIN_CONFIDENCE': 0.3,
+            'NMS_MAX_OVERLAP': 0.5,
+            'MAX_IOU_DISTANCE': 0.7,
+            'MAX_AGE': 70,
+            'N_INIT': 3,
+            'NN_BUDGET': 100
+        }
 
         self.tracker = build_tracker(weights, cfg, use_cuda=use_cuda)
         self.detector = detector
