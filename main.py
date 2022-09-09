@@ -1,10 +1,10 @@
 import argparse
+import asone
 from asone import ASOne
 import argparse
-import asone
 
 def main(args):
-    dt_obj = ASOne(tracker=asone.BYTETRACK, detector=args.detector, use_cuda=args.use_cuda, use_onnx=True)
+    dt_obj = ASOne(tracker=asone.DEEPSORT, detector=args.detector, use_cuda=args.use_cuda, use_onnx=True)
     dt_obj.start_tracking(args.video_path)
 
 if __name__ == '__main__':

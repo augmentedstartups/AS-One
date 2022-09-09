@@ -39,6 +39,7 @@ def setup_package():
                     f'{DISTNAME}.trackers.deep_sort.tracker.deep',
                     f'{DISTNAME}.trackers.deep_sort.tracker.sort',
                     f'{DISTNAME}.trackers.nor_fair',
+                    f'{DISTNAME}.utils',
                     ],
         dependency_links = [
         "https://download.pytorch.org/whl/cu113/",
