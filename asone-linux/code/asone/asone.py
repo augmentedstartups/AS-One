@@ -4,11 +4,11 @@ from loguru import logger
 import os
 import time
 import asone.utils as utils
-
+from asone.trackers import Tracker
 
 class ASOne:
     def __init__(self,
-                 tracker: str = 'byte_track',
+                 tracker: int = 0,
                  detector: str = 'yolov5s',
                  use_cuda: bool = True,
                  use_onnx: bool = True) -> None:
@@ -18,13 +18,16 @@ class ASOne:
 
         # get detector object
         self.detector = self.get_detector(detector)
+
         self.tracker = self.get_tracker(tracker)
 
     def get_detector(self, detector: str):
         return utils.get_detector(detector, use_cuda=self.use_cuda, use_onnx=self.use_onnx)
 
-    def get_tracker(self, tracker: str):
-        return utils.get_tracker(tracker, self.detector)
+    def get_tracker(self, tracker: int):
+
+        tracker = Tracker(tracker, self.detector,  use_cuda=self.use_cuda, use_onnx=self.use_onnx)
+        return tracker
 
     def start_tracking(self, video_path, output_dir='results', save_result=True, display=False):
 
