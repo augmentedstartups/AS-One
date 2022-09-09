@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, './yolov7')
+
 from .utils.yolov7_utils import (prepare_input, process_output,
                                draw_detections, non_max_suppression)
 from .models.experimental import attempt_load
