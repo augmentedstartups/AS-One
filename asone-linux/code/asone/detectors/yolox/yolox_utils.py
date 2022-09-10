@@ -1,93 +1,6 @@
 import cv2
 import numpy as np
 
-
-
-COCO_CLASSES = (
-    "person",
-    "bicycle",
-    "car",
-    "motorcycle",
-    "airplane",
-    "bus",
-    "train",
-    "truck",
-    "boat",
-    "traffic light",
-    "fire hydrant",
-    "stop sign",
-    "parking meter",
-    "bench",
-    "bird",
-    "cat",
-    "dog",
-    "horse",
-    "sheep",
-    "cow",
-    "elephant",
-    "bear",
-    "zebra",
-    "giraffe",
-    "backpack",
-    "umbrella",
-    "handbag",
-    "tie",
-    "suitcase",
-    "frisbee",
-    "skis",
-    "snowboard",
-    "sports ball",
-    "kite",
-    "baseball bat",
-    "baseball glove",
-    "skateboard",
-    "surfboard",
-    "tennis racket",
-    "bottle",
-    "wine glass",
-    "cup",
-    "fork",
-    "knife",
-    "spoon",
-    "bowl",
-    "banana",
-    "apple",
-    "sandwich",
-    "orange",
-    "broccoli",
-    "carrot",
-    "hot dog",
-    "pizza",
-    "donut",
-    "cake",
-    "chair",
-    "couch",
-    "potted plant",
-    "bed",
-    "dining table",
-    "toilet",
-    "tv",
-    "laptop",
-    "mouse",
-    "remote",
-    "keyboard",
-    "cell phone",
-    "microwave",
-    "oven",
-    "toaster",
-    "sink",
-    "refrigerator",
-    "book",
-    "clock",
-    "vase",
-    "scissors",
-    "teddy bear",
-    "hair drier",
-    "toothbrush",
-)
-
-
-
 def preprocess(img, input_size, swap=(2, 0, 1)):
     if len(img.shape) == 3:
         padded_img = np.ones((input_size[0], input_size[1], 3), dtype=np.uint8) * 114
@@ -105,24 +18,6 @@ def preprocess(img, input_size, swap=(2, 0, 1)):
     padded_img = padded_img.transpose(swap)
     padded_img = np.ascontiguousarray(padded_img, dtype=np.float32)
     return padded_img, r
-
-# def preproc(img, input_size, swap=(2, 0, 1)):
-#     if len(img.shape) == 3:
-#         padded_img = np.ones((input_size[0], input_size[1], 3), dtype=np.uint8) * 114
-#     else:
-#         padded_img = np.ones(input_size, dtype=np.uint8) * 114
-
-#     r = min(input_size[0] / img.shape[0], input_size[1] / img.shape[1])
-#     resized_img = cv2.resize(
-#         img,
-#         (int(img.shape[1] * r), int(img.shape[0] * r)),
-#         interpolation=cv2.INTER_LINEAR,
-#     ).astype(np.uint8)
-#     padded_img[: int(img.shape[0] * r), : int(img.shape[1] * r)] = resized_img
-
-#     padded_img = padded_img.transpose(swap)
-#     padded_img = np.ascontiguousarray(padded_img, dtype=np.float32)
-#     return padded_img, r
 
 def nms(boxes, scores, nms_thr):
     """Single class NMS implemented in Numpy."""
@@ -232,39 +127,3 @@ def demo_postprocess(outputs, img_size, p6=False):
 
     return outputs
 
-# Bbox Colors 
-rng = np.random.default_rng(3)
-colors = rng.uniform(0, 255, size=(len(COCO_CLASSES), 3))
-
-def vis(img, boxes, scores, cls_ids, conf=0.5, class_names=None):
-
-    for i in range(len(boxes)):
-        box = boxes[i]
-        cls_id = int(cls_ids[i])
-        score = scores[i]
-        if score < conf:
-            continue
-        x0 = int(box[0])
-        y0 = int(box[1])
-        x1 = int(box[2])
-        y1 = int(box[3])
-
-        color = (colors[cls_id] * 255).astype(np.uint8).tolist()
-        text = '{}:{:.1f}%'.format(class_names[cls_id], score * 100)
-        txt_color = (0, 0, 0) if np.mean(colors[cls_id]) > 0.5 else (255, 255, 255)
-        font = cv2.FONT_HERSHEY_SIMPLEX
-
-        txt_size = cv2.getTextSize(text, font, 0.4, 1)[0]
-        cv2.rectangle(img, (x0, y0), (x1, y1), color, 2)
-
-        txt_bk_color = (colors[cls_id] * 255 * 0.7).astype(np.uint8).tolist()
-        cv2.rectangle(
-            img,
-            (x0, y0 + 1),
-            (x0 + txt_size[0] + 1, y0 + int(1.5*txt_size[1])),
-            txt_bk_color,
-            -1
-        )
-        cv2.putText(img, text, (x0, y0 + txt_size[1]), font, 0.4, txt_color, thickness=1)
-
-    return img

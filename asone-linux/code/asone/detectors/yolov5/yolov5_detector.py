@@ -1,14 +1,16 @@
-from yolov5.utils.yolov5_utils import (non_max_suppression,
-                                scale_coords, letterbox,
-                                draw_detections)
-from yolov5.models.experimental import attempt_load
-
+import os
 import numpy as np
 import torch
 import onnxruntime
-import os
-import sys
-import cv2
+
+from yolov5.utils.yolov5_utils import (non_max_suppression,
+                                       scale_coords, letterbox)
+from yolov5.models.experimental import attempt_load
+from asone import utils
+
+
+
+
 
 class YOLOv5Detector:
     def __init__(self,
@@ -18,10 +20,12 @@ class YOLOv5Detector:
 
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
-        if weights == None:
-            weights = os.path.join("weights", "yolov5n.pt")
-        #If incase weighst is a list of paths then select path at first index
-        weights = str(weights[0] if isinstance(weights, list) else weights)
+
+        # if weights == None:
+        #     weights = os.path.join("weights", "yolov5n.pt")
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
+        
         # Load Model
         self.model = self.load_model(use_cuda, weights)
         
@@ -103,19 +107,4 @@ class YOLOv5Detector:
         self.class_ids = detections[:, 5:6]
         return detections, image_info
 
-    def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
-        return draw_detections(image, self.boxes, self.scores,
-                               self.class_ids, mask_alpha)
-
-if __name__ == '__main__':
-    
-    model_path = sys.argv[1]
-    # Initialize YOLOv6 object detector
-    yolov5_detector = YOLOv5Detector(model_path, use_onnx=False, use_cuda=True)
-    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
-    # Detect Objects
-    result =  yolov5_detector.detect(img)
-    print(result)
-    bbox_drawn = yolov5_detector.draw_detections(img)
-    cv2.imwrite("myoutput.jpg", bbox_drawn)
  

@@ -1,13 +1,10 @@
-import time
-import cv2
 import os
-import sys
+import time
 import numpy as np
 import torch
 import onnxruntime
 from .yolov6_utils import (prepare_input, process_output,
-                         load_pytorch, non_max_suppression,
-                         draw_detections) 
+                           load_pytorch, non_max_suppression) 
 
 
 class YOLOv6Detector:
@@ -114,10 +111,6 @@ class YOLOv6Detector:
             detection[:, :4] /= np.array([input_shape[1], input_shape[0], input_shape[1], input_shape[0]])
             detection[:, :4] *= np.array([img_width, img_height, img_width, img_height])
             
-        
-        self.boxes = detection[:, :4]
-        self.scores = detection[:, 4:5]
-        self.class_ids = detection[:, 5:6]
             
         image_info = {
             'width': image.shape[1],
@@ -125,20 +118,3 @@ class YOLOv6Detector:
         }
 
         return detection, image_info
-
-    def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
-        return draw_detections(image, self.boxes, self.scores,
-                               self.class_ids, mask_alpha)
-
-
-
-if __name__ == '__main__':
-    model_path = sys.argv[1]
-    # Initialize YOLOv6 object detector
-    yolov6_detector = YOLOv6Detector(model_path, use_onnx=False, use_cuda=True)
-    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
-    # Detect Objects
-    result =  yolov6_detector.detect(img)
-    print(result)
-    bbox_drawn = yolov6_detector.draw_detections(img)
-    cv2.imwrite("hang.jpg", bbox_drawn)

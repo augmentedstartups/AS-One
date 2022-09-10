@@ -1,16 +1,17 @@
 import sys
-sys.path.insert(0, './yolov7')
-
-from .utils.yolov7_utils import (prepare_input, process_output,
-                               draw_detections, non_max_suppression)
-from .models.experimental import attempt_load
-
+import os
+import sys
 import onnxruntime
 import torch
-import os
-import cv2
-import sys
 import numpy as np
+
+from .utils.yolov7_utils import (prepare_input,
+                                 process_output,
+                                 non_max_suppression)
+from .models.experimental import attempt_load
+
+sys.path.insert(0, './yolov7')
+
 
 
 class YOLOv7Detector:
@@ -99,18 +100,3 @@ class YOLOv7Detector:
         self.class_ids = detection[:, 5:6]
         
         return detection, image_info
-
-    def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
-        return draw_detections(image, self.boxes, self.scores,
-                               self.class_ids, mask_alpha)
-
-if __name__ == '__main__':
-    model_path = sys.argv[1]
-    # Initialize YOLOv7 object detector
-    yolov7_detector = YOLOv7Detector(model_path, use_onnx=True, use_cuda=False)
-    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
-    # Detect Objects
-    result =  yolov7_detector.detect(img)
-    print(result)
-    bbox_drawn = yolov7_detector.draw_detections(img) 
-    cv2.imwrite("result.jpg", bbox_drawn)

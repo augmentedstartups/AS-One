@@ -1,18 +1,12 @@
 
-import argparse
+import os
 import numpy as np
 import torch
 import onnxruntime
-import cv2
-import os
-import sys
-import argparse
-
-
 
 from yolox.yolox.utils import fuse_model, postprocess
 from yolox.yolox.exp import get_exp
-from yolox.yolox_utils import preprocess, COCO_CLASSES, multiclass_nms, demo_postprocess, vis
+from yolox.yolox_utils import preprocess, multiclass_nms, demo_postprocess
 
 class YOLOxDetector:
     def __init__(self,
@@ -27,6 +21,7 @@ class YOLOxDetector:
         self.device = 'cuda' if use_cuda else 'cpu'
         if weights is None:
             weights = os.path.join("weights", "yolov5n.pt")
+        self.weights_name = os.path.basename(weights)
 
         if model_name is None:
             model_name = 'yolox-s'
@@ -75,10 +70,11 @@ class YOLOxDetector:
                iou_thres: float = 0.45,
                with_p6 = False,
                agnostic_nms: bool = True,
-               input_shape=(640, 640),
-               max_det: int = 1000) -> list:
+               input_shape=(640, 640)) -> list:
         
         original_image = image.copy()
+        if self.weights_name in ['yolox_tiny.onnx','yolox_nano.onnx']:
+            input_shape = (416,416)
         self.input_shape = input_shape
         # Image Preprocess for onnx models
         if self.use_onnx:
@@ -131,42 +127,10 @@ class YOLOxDetector:
                 pred = np.append(pred, cls[box])
                 detection.append(pred)
             detection = np.array(detection)
-        
-        #Draw Bboxes
-        if detection is not None:
-            final_boxes, final_scores, final_cls_inds = detection[:, :4], detection[:, 4], detection[:, 5]
-            origin_img = vis(original_image, final_boxes, final_scores, final_cls_inds,
-                            conf=conf_thres, class_names=COCO_CLASSES)
-        
+    
         image_info = {
             'width': image.shape[1],
             'height': image.shape[0],
         }
         return detection, image_info
     
-if __name__ == '__main__':
-   
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("--name", default=None, type=str, help="Model name")
-    parser.add_argument("--expfile", type=str, default=None)
-    parser.add_argument("--weights", type=str, default=None, help="Weights path")
-    parser.add_argument("--onnx",  action='store_true', default=False, dest='onnx',help="Use onnx model or not")
-    
-    args = parser.parse_args()
-    if args.onnx:
-        yolox_detector = YOLOxDetector(weights=args.weights, use_onnx=args.onnx, use_cuda=False)
-    else:
-        yolox_detector = YOLOxDetector(model_name=args.name,
-                                       exp_file=args.expfile,
-                                       weights=args.weights,
-                                       use_onnx=args.onnx,
-                                       use_cuda=False)
-
-    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
-    # Detect Objects
-    result =  yolox_detector.detect(img)
-    # print(result)
-    # cv2.imwrite("myoutput.jpg", result)
- 
-
