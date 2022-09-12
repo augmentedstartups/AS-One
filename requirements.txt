@@ -10,3 +10,5 @@ torchvision
 pyyaml
 easydict
 gdown
+pandas
+tabulate

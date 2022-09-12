@@ -4,9 +4,9 @@ import numpy as np
 import torch
 import onnxruntime
 
-from yolox.yolox.utils import fuse_model, postprocess
-from yolox.yolox.exp import get_exp
-from yolox.yolox_utils import preprocess, multiclass_nms, demo_postprocess
+from asone.detectors.yolox.yolox.utils import fuse_model, postprocess
+from asone.detectors.yolox.yolox.exp import get_exp
+from asone.detectors.yolox.yolox_utils import preprocess, multiclass_nms, demo_postprocess
 
 class YOLOxDetector:
     def __init__(self,

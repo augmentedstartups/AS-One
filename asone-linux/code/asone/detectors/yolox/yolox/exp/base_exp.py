@@ -7,7 +7,7 @@ import pprint
 from abc import ABCMeta, abstractmethod
 from typing import Dict
 from tabulate import tabulate
-from yolox.yolox.utils import LRScheduler
+from asone.detectors.yolox.yolox.utils import LRScheduler
 
 import torch
 from torch.nn import Module

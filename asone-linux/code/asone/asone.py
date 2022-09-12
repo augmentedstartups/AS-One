@@ -5,6 +5,7 @@ import os
 import time
 import asone.utils as utils
 from asone.trackers import Tracker
+from asone.detectors import Detector
 
 class ASOne:
     def __init__(self,
@@ -21,8 +22,9 @@ class ASOne:
 
         self.tracker = self.get_tracker(tracker)
 
-    def get_detector(self, detector: str):
-        return utils.get_detector(detector, use_cuda=self.use_cuda, use_onnx=self.use_onnx)
+    def get_detector(self, detector: int):
+        detector = Detector(detector, use_cuda=self.use_cuda).get_detector()
+        return detector
 
     def get_tracker(self, tracker: int):
 

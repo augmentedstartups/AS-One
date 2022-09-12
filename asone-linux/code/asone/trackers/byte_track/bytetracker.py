@@ -2,6 +2,7 @@ from .tracker.byte_tracker import BYTETracker
 import numpy as np
 from asone import utils
 
+
 class ByteTrack(object):
     def __init__(self, detector, min_box_area: int = 10) -> None:
 
@@ -10,7 +11,11 @@ class ByteTrack(object):
         self.std = (0.229, 0.224, 0.225)
 
         self.detector = detector
-        self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
+        try:
+            self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
+        except AttributeError as e:
+            self.input_shape = (640, 640)
+
         self.tracker = BYTETracker(frame_rate=30)
 
     def detect_and_track(self, image: np.ndarray):
@@ -51,6 +56,5 @@ class ByteTrack(object):
                 online_xyxys.append(utils.tlwh_to_xyxy(tlwh))
                 online_ids.append(track_id)
                 online_scores.append(online_target.score)
-
 
         return online_xyxys, online_ids, online_scores

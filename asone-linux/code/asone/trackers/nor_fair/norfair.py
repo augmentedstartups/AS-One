@@ -11,7 +11,10 @@ class NorFair:
             distance_threshold=max_distance_between_points,
         )
         self.detector = detector
-        self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
+        try:
+            self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
+        except AttributeError as e:
+            self.input_shape = (640, 640)
 
     def _euclidean_distance(self, detection, tracked_object):
         return np.linalg.norm(detection.points - tracked_object.estimate)

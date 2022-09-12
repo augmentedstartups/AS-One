@@ -26,8 +26,10 @@ class DeepSort:
 
         self.tracker = build_tracker(weights, cfg, use_cuda=use_cuda)
         self.detector = detector
-        self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
-
+        try:
+            self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
+        except AttributeError as e:
+            self.input_shape = (640, 640)
     def detect_and_track(self, image):
 
         dets_xyxy, image_info = self.detector.detect(

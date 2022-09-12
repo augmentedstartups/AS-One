@@ -20,6 +20,13 @@ def download_weights(weights):
         model_key = '10XNOpBAmMrYqmXOsJLl79MGtuGWY2zAl'
     elif model == 'yolov7-tiny':
         model_key = '1ut2doFvtQSKGjiHGPBsEItZlTTj-7_rF'
+    elif model == 'yolov7-e6':
+        model_key = '1E9pow2PFcvil0iqRx2tRCI4HLduh9gp0'
+    elif model == 'yolov7-w6':
+        model_key = '1B8j9XMZxGxz8kpsqJhKXuk1TE_244n6t'
+    elif model == 'yolov7x':
+        model_key = '1FiGLXG6_3He21ean4bFET471Wrj-3oc3'
+
     elif model == 'ckpt':
         model_key = '1VZ05gzg249Q1m8BJVQxl3iHoNIbjzJf8'
     else:
@@ -30,6 +37,6 @@ def download_weights(weights):
 
     if not os.path.exists(outputpath):
         os.makedirs(outputpath)
-    
+
     exractfile(filename, outputpath)
     os.remove(filename)

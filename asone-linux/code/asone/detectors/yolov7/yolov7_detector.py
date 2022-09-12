@@ -1,4 +1,3 @@
-import sys
 import os
 import sys
 import onnxruntime
@@ -9,8 +8,10 @@ from .utils.yolov7_utils import (prepare_input,
                                  process_output,
                                  non_max_suppression)
 from .models.experimental import attempt_load
+from asone import utils
 
-sys.path.insert(0, './yolov7')
+# sys.path.insert(0, 'asone/detectors/yolov7')
+sys.path.append(os.path.dirname(__file__))
 
 
 
@@ -22,11 +23,17 @@ class YOLOv7Detector:
 
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
-        if weights == None:
+
+        if weights is None:
             weights = os.path.join("weights", "yolov5n.pt")
         #If incase weighst is a list of paths then select path at first index
+
         weights = str(weights[0] if isinstance(weights, list) else weights)
-        
+
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
+            
+
         # Load Model
         self.model = self.load_model(use_cuda, weights)  
 
@@ -34,11 +41,12 @@ class YOLOv7Detector:
         # Device: CUDA and if fp16=True only then half precision floating point works  
         self.fp16 = fp16 & ((not self.use_onnx or self.use_onnx) and self.device != 'cpu')
         # Load onnx 
-        if self.use_onnx:
+        if self.use_onnx:            
             if use_cuda:
                 providers = ['CUDAExecutionProvider','CPUExecutionProvider']
             else:
                 providers = ['CPUExecutionProvider']
+
             model = onnxruntime.InferenceSession(weights, providers=providers)
         #Load Pytorch
         else: 

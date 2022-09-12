@@ -1,7 +1,7 @@
-from yolor.utils.google_utils import *
-from yolor.utils.layers import *
-from yolor.utils.parse_config import *
-from yolor.utils import torch_utils
+from asone.detectors.yolor.utils.google_utils import *
+from asone.detectors.yolor.utils.layers import *
+from asone.detectors.yolor.utils.parse_config import *
+from asone.detectors.yolor.utils import torch_utils
 
 ONNX_EXPORT = False
 

@@ -3,7 +3,7 @@ from asone.trackers import Tracker
 import argparse
 import asone
 from asone import utils
-from asone.detectors import YOLOv5Detector
+from asone.detectors import Detector
 import cv2
 import os
 from loguru import logger
@@ -11,10 +11,8 @@ import time
 import copy
 
 def main(args):
-    # asone = ASOne(tracker=args.tracker, detector=args.detector, use_cuda=args.use_cuda)
-    # asone.start_tracking(args.video_path)
-    detector = YOLOv5Detector(use_onnx=True, use_cuda=True)
-    tracker = Tracker(asone.DEEPSORT, detector).get_tracker()
+    detector = Detector(asone.YOLOV7_E6_PYTORCH, use_cuda=True).get_detector()
+    tracker = Tracker(asone.BYTETRACK, detector).get_tracker()
 
     cap = cv2.VideoCapture(args.video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)

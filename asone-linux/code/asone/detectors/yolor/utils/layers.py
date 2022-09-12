@@ -1,4 +1,4 @@
-from yolor.utils.general import *
+from asone.detectors.yolor.utils.general import *
 
 import torch
 from torch import nn

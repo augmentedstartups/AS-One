@@ -1,4 +1,4 @@
-from yolov6.layers.common import Conv
+from asone.detectors.yolov6.layers.common import Conv
 
 import time
 import numpy as np

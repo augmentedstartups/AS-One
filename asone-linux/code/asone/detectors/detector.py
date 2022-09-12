@@ -1,20 +1,20 @@
 import os
 import cv2
 
-from yolov5 import YOLOv5Detector 
-from yolov6 import YOLOv6Detector 
-from yolov7 import YOLOv7Detector
-from yolor import YOLOrDetector
-from yolox import YOLOxDetector
+from asone.detectors.yolov5 import YOLOv5Detector 
+from asone.detectors.yolov6 import YOLOv6Detector 
+from asone.detectors.yolov7 import YOLOv7Detector
+from asone.detectors.yolor import YOLOrDetector
+from asone.detectors.yolox import YOLOxDetector
 
-from utils.weights_path import get_weight_path
-from utils.cfg_path import get_cfg_path
-from utils.exp_name import get_exp__name 
+from asone.detectors.utils.weights_path import get_weight_path
+from asone.detectors.utils.cfg_path import get_cfg_path
+from asone.detectors.utils.exp_name import get_exp__name 
 
 
 class Detector:
     def __init__(self, model_flag: int, use_cuda=True):
-        self.detector = self._select_detector(model_flag, use_cuda)
+        self.model = self._select_detector(model_flag, use_cuda)
      
 
     def _select_detector(self, model_flag, cuda):
@@ -58,9 +58,11 @@ class Detector:
             
           
         return _detector
-
-    def get_detector(self, image):
-        return self.detector.detect(image)
+    def get_detector(self):
+        return self.model
+        
+    def detect(self, image):
+        return self.model.detect(image)
             
 
 if __name__ == '__main__':
