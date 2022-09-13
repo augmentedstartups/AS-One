@@ -26,7 +26,7 @@ def setup_package():
         author=MAINTAINER,
         author_email=MAINTAINER_EMAIL,
         license='BSD 2-clause',
-        package_dir={"":'asone-linux/code'},
+        # package_dir={"":""},
         packages=[DISTNAME,
                     f'{DISTNAME}.detectors',
                     f'{DISTNAME}.detectors.utils',
@@ -63,7 +63,9 @@ def setup_package():
         "https://download.pytorch.org/whl/cu113/",
         'https://pypi.python.org/simple/'],
         install_requires=[str(requirement) for requirement in parse_requirements(requirements_txt)],
-
+        package_data={
+                "": ["*.cfg", "*.ymal", "*.yml", "*.names"],
+            },
         classifiers=[
             'Development Status :: 1 - Planning',
             'Intended Audience :: Science/Research',
