@@ -16,6 +16,34 @@ def download_weights(weights):
 
     if model == 'yolov5s':
         model_key = '13Agcwy0yFxPn6nujHIEB8_KCYg5y-t4a'
+    elif model == 'yolov5x6':
+        model_key = '161bThpOB4HDqrh2FXvbFZJmiSKFwS_Wb'
+    elif model == 'yolov5n':
+        model_key = '1zI4f0AUHAz-fTE_fP7UyiFSRGBYYXd7x'
+    elif model == 'yolov5m':
+        model_key = '1vy8S68wbUzKSHMhsTuLN-VA7lMzKchAa'
+    elif model == 'yolov5l':
+        model_key = '1pQL9s0o3v6CycAgAX8SkxCfordUl5IxZ'
+    elif model == 'yolov5x':
+        model_key = '1iB7MQ1IP3MVKLMF8TIJ44vtv9cjWC2qH'
+    elif model == 'yolov5n6':
+        model_key = '1YxnRYlPcCqXGbX20kPlfSimNfROKwoJH'
+    elif model == 'yolov5s6':
+        model_key = '1mm5zY6IpPtM7IZh_X5x0kAxuO7INKyte'
+    elif model == 'yolov5m6':
+        model_key = '1qv_uan5oNq9skcg1UThfaFs0xMs2mSE2'
+    elif model == 'yolov5l6':
+        model_key = '1eaM51cIh8i_EXmg6Nf0Sx2uW53pT7wZR'
+    elif model == 'yolov6n':
+        model_key = '1EYfs4jHo_1xKW6NEM4Ycf0ncSnUajjEE'
+    elif model == 'yolov6t':
+        model_key = '1ObpNEuJOun4pYDgZbJ4DAfJaMXf0TOSL'
+    elif model == 'yolov6s':
+        model_key = '1s7wPkXXOBURnvki8DrLAIucHSeu1Jt0O'
+    elif model == 'yolov7-e6e':
+        model_key = '1rQR5KiSJiWtpHEniAyeBQdpXFb7Wv1UT'
+    elif model == 'yolov7-d6':
+        model_key = '1idAyjdq9pVsgkDCCfADbGOjxGq4TPulB'
     elif model == 'yolov7':
         model_key = '10XNOpBAmMrYqmXOsJLl79MGtuGWY2zAl'
     elif model == 'yolov7-tiny':
@@ -30,6 +58,26 @@ def download_weights(weights):
         model_key = '1G3FBZKrznW_64mGfs6b3nAJiJv6GmmV0'
     elif model == 'yolor_csp-star':
         model_key = '15WDl46ZthFGZfpOyI3qXx6gC9FQLH_wH'
+    elif model == 'yolor_csp_x':
+        model_key = '1LU2ckh7eSpVD0nyPSdq1n34lKmNAX39T'
+    elif model == 'yolor_csp_x_star':
+        model_key = '1jheqFDm7BpHQpR60wuWSBpbuyK5SoKdV'
+    elif model == 'yolor_p6':
+        model_key = '1XKREKdxQCO8OXiW2IWGFhczolIaIr9sm'
+    elif model == 'yolox_l':
+        model_key = '1jX1KHerOdZ5-dmXh6cWcRAn80aKD-7sP'
+    elif model == 'yolox_nano':
+        model_key = '1783Os6uTpYjunL-MfK0WE1Wcwk58fIUi'
+    elif model == 'yolox_tiny':
+        model_key = '1Lcv1ITvfPdWsu6Kb8Hq6cOSfJE7lbbf2'
+    elif model == 'yolox_darknet':
+        model_key = '17f4UI06TWJ25Oqo2OoQGu8AoGVX1lPta'
+    elif model == 'yolox_s':
+        model_key = '1IUAOv62XuwkwwTCVD2y3xJg7KUA3M0-M'
+    elif model == 'yolox_m':
+        model_key = '1ktHj8UEwl0V8Qz9G74E-yj-o13FLeD0-'
+    elif model == 'yolox_x':
+        model_key = '13HNnlILCx_XamNJWwJ1MG5x0XfP6HL1U'
     elif model == 'ckpt':
         model_key = '1VZ05gzg249Q1m8BJVQxl3iHoNIbjzJf8'
     else:
