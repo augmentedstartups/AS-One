@@ -7,7 +7,11 @@ import cv2
 import os
 import sys
 
-from asone.detectors.yolor.utils.yolor_utils import non_max_suppression, scale_coords, letterbox, draw_detections
+from asone import utils
+from asone.detectors.yolor.utils.yolor_utils import (non_max_suppression,
+                                                     scale_coords,
+                                                     letterbox,
+                                                     draw_detections)
 
 
 class YOLOrDetector:
@@ -20,8 +24,10 @@ class YOLOrDetector:
 
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
-        if weights == None:
-            weights = os.path.join("weights", "yolov5n.pt")
+        
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
+
         if cfg == None:
             cfg = os.path.join("cfg", "yolor_p6.cfg")
         # If incase weighst is a list of paths then select path at first index

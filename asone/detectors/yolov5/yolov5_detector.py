@@ -21,8 +21,6 @@ class YOLOv5Detector:
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
 
-        # if weights == None:
-        #     weights = os.path.join("weights", "yolov5n.pt")
         if not os.path.exists(weights):
             utils.download_weights(weights)
         

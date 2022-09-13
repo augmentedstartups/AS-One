@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import onnxruntime
 
+from asone import utils
 from asone.detectors.yolox.yolox.utils import fuse_model, postprocess
 from asone.detectors.yolox.yolox.exp import get_exp
 from asone.detectors.yolox.yolox_utils import preprocess, multiclass_nms, demo_postprocess
@@ -19,8 +20,10 @@ class YOLOxDetector:
 
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
-        if weights is None:
-            weights = os.path.join("weights", "yolov5n.pt")
+        
+        if not os.path.exists(weights):
+            utils.download_weights(weights)
+            
         self.weights_name = os.path.basename(weights)
 
         if model_name is None:

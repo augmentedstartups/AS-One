@@ -26,7 +26,8 @@ def download_weights(weights):
         model_key = '1B8j9XMZxGxz8kpsqJhKXuk1TE_244n6t'
     elif model == 'yolov7x':
         model_key = '1FiGLXG6_3He21ean4bFET471Wrj-3oc3'
-
+    elif model == 'yolor_csp':
+        model_key = '1G3FBZKrznW_64mGfs6b3nAJiJv6GmmV0'
     elif model == 'ckpt':
         model_key = '1VZ05gzg249Q1m8BJVQxl3iHoNIbjzJf8'
     else:
