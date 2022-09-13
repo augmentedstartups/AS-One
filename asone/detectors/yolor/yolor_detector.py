@@ -1,17 +1,14 @@
-from .models.models import *
 
+import os
 import numpy as np
 import torch
 import onnxruntime
-import cv2
-import os
-import sys
 
+from .models.models import *
 from asone import utils
 from asone.detectors.yolor.utils.yolor_utils import (non_max_suppression,
                                                      scale_coords,
-                                                     letterbox,
-                                                     draw_detections)
+                                                     letterbox)
 
 
 class YOLOrDetector:
@@ -120,23 +117,7 @@ class YOLOrDetector:
 
         return predictions, image_info
 
-    def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
-        return draw_detections(image, self.boxes, self.scores,
-                               self.class_ids, mask_alpha)
 
 
-if __name__ == '__main__':
-    model_path = sys.argv[1]
-    cfg = sys.argv[2]
-    # Read input image
-    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
-    # Initialize YOLOvr object detector
-    yolor_detector = YOLOrDetector(
-        model_path, cfg, use_onnx=False, use_cuda=True)
-    img = cv2.imread('/home/ajmair/benchmarking/asone/asone-linux/test.jpeg')
-    # Detect Objects
-    result = yolor_detector.detect(img)
-    print(result)
-    # Draw detections
-    combined_img = yolor_detector.draw_detections(img)
-    cv2.imwrite("myoutput.jpg", combined_img)
+
+

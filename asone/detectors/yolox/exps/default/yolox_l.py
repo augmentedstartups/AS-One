@@ -4,7 +4,7 @@
 
 import os
 
-from yolox.exp import Exp as MyExp
+from asone.detectors.yolox.yolox.exp import Exp as MyExp
 
 
 class Exp(MyExp):

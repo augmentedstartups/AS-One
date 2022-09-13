@@ -1,13 +1,14 @@
 import os
+import sys
 import time
 import numpy as np
 import torch
 import onnxruntime
 
 from asone import utils
-from .yolov6_utils import (prepare_input, process_output,
-                           load_pytorch, non_max_suppression) 
-
+from asone.detectors.yolov6.yolov6.utils.yolov6_utils import (prepare_input, process_output,
+                                                             load_pytorch, non_max_suppression) 
+sys.path.append(os.path.dirname(__file__))  
 
 class YOLOv6Detector:
     def __init__(self,

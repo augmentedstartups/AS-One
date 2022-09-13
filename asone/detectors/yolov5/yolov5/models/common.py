@@ -21,7 +21,9 @@ import yaml
 from PIL import Image
 from torch.cuda import amp
 
-from models.general import (LOGGER, check_requirements, check_suffix, check_version, colorstr, increment_path)
+from asone.detectors.yolov5.yolov5.models.general import (LOGGER, check_requirements,
+                                                   check_suffix, check_version,
+                                                   colorstr, increment_path)
                       
 def autopad(k, p=None):  # kernel, padding
     # Pad to 'same'

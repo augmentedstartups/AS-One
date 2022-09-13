@@ -1,16 +1,15 @@
 import os
+import sys
 import numpy as np
 import torch
 import onnxruntime
 
-from asone.detectors.yolov5.utils.yolov5_utils import (non_max_suppression,
+from asone.detectors.yolov5.yolov5.utils.yolov5_utils import (non_max_suppression,
                                        scale_coords, letterbox)
-from asone.detectors.yolov5.models.experimental import attempt_load
+from asone.detectors.yolov5.yolov5.models.experimental import attempt_load
 from asone import utils
 
-
-
-
+sys.path.insert(0, 'asone/detectors/yolov5/yolov5')
 
 class YOLOv5Detector:
     def __init__(self,

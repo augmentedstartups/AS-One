@@ -4,15 +4,14 @@ import onnxruntime
 import torch
 import numpy as np
 
-from .utils.yolov7_utils import (prepare_input,
+from asone.detectors.yolov7.yolov7.utils.yolov7_utils import (prepare_input,
                                  process_output,
                                  non_max_suppression)
-from .models.experimental import attempt_load
+from asone.detectors.yolov7.yolov7.models.experimental import attempt_load
 from asone import utils
 
-# sys.path.insert(0, 'asone/detectors/yolov7')
-sys.path.append(os.path.dirname(__file__))
-
+sys.path.insert(0, 'asone/detectors/yolov7/yolov7')
+# sys.path.append(os.path.dirname(__file__))
 
 
 class YOLOv7Detector:

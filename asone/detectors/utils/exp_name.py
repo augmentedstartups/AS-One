@@ -1,12 +1,12 @@
 import os
 
-exp_file_name = {'50': (os.path.join('yolox','exps','default','yolox_l.py'),'yolox-l'),
-                 '52': (os.path.join('yolox','exps','default','yolox_nano.py'),'yolox-n'),
-                 '54': (os.path.join('yolox','exps','default','yolox_tiny'),'yolox-tiny'),
-                 '56': (os.path.join('yolox','exps','default','yolov3.py'),'yolox-darknet'),
-                 '58': (os.path.join('yolox','exps','default','yolox_s.py'),'yolox-s'),
-                 '60': (os.path.join('yolox','exps','default','yolox_m.py'),'yolox-m'),
-                 '62': (os.path.join('yolox','exps','default','yolox_x.py'),'yolox-x')
+exp_file_name = {'50': (os.path.join('asone','detectors','yolox','exps','default','yolox_l.py'),'yolox-l'),
+                 '52': (os.path.join('asone','detectors','yolox','exps','default','yolox_nano.py'),'yolox-nano'),
+                 '54': (os.path.join('asone','detectors','yolox','exps','default','yolox_tiny'),'yolox-tiny'),
+                 '56': (os.path.join('asone','detectors','yolox','exps','default','yolov3.py'),'yolox-darknet'),
+                 '58': (os.path.join('asone','detectors','yolox','exps','default','yolox_s.py'),'yolox-s'),
+                 '60': (os.path.join('asone','detectors','yolox','exps','default','yolox_m.py'),'yolox-m'),
+                 '62': (os.path.join('asone','detectors','yolox','exps','default','yolox_x.py'),'yolox-x')
                 }
 
 
