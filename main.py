@@ -4,7 +4,7 @@ from asone import ASOne
 import argparse
 
 def main(args):
-    dt_obj = ASOne(tracker=asone.NORFAIR, detector=asone.YOLOV5N_PYTORCH, use_cuda=args.use_cuda)
+    dt_obj = ASOne(tracker=asone.NORFAIR, detector=asone.YOLOV7_PYTORCH, use_cuda=args.use_cuda)
     dt_obj.start_tracking(args.video_path)
 
 if __name__ == '__main__':

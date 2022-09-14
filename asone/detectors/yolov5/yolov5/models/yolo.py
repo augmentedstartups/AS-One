@@ -21,7 +21,7 @@ if str(ROOT) not in sys.path:
 if platform.system() != 'Windows':
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from asone.detectors.yolov5.yolov5.models.common import *
+from asone.detectors.yolov5.yolov5.models.yolov5_common import *
 from asone.detectors.yolov5.yolov5.models.experimental import *
 from asone.detectors.yolov5.yolov5.models.general import (LOGGER, check_version,
                                                    check_yaml, make_divisible,

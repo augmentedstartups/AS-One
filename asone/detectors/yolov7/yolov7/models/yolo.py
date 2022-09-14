@@ -1,7 +1,7 @@
-from utils.torch_utils import time_synchronized, fuse_conv_and_bn, model_info, scale_img, \
+from asone.detectors.yolov7.yolov7.utils.torch_utils import time_synchronized, fuse_conv_and_bn, model_info, scale_img, \
     initialize_weights, select_device, copy_attr
-from models.experimental import *
-from asone.detectors.yolov7.yolov7.models.common import *
+from asone.detectors.yolov7.yolov7.models.experimental import *
+from asone.detectors.yolov7.yolov7.models.yolov7_common import *
 import torch
 import argparse
 import logging

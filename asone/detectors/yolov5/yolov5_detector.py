@@ -9,7 +9,13 @@ from asone.detectors.yolov5.yolov5.utils.yolov5_utils import (non_max_suppressio
 from asone.detectors.yolov5.yolov5.models.experimental import attempt_load
 from asone import utils
 
-sys.path.insert(0, 'asone/detectors/yolov5/yolov5')
+print(sys.path)
+print("######")
+# sys.path.insert(0, 'asone/detectors/yolov5/yolov5')
+
+sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov5'))
+print(sys.path)
+print("@@@@@@2")
 
 class YOLOv5Detector:
     def __init__(self,

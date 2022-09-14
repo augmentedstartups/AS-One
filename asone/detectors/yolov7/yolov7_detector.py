@@ -10,10 +10,13 @@ from asone.detectors.yolov7.yolov7.utils.yolov7_utils import (prepare_input,
 from asone.detectors.yolov7.yolov7.models.experimental import attempt_load
 from asone import utils
 
-sys.path.insert(0, 'asone/detectors/yolov7/yolov7')
-# sys.path.append(os.path.dirname(__file__))
-
-
+# sys.path.insert(0, 'asone/detectors/yolov7/yolov7')
+print(sys.path)
+print("#########")
+sys.path.insert(1, 'asone/detectors/yolov7/yolov7')
+# sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov7'))
+print(sys.path)
+print("%%%%%%%%%%%%%%")
 class YOLOv7Detector:
     def __init__(self,
                  weights=None,
@@ -23,8 +26,6 @@ class YOLOv7Detector:
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
 
-        if not os.path.exists(weights):
-            utils.download_weights(weights)
         #If incase weighst is a list of paths then select path at first index
 
         weights = str(weights[0] if isinstance(weights, list) else weights)
