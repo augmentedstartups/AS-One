@@ -43,7 +43,7 @@ def setup_package():
                   f'{DISTNAME}.detectors.yolor.utils',
                   f'{DISTNAME}.detectors.yolor.cfg',
                   f'{DISTNAME}.detectors.yolox',
-                  f'{DISTNAME}.detectors.yolox.exp.default',
+                  f'{DISTNAME}.detectors.yolox.exps.default',
                   f'{DISTNAME}.detectors.yolox.yolox',
                   f'{DISTNAME}.detectors.yolox.yolox.exp',
                   f'{DISTNAME}.detectors.yolox.yolox.models',
