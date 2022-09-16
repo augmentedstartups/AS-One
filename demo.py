@@ -11,7 +11,7 @@ import time
 import copy
 
 def main(args):
-    detector = Detector(asone.YOLOV7_E6_PYTORCH, use_cuda=True).get_detector()
+    detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector()
     tracker = Tracker(asone.BYTETRACK, detector).get_tracker()
 
     cap = cv2.VideoCapture(args.video_path)
