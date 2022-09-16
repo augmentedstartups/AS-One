@@ -35,11 +35,21 @@ def download_weights(weights):
     elif model == 'yolov5l6':
         model_key = '1eaM51cIh8i_EXmg6Nf0Sx2uW53pT7wZR'
     elif model == 'yolov6n':
-        model_key = '1EYfs4jHo_1xKW6NEM4Ycf0ncSnUajjEE'
+        model_key = '1KrtcvjgBD-ujsLABxMPZy3pHbxY6ehr3'
     elif model == 'yolov6t':
-        model_key = '1ObpNEuJOun4pYDgZbJ4DAfJaMXf0TOSL'
+        model_key = '1DICkCStkKEWTkJWQapOdT9E9V35n3HGE'
     elif model == 'yolov6s':
-        model_key = '1s7wPkXXOBURnvki8DrLAIucHSeu1Jt0O'
+        model_key = '1whcQ5p6RrGebax1EoskW8ZTL3cfgfCgh'
+    elif model == 'yolov6l_relu':
+        model_key = '14UfY057QUQoAj6q39PX_qE7U1bBIrIGi'
+    elif model == 'yolov6l':
+        model_key = '1HdRIs0uMPbqs5E2aEX8O3d3dJTh-KBTf'
+    elif model == 'yolov6m':
+        model_key = '1t_w9SCwbZAW7icwX_z97-SQz-plXzBgM'
+    elif model == 'yolov6s_repopt':
+        model_key = '1L_1Crxx-4059xDDUZEf_asWRBVd3PF05'
+
+        
     elif model == 'yolov7-e6e':
         model_key = '1rQR5KiSJiWtpHEniAyeBQdpXFb7Wv1UT'
     elif model == 'yolov7-d6':

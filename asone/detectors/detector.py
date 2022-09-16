@@ -25,17 +25,17 @@ class Detector:
             _detector = YOLOv5Detector(weights=weight,
                                        use_onnx=onnx,
                                        use_cuda=cuda)
-        elif model_flag in range(20, 26):
+        elif model_flag in range(20, 34):
             _detector = YOLOv6Detector(weights=weight,
                                        use_onnx=onnx,
                                        use_cuda=cuda)
-        elif model_flag in range(26, 40):
+        elif model_flag in range(34, 48):
             _detector = YOLOv7Detector(weights=weight,
                                        use_onnx=onnx,
                                        use_cuda=cuda)
-        elif model_flag in range(40, 50):
+        elif model_flag in range(48, 58):
             # Get Configuration file for Yolor
-            if model_flag in range(40,49,2): 
+            if model_flag in range(48,57,2): 
                 cfg = get_cfg_path(model_flag)
             else:
                 cfg = None
@@ -44,9 +44,9 @@ class Detector:
                                       use_onnx=onnx,
                                       use_cuda=cuda)
         
-        elif model_flag in range(50, 64):
+        elif model_flag in range(58, 72):
             # Get exp file and corresponding model for pytorch only
-            if model_flag in range(50,63,2):     
+            if model_flag in range(58,71,2):     
                 exp, model_name = get_exp__name(model_flag)
             else:
                 exp = model_name = None
