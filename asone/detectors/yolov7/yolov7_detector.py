@@ -11,12 +11,8 @@ from asone.detectors.yolov7.yolov7.models.experimental import attempt_load
 from asone import utils
 
 # sys.path.insert(0, 'asone/detectors/yolov7/yolov7')
-print(sys.path)
-print("#########")
 sys.path.insert(1, 'asone/detectors/yolov7/yolov7')
 # sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov7'))
-print(sys.path)
-print("%%%%%%%%%%%%%%")
 class YOLOv7Detector:
     def __init__(self,
                  weights=None,
