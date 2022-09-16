@@ -91,7 +91,7 @@ class YOLOv6Detector:
             processed_image = torch.from_numpy(processed_image).to(self.device)
             # Change image floating point precision if fp16 set to true
             processed_image = processed_image.half() if self.fp16 else processed_image.float() 
-            prediction = self.model(processed_image)
+            prediction = self.model(processed_image)[0]
 
         # Post Procesing, non-max-suppression and rescaling
         if self.use_onnx:
