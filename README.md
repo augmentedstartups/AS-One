@@ -4,10 +4,56 @@
 - System Setup
     - [Linux](asone-linux)
     - [Windows](asone-windows)
-- [Asone Library Installation](#asone-library-installation)
+- Asone Library Installation
+    - [Install In Docker Container](#install-in-docker-container)
+        - [Prerequisite](#prerequisite)
+        - [Installation](#installation)
+    - [Install Locally](#install-locally)
 
 
 # Asone Library Installation
+
+## Install In Docker Container
+
+### Prerequisite
+
+- Make sure you have docker installed in your system. if not reffer to [Docker Setup](asone-linux/README.md)
+
+
+### Installation
+
+1. Clone the repo
+
+```
+git clone https://github.com/axcelerateai/asone.git
+cd asone
+```
+
+2. Run docker coompose command.
+
+```
+# if you wanna test on gpu system
+docker compose run linux-gpu
+```
+
+```
+# if you wanna test on cpu system
+docker compose run linux
+```
+
+3. In docker terminal.
+
+```
+# if using gpu
+python main.py [VIDEO_PATH]
+
+# if using cpu
+python main.py [VIDEO_PATH] --cpu
+```
+
+
+
+## Install Locally
 
 1. Clone the repo
 
@@ -56,8 +102,12 @@ pip3 install torch torchvision torchaudio --extra-index-url https://download.pyt
 pip install .
 ```
 
-5. Test it by runiing demo.py
+5. Test it by runiing main.py
 
 ```
+# if using gpu
 python main.py [VIDEO_PATH]
+
+# if using cpu
+python main.py [VIDEO_PATH] --cpu
 ```

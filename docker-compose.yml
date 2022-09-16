@@ -21,6 +21,7 @@ services:
             # - $HOME/.Xauthority:/root/.Xauthority:rw
             # - /dev/video0:/dev/video0
         network_mode: host
+        restart: always
         privileged: true
         environment:
             DISPLAY: $DISPLAY
