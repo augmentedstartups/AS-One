@@ -1,5 +1,5 @@
 .env/
-*.mp4
+results/
 **__pycache__**
 *.onnx
 *.pt
