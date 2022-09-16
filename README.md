@@ -59,5 +59,5 @@ pip install .
 5. Test it by runiing demo.py
 
 ```
-python demo.py [VIDEO_PATH]
+python main.py [VIDEO_PATH]
 ```
