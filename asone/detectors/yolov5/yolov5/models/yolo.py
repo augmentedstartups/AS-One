@@ -16,17 +16,18 @@ from pathlib import Path
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[1]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
+# if str(ROOT) not in sys.path:
+#     sys.path.append(str(ROOT))  # add ROOT to PATH
 if platform.system() != 'Windows':
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from asone.detectors.yolov5.yolov5.models.yolov5_common import *
+from asone.detectors.yolov5.yolov5.models.common import *
 from asone.detectors.yolov5.yolov5.models.experimental import *
 from asone.detectors.yolov5.yolov5.models.general import (LOGGER, check_version,
                                                    check_yaml, make_divisible,
                                                    print_args)
-from asone.detectors.yolov5.yolov5.utils.torch_utils import (fuse_conv_and_bn,
+from asone.detectors.yolov5.yolov5.utils.torch_utils import (
+                                                      fuse_conv_and_bn,
                                                       initialize_weights,
                                                       model_info,
                                                       profile,

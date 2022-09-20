@@ -1,8 +1,13 @@
-import torch
-import torchvision
+import contextlib
 import time
 import numpy as np
+import torch
+import torchvision
 import cv2
+import sys
+from pathlib import Path
+
+
 
 def box_area(box):
     # box = xyxy(4,n)
@@ -198,3 +203,20 @@ def clip_coords(boxes, shape):
     else:  # np.array (faster grouped)
         boxes[:, [0, 2]] = boxes[:, [0, 2]].clip(0, shape[1])  # x1, x2
         boxes[:, [1, 3]] = boxes[:, [1, 3]].clip(0, shape[0])  # y1, y2
+
+@contextlib.contextmanager
+def yolov5_in_syspath():
+    """
+    Temporarily add yolov5 folder to `sys.path`.
+    
+    torch.hub handles it in the same way: https://github.com/pytorch/pytorch/blob/75024e228ca441290b6a1c2e564300ad507d7af6/torch/hub.py#L387
+    
+    Proper fix for: #22, #134, #353, #1155, #1389, #1680, #2531, #3071   
+    No need for such workarounds: #869, #1052, #2949
+    """
+    yolov5_folder_dir = str(Path(__file__).parents[1].absolute())
+    try:
+        sys.path.insert(0, yolov5_folder_dir)
+        yield
+    finally:
+        sys.path.remove(yolov5_folder_dir)

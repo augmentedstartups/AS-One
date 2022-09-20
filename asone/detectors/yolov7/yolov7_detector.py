@@ -10,15 +10,12 @@ from asone.detectors.yolov7.yolov7.utils.yolov7_utils import (prepare_input,
 from asone.detectors.yolov7.yolov7.models.experimental import attempt_load
 from asone import utils
 
-# sys.path.insert(0, 'asone/detectors/yolov7/yolov7')
-sys.path.insert(1, 'asone/detectors/yolov7/yolov7')
-# sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov7'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov7'))
 class YOLOv7Detector:
     def __init__(self,
                  weights=None,
                  use_onnx=False,
                  use_cuda=True):
-
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
 
@@ -31,8 +28,8 @@ class YOLOv7Detector:
             
 
         # Load Model
-        self.model = self.load_model(use_cuda, weights)  
-
+        self.model = self.load_model(use_cuda, weights)
+    
     def load_model(self, use_cuda, weights, fp16=False):
         # Device: CUDA and if fp16=True only then half precision floating point works  
         self.fp16 = fp16 & ((not self.use_onnx or self.use_onnx) and self.device != 'cpu')

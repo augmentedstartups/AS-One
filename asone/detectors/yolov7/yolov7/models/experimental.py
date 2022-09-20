@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from .yolov7_common import Conv
+from .common import Conv
 
 class Ensemble(nn.ModuleList):
     # Ensemble of models
@@ -22,7 +22,6 @@ def attempt_load(weights, map_location=None):
 
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
-        print(w)
         ckpt = torch.load(w, map_location=map_location)  # load
         model.append(ckpt['ema' if ckpt.get('ema') else 'model'].float().fuse().eval())  # FP32 model
     

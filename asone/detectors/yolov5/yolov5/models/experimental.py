@@ -7,6 +7,7 @@ import math
 import numpy as np
 import torch
 import torch.nn as nn
+from asone.detectors.yolov5.yolov5.utils.yolov5_utils import yolov5_in_syspath
 
 class Ensemble(nn.ModuleList):
     # Ensemble of models
@@ -23,11 +24,13 @@ class Ensemble(nn.ModuleList):
 
 def attempt_load(weights, device=None, inplace=True, fuse=True):
     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
-    from asone.detectors.yolov5.yolov5.models.yolo import Detect, Model
+    with yolov5_in_syspath():
+        from asone.detectors.yolov5.yolov5.models.yolo import Detect, Model
 
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
-        ckpt = torch.load(w, map_location='cpu')  # load
+        with yolov5_in_syspath():
+            ckpt = torch.load(w, map_location='cpu')  # load
         ckpt = (ckpt.get('ema') or ckpt['model']).to(device).float()  # FP32 model
         model.append(ckpt.fuse().eval() if fuse else ckpt.eval())  # fused or un-fused model in eval mode
 
@@ -50,3 +53,4 @@ def attempt_load(weights, device=None, inplace=True, fuse=True):
     model.stride = model[torch.argmax(torch.tensor([m.stride.max() for m in model])).int()].stride  # max stride
     assert all(model[0].nc == m.nc for m in model), f'Models have different class counts: {[m.nc for m in model]}'
     return model  # return ensemble
+
