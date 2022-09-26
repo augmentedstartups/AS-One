@@ -7,8 +7,9 @@ results/
 **deep_sort_results**
 **nor_fair_results**
 test_env/
-yolor/
-yolov5/
-yolov6/
-yolox/
-yolov7/
+yolov5/weights/
+yolov6/weights/
+yolov7/weights/
+yolor/weights/
+yolox/weights/
+
