@@ -39,7 +39,6 @@ sudo reboot
 #### Install using Shell Script
 
 ```
-cd asone-linux
 chmod a+x docker-installation.sh
 ./docker-installation.sh
 ```
@@ -91,6 +90,7 @@ docker compose run linux-gpu
 - To test DISPLAY is shared with docker properly:
 
 ```
+cd asone-linux
 python main.py
 ```
 
