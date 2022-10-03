@@ -95,9 +95,9 @@ class YOLOv7Detector:
             'width': original_image.shape[1],
             'height': original_image.shape[0],
         }
+        if len(detections) > 0:
+            self.boxes = detection[:, :4]
+            self.scores = detection[:, 4:5]
+            self.class_ids = detection[:, 5:6]
 
-        self.boxes = detection[:, :4]
-        self.scores = detection[:, 4:5]
-        self.class_ids = detection[:, 5:6]
-        
         return detection, image_info
