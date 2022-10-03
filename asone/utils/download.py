@@ -15,7 +15,7 @@ def download_weights(weights):
     filename = f'{model}.zip'
 
     if model == 'yolov5s':
-        model_key = '13Agcwy0yFxPn6nujHIEB8_KCYg5y-t4a'
+        model_key = '1H7G8ryDXs6bKlK2Qot7-2uIkjEYoYook'
     elif model == 'yolov5x6':
         model_key = '161bThpOB4HDqrh2FXvbFZJmiSKFwS_Wb'
     elif model == 'yolov5n':
