@@ -117,23 +117,27 @@ class YOLOxDetector:
                                     iou_thres,
                                     class_agnostic=agnostic_nms
                                     )[0]
-          
-                prediction = prediction.detach().cpu().numpy()
-                bboxes = prediction[:, 0:4]
-            # Postprocessing
-            bboxes /= ratio
-            cls = prediction[:, 6]
-            scores = prediction[:, 4] * prediction[:, 5]
-            detection = []
-            for box in range(len(bboxes)):
-                pred = np.append(bboxes[box], scores[box])
-                pred = np.append(pred, cls[box])
-                detection.append(pred)
-            detection = np.array(detection)
+                if prediction is not None:
+                    prediction = prediction.detach().cpu().numpy()
+                    bboxes = prediction[:, 0:4]
+                    # Postprocessing
+                    bboxes /= ratio
+                    cls = prediction[:, 6]
+                    scores = prediction[:, 4] * prediction[:, 5]
+                    detection = []
+                    for box in range(len(bboxes)):
+                        pred = np.append(bboxes[box], scores[box])
+                        pred = np.append(pred, cls[box])
+                        detection.append(pred)
+                    detection = np.array(detection)
+                else:
+                    detection = prediction
+            
     
         image_info = {
             'width': image.shape[1],
             'height': image.shape[0],
         }
+        
         return detection, image_info
     
