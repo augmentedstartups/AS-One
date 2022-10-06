@@ -48,8 +48,6 @@ def download_weights(weights):
         model_key = '1t_w9SCwbZAW7icwX_z97-SQz-plXzBgM'
     elif model == 'yolov6s_repopt':
         model_key = '1L_1Crxx-4059xDDUZEf_asWRBVd3PF05'
-
-        
     elif model == 'yolov7-e6e':
         model_key = '1rQR5KiSJiWtpHEniAyeBQdpXFb7Wv1UT'
     elif model == 'yolov7-d6':
