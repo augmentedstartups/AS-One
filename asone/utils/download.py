@@ -35,11 +35,11 @@ def download_weights(weights):
     elif model == 'yolov5l6':
         model_key = '1eaM51cIh8i_EXmg6Nf0Sx2uW53pT7wZR'
     elif model == 'yolov6n':
-        model_key = '1KrtcvjgBD-ujsLABxMPZy3pHbxY6ehr3'
+        model_key = '1NA_u4BkPE_N8HcPmZrd7HyLmvFHOk8qd'
     elif model == 'yolov6t':
-        model_key = '1DICkCStkKEWTkJWQapOdT9E9V35n3HGE'
+        model_key = '16OWncBp-vh-sLDMOR58th3WOGv4envQ1'
     elif model == 'yolov6s':
-        model_key = '1whcQ5p6RrGebax1EoskW8ZTL3cfgfCgh'
+        model_key = '14BE0j654ClLxMq2ySWZNhTCmf48mLyXi'
     elif model == 'yolov6l_relu':
         model_key = '14UfY057QUQoAj6q39PX_qE7U1bBIrIGi'
     elif model == 'yolov6l':
