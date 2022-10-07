@@ -10,9 +10,9 @@ from asone.detectors import Detector
 class ASOne:
     def __init__(self,
                  tracker: int = 0,
-                 detector: str = 'yolov5s',
+                 detector: int = 0,
                  use_cuda: bool = True,
-                 use_onnx: bool = True) -> None:
+                 use_onnx: bool = False) -> None:
 
         self.use_cuda = use_cuda
         self.use_onnx = use_onnx

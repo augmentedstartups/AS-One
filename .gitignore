@@ -13,3 +13,6 @@ yolov7/weights/
 yolor/weights/
 yolox/weights/
 
+build/
+dist/
+asone.egg-info/

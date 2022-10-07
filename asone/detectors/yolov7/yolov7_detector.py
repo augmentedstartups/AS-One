@@ -71,7 +71,7 @@ class YOLOv7Detector:
             # Change image floating point precision if fp16 set to true
             processed_image = processed_image.half() if self.fp16 else processed_image.float() 
             prediction = self.model(processed_image, augment=False)[0]
-     
+        detection = []
         # Postprocess prediction
         if self.use_onnx:
             detection = process_output(prediction,
@@ -95,7 +95,7 @@ class YOLOv7Detector:
             'width': original_image.shape[1],
             'height': original_image.shape[0],
         }
-        if len(detections) > 0:
+        if len(detection) > 0:
             self.boxes = detection[:, :4]
             self.scores = detection[:, 4:5]
             self.class_ids = detection[:, 5:6]
