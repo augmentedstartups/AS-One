@@ -99,6 +99,7 @@ class YOLOv6Detector:
             
             boxes, scores, class_ids = process_and_scale_boxes(prediction, img_height, img_width,
                                                    input_shape[1], input_shape[0])
+            
             detection = []
             for box in range(len(boxes)):
                 pred = np.append(boxes[box], scores[box])
