@@ -6,8 +6,8 @@ import torch
 import onnxruntime
 
 from asone import utils
-from asone.detectors.yolov6.yolov6.utils.yolov6_utils import (prepare_input, process_output,
-                                                             load_pytorch, non_max_suppression) 
+from asone.detectors.yolov6.yolov6.utils.yolov6_utils import (prepare_input, load_pytorch,
+                                                              non_max_suppression, process_and_scale_boxes) 
 sys.path.append(os.path.dirname(__file__))  
 
 class YOLOv6Detector:
@@ -96,9 +96,9 @@ class YOLOv6Detector:
         # Post Procesing, non-max-suppression and rescaling
         if self.use_onnx:
             # Process ONNX Output
-            boxes, scores, class_ids = process_output(prediction, img_height, img_width,
-                                                 input_shape[1], input_shape[0],
-                                                 conf_thres, iou_thres)
+            
+            boxes, scores, class_ids = process_and_scale_boxes(prediction, img_height, img_width,
+                                                   input_shape[1], input_shape[0])
             detection = []
             for box in range(len(boxes)):
                 pred = np.append(boxes[box], scores[box])
