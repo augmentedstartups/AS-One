@@ -42,7 +42,7 @@ dt_obj.start_tracking([VIDEO_PATH])
 
 ### Prerequisite
 
-- Make sure you have docker installed in your system. if not reffer to [Docker Setup](asone-linux/README.md)
+- Make sure you have docker installed in your system. if not reffer to Docker Setup [Linux](asone-linux/README.md), [Windows](asone-windows/README.md)
 
 
 ### Installation
@@ -58,12 +58,20 @@ cd asone
 
 ```
 # if you wanna test on gpu system
+# linux
 docker compose run linux-gpu
+
+# windows
+docker compose run windows-gpu
 ```
 
 ```
 # if you wanna test on cpu system
+# linux
 docker compose run linux
+
+# windows
+docker compose run windows
 ```
 
 3. In docker terminal.
@@ -119,7 +127,11 @@ pip install cython-bbox
 5. Install torch
 
 ```
-pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+# for system with gpu
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
+
+# for system with cpu
+pip install torch torchvision
 ```
 6. Install asone
 
