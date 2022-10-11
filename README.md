@@ -154,3 +154,8 @@ python main.py [VIDEO_PATH]
 # if using cpu
 python main.py [VIDEO_PATH] --cpu
 ```
+
+|Offered By: |Maintained By:|
+|-------------|-------------|
+|[![AugmentedStarups](https://user-images.githubusercontent.com/107035454/195106761-4dd507bb-0e9c-4ad5-af0c-5b9b9feb8f49.png)](https://augmentedstartups.com)|[![AxcelerateAI](https://user-images.githubusercontent.com/107035454/195112652-d2292fa2-9f80-484b-a7a4-18aa055cc05f.png)](https://axcelerate.ai/)|
+
