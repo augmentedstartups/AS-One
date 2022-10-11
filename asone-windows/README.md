@@ -3,8 +3,6 @@
 #### Table of Contents  
 - [System Requirements](#system-requirements) 
 - [Installation with Batch and Configuring Devices](#installation-with-batch-and-configuring-devices)  
-- [Setting up Docker](#setting-up-docker)
-- [Setting up detectron2](#setting-up-detectron2)
 
 <!-- - [Enable WSL 2 Feature](#enable-wsl-2-feature) -->
 <!-- - [Docker Installation for Windows Systems](#docker-installation-for-windows-systems) -->
@@ -50,7 +48,7 @@ Type **winver** in RUN to check the version of the installed windows.
 4. Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) see "Listening on: 56000" 
  - IP stream will be on `http://localhost:56000/mjpeg`
 
- Now go to [Setting up Docker](#setting-up-docker). 
+ You can now go back to [Installation Page](../README.md). 
 
 
 
@@ -139,53 +137,3 @@ setx DISPLAY <ipv4>:0.0
 7. 
  - Open [cam2ip.exe](cam2ip-1.6-64bit-cv/cam2ip.exe) see "Listening on: 56000" 
  - IP stream will be on `http://localhost:56000/mjpeg` -->
-## Setting up Docker
-
-1. Goto asone directory
-```
-cd asone
-```
-2. Build docker contanier <br/>
-   
-```
-docker build -t [IMAGE_NAME]:[TAG] .
-```
-
-- `IMAGE_NAME` = Assign a name to image
-- `TAG` = Assign a tag to image
-
-A valid command will be
-```
-docker build -t yolov5:latest .
-```
-3. Run Docker Contaner
-
-```
-docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v [PATH_TO_LOCAL_DIR]:/workspace/  -it [IMAGE_NAME]:[TAG]
-```
-
-- `PATH_TO_LOCAL_DIR` = Path to asone directory or use `${PWD}` if already in that directory
-
-Example: `docker run --gpus all --env DISPLAY=%DISPLAY% --net=host -v C:\asone\asone\:/workspace/ -it asone:first` <br/>
-
-
-or run the following command to run docker.
-```
-docker compose run windows
-```
-
-4. In Docker terminal run test-webcam.py or test-display.py file
-
-```
-python test-webcam.py or python test-display.py
-```
-
-- `PATH_TO_TEST_IMAGE` = Path of test image
-- `PATH_TO_OUTPUT_IMAGE` = Path of Results
-- `DEVICE` = device to use i.e. cpu or gpu
-
-## Setting up detectron2
-1. Clone the Repo
-```
-git clone https://github.com/facebookresearch/detectron2.git
-```
