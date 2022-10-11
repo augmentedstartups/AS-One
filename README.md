@@ -43,7 +43,7 @@ dt_obj.start_tracking('sample_videos/test.mp4')
 ```
 Results on provided sample video
 
-[![Demo](https://share.gifyoutube.com/KzB6Gb.gif)](./results/test.mp4)
+[![Demo](https://share.gifyoutube.com/KzB6Gb.gif)](results/test.mp4)
 
 
 
