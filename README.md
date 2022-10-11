@@ -1,7 +1,7 @@
 # ASOne
 
 #### Table of Contents
-- [Introduction](#introduction)
+- [Introduction](introduction)
 - System Setup
     - [Linux](asone-linux)
     - [Windows](asone-windows)
@@ -42,7 +42,7 @@ dt_obj.start_tracking([VIDEO_PATH])
 
 ### Prerequisite
 
-- Make sure you have docker installed in your system. if not reffer to Docker Setup [Linux](asone-linux/README.md), [Windows](asone-windows/README.md)
+- Make sure you have docker installed in your system. if not reffer to [Docker Setup](asone-linux/README.md)
 
 
 ### Installation
@@ -53,25 +53,20 @@ dt_obj.start_tracking([VIDEO_PATH])
 git clone https://github.com/axcelerateai/asone.git
 cd asone
 ```
-
+2. For windows, Run this command in command propmt.
+```
+set PWD=%cd%
+```
 2. Run docker coompose command.
 
 ```
 # if you wanna test on gpu system
-# linux
 docker compose run linux-gpu
-
-# windows
-docker compose run windows-gpu
 ```
 
 ```
 # if you wanna test on cpu system
-# linux
 docker compose run linux
-
-# windows
-docker compose run windows
 ```
 
 3. In docker terminal.
@@ -127,11 +122,7 @@ pip install cython-bbox
 5. Install torch
 
 ```
-# for system with gpu
-pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
-
-# for system with cpu
-pip install torch torchvision
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 6. Install asone
 
