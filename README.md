@@ -43,9 +43,7 @@ dt_obj.start_tracking('sample_videos/test.mp4')
 ```
 Results on provided sample video
 
-[![Demo](https://share.gifyoutube.com/KzB6Gb.gif)](results/test.mp4)
-
-
+https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
 
 
 # Asone Library Installation
