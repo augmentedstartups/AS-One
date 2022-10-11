@@ -1,0 +1,4 @@
+include detectors/yolor/cfg/*.cfg
+include detectors/data/*.names
+include detectors/data/*.yaml
+include detectors/data/*.yml
