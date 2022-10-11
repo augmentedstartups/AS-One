@@ -1,6 +1,7 @@
 # ASOne
 
 #### Table of Contents
+- [Introduction](introduction)
 - System Setup
     - [Linux](asone-linux)
     - [Windows](asone-windows)
@@ -9,6 +10,30 @@
         - [Prerequisite](#prerequisite)
         - [Installation](#installation)
     - [Install Locally](#install-locally)
+
+
+
+# Introduction
+
+Asone is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
+This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
+
+Usage:
+
+```
+pip install asone
+```
+
+```
+import asone
+from asone import ASOne
+
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
+dt_obj.start_tracking([VIDEO_PATH])
+
+```
+
+- `VIDEO_PATH` = Path of input video
 
 
 # Asone Library Installation
@@ -94,7 +119,7 @@ pip install cython-bbox
 5. Install torch
 
 ```
-pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 6. Install asone
 
