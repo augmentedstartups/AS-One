@@ -36,6 +36,7 @@ sudo reboot
 #### Install using Shell Script
 
 ```
+cd asone-linux
 chmod a+x docker-installation.sh
 ./docker-installation.sh
 ```
@@ -65,6 +66,11 @@ sudo rm -rf /var/lib/apt/lists/*
 ./docker-installation.sh
 ```
 
+```
+# jump back to main folder
+cd ..
+```
+
 If everything is done successfully you can return to [Installation Page](../README.md) 
 
-- In case shell script keeps failing or you want to install manually follow steps in [Manual Installation](Instructions/Manual-Installation.md)
+In case shell script keeps failing or you want to install manually follow steps in [Manual Installation](Instructions/Manual-Installation.md)

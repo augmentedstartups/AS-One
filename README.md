@@ -18,20 +18,18 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 Usage:
 
 ```
-pip install numpy Cython
+pip install asone
+
 
 # for windows
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 # for linux
 pip install cython-bbox
 
-# for cpu
-pip install torch torchvision
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 
 
-pip install asone
 ```
 
 Sample code:
@@ -122,11 +120,14 @@ source .env/bin/activate
 .env\Scripts\activate
 ```
 
-4. Intall pre-requisite
+4. Install asone
 
 ```
-pip install numpy Cython
+pip install .
 ```
+
+5. Intall pre-requisite
+
 ```
 # for windows
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
@@ -135,22 +136,14 @@ pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbo
 pip install cython-bbox
 ```
 
-5. Install torch
+6. Install torch
 
 ```
-# for cpu
-pip install torch torchvision
-
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
-6. Install asone
 
-```
-pip install .
-```
-
-5. Test it by runiing main.py
+7. Test it by runiing main.py
 
 ```
 # if using gpu
