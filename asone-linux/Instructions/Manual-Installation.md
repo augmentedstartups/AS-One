@@ -66,3 +66,4 @@ sudo gpasswd -a $USER docker
 newgrp docker
 
 ```
+Now you can go back to [Installation Page](../../README.md)
