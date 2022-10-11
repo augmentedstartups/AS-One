@@ -9,7 +9,7 @@ MAINTAINER_EMAIL = ''
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1.0-dev0'
+VERSION = '0.1.1-dev1'
 
 
 requirements_txt = pathlib.Path('requirements.txt').open()
