@@ -6,10 +6,10 @@ DISTNAME = 'asone'
 DESCRIPTION = ''
 MAINTAINER = 'AxcelerateAI'
 MAINTAINER_EMAIL = ''
-URL = 'https://github.com/axcelerateai/asone-library'
+URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1-dev'
+VERSION = '0.1'
 
 
 requirements_txt = pathlib.Path('requirements.txt').open()
@@ -80,6 +80,7 @@ def setup_package():
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
+            'Programming Language :: Python :: 3.10',
         ],
     )
 

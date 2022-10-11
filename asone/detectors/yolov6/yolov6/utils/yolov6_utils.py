@@ -55,7 +55,7 @@ def process_output(output,  img_height, img_width,
     class_ids = np.argmax(predictions[:, 5:], axis=1)
 
     # Get bounding boxes for each object
-    boxes = process_and_scale_boxes(predictions, img_height, img_width,    
+    boxes = extract_boxes(predictions, img_height, img_width,    
                                input_width, input_height)
 
     # Apply non-maxima suppression to suppress weak, overlapping bounding boxes
@@ -106,22 +106,19 @@ def prepare_input(image, input_width, input_height):
 
     return input_tensor
 
-def process_and_scale_boxes(predictions, img_height, img_width,    
+def extract_boxes(predictions, img_height, img_width,    
                  input_width, input_height):
-    
-    predictions = np.delete(predictions, 0, axis=1)
     # Extract boxes from predictions
     boxes = predictions[:, :4]
+
     # Scale boxes to original image dimensions
     boxes /= np.array([input_width, input_height, input_width, input_height])
     boxes *= np.array([img_width, img_height, img_width, img_height])
+
     # Convert boxes to xyxy format
-    # boxes = xywh2xyxy(boxes)
-    
-    boxes = boxes[:,:4]
-    class_ids = predictions[:,4:5]
-    scores = predictions[:,5:]
-    return boxes, scores, class_ids
+    boxes = xywh2xyxy(boxes)
+
+    return boxes
 
 def load_pytorch(weights, map_location=None, inplace=True, fuse=False):
     """Load model from checkpoint file."""

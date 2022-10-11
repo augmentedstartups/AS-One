@@ -10,13 +10,14 @@ fi
 echo "[INFO]: Updating apt-package index..."
 echo "[INFO]: Updating apt-package index..." >> logs.txt
 
+
 if sudo apt-get update -y >> logs.txt; then
     echo "[INFO]: apt-package index updated successfuly!"
     echo "[INFO]: apt-package index updated successfuly!" >> logs.txt
 else
     echo "[ERROR]: Error while updating apt-package index. Check logs.txt file for more info."
     echo "[ERROR]: Error while updating apt-package index." >> logs.txt
-    exit 1
+    # exit 1
 fi
 
 echo "[INFO]: Installing required apt packages..."
@@ -80,7 +81,7 @@ if sudo apt-get update -y >> logs.txt; then
 else
     echo "[ERROR]: Error updating apt packages. Check logs.txt file for more info."
     echo "[ERROR]: Error updating apt packages." >> logs.txt
-    exit 1
+    # exit 1
 fi
 
 echo "[INFO]: Adding docker to sudo group..."
