@@ -65,6 +65,6 @@ sudo rm -rf /var/lib/apt/lists/*
 ./docker-installation.sh
 ```
 
-If everything is done successfully you can return to [Installation Page](../asone/Readme.md) 
+If everything is done successfully you can return to [Installation Page](../) 
 
 - In case shell script keeps failing or you want to install manually follow steps in [Manual Installation](Instructions/Manual-Installation.md)
