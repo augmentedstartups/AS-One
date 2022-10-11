@@ -1,5 +1,7 @@
 # ASOne
 
+![croped](https://user-images.githubusercontent.com/107035454/195083948-4873d60a-3ac7-4279-8770-535488f4a097.png)
+
 #### Table of Contents
 - [Introduction](#introduction)
 - Asone Library Installation
