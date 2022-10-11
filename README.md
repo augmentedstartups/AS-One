@@ -157,5 +157,5 @@ python main.py [VIDEO_PATH] --cpu
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
-|[![AugmentedStarups](https://user-images.githubusercontent.com/107035454/195106761-4dd507bb-0e9c-4ad5-af0c-5b9b9feb8f49.png)](https://augmentedstartups.com)|[![AxcelerateAI](https://user-images.githubusercontent.com/107035454/195114870-691c8a52-fcf0-462e-9e02-a720fc83b93f.png)](https://axcelerate.ai/)|
+|[![AugmentedStarups](https://user-images.githubusercontent.com/107035454/195115263-d3271ef3-973b-40a4-83c8-0ade8727dd40.png)](https://augmentedstartups.com)|[![AxcelerateAI](https://user-images.githubusercontent.com/107035454/195114870-691c8a52-fcf0-462e-9e02-a720fc83b93f.png)](https://axcelerate.ai/)|
 
