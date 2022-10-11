@@ -1,10 +1,7 @@
 # ASOne
 
 #### Table of Contents
-- [Introduction](introduction)
-- System Setup
-    - [Linux](asone-linux)
-    - [Windows](asone-windows)
+- [Introduction](#introduction)
 - Asone Library Installation
     - [Install In Docker Container](#install-in-docker-container)
         - [Prerequisite](#prerequisite)
@@ -21,6 +18,19 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 Usage:
 
 ```
+pip install numpy Cython
+
+# for windows
+pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
+# for linux
+pip install cython-bbox
+
+# for cpu
+pip install torch torchvision
+# for gpu
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
+
+
 pip install asone
 ```
 
@@ -42,7 +52,7 @@ dt_obj.start_tracking([VIDEO_PATH])
 
 ### Prerequisite
 
-- Make sure you have docker installed in your system. if not reffer to [Docker Setup](asone-linux/README.md)
+- Make sure you have docker installed in your system. if not reffer to docker installation for [Linux](asone-linux/README.md), [Windows](asone-windows/README.md)
 
 
 ### Installation
@@ -53,20 +63,25 @@ dt_obj.start_tracking([VIDEO_PATH])
 git clone https://github.com/axcelerateai/asone.git
 cd asone
 ```
-2. For windows, Run this command in command propmt.
+2. If using windows, Run this command in command prompt.
 ```
 set PWD=%cd%
 ```
 2. Run docker coompose command.
 
 ```
-# if you wanna test on gpu system
+# if you wanna test on gpu system (linux)
 docker compose run linux-gpu
+
+# if you wanna test on gpu system (windows)
+docker compose run windows-gpu
 ```
 
 ```
-# if you wanna test on cpu system
+# if you wanna test on cpu system (linux)
 docker compose run linux
+# if you wanna test on cpu system (windows)
+docker compose run windows
 ```
 
 3. In docker terminal.
@@ -101,8 +116,7 @@ python3 -m venv .env
 # linux
 source .env/bin/activate
 
-# Windows
-
+# windows
 .env\Scripts\activate
 ```
 
@@ -122,7 +136,11 @@ pip install cython-bbox
 5. Install torch
 
 ```
-pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+# for cpu
+pip install torch torchvision
+
+# for gpu
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 6. Install asone
 
