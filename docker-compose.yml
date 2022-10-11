@@ -41,7 +41,7 @@ services:
         restart: always
         privileged: true
         environment:
-            DISPLAY: ${DISPLAY}
+            DISPLAY: $DISPLAY
 
     windows-gpu:
         build: .
@@ -54,7 +54,7 @@ services:
         restart: always
         privileged: true
         environment:
-            DISPLAY: ${DISPLAY}
+            DISPLAY: $DISPLAY
         deploy:
             resources:
                 reservations:
