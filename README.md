@@ -72,18 +72,14 @@ set PWD=%cd%
 2. Run docker coompose command.
 
 ```
-# if you wanna test on gpu system (linux)
-docker compose run linux-gpu
+# if you wanna test on gpu system
+docker compose run asone-gpu
 
-# if you wanna test on gpu system (windows)
-docker compose run windows-gpu
 ```
 
 ```
-# if you wanna test on cpu system (linux)
-docker compose run linux
-# if you wanna test on cpu system (windows)
-docker compose run windows
+# if you wanna test on cpu system
+docker compose run asone
 ```
 
 3. In docker terminal.
