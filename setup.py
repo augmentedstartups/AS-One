@@ -78,8 +78,8 @@ def setup_package():
         classifiers=[
             'Development Status :: 1 - Planning',
             'Intended Audience :: Science/Research',
-            'License :: OSI Approved :: BSD License',
-            'Operating System :: POSIX :: Linux',
+            'License :: OSI Approved :: MIT License',
+            'Operating System :: POSIX :: Linux :: Windows',
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
