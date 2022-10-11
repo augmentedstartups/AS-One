@@ -5,10 +5,7 @@
   - [Ubuntu](#ubuntu)
     - [Prerequisite](#prerequisite)
     - [Install Using Shell Script](#install-using-shell-script)
-- [Test Docker](#test-docker)
-  - [Test using Compose File](#test-using-docker-compose-file)
-  - [Test Detectron2](#test-detectron2)
-
+    
 # Docker Installation
 
 ## Ubuntu
