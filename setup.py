@@ -9,8 +9,10 @@ MAINTAINER_EMAIL = ''
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1.2.dev0'
+VERSION = '0.1.2.dev3'
 
+with open('pypi_README.md') as f:
+    long_description = f.read()
 
 requirements_txt = pathlib.Path('requirements.txt').open()
 
@@ -20,6 +22,8 @@ def setup_package():
         name=DISTNAME,
         version=VERSION,
         description=DESCRIPTION,
+        long_description = long_description,
+        long_description_content_type='text/markdown',
         url=DOWNLOAD_URL,
         author=MAINTAINER,
         author_email=MAINTAINER_EMAIL,
