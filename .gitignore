@@ -1,5 +1,4 @@
 .env/
-results/
 **__pycache__**
 *.onnx
 *.pt

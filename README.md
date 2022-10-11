@@ -39,11 +39,13 @@ import asone
 from asone import ASOne
 
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-dt_obj.start_tracking([VIDEO_PATH])
-
+dt_obj.start_tracking('sample_videos/test.mp4')
 ```
+Results on provided sample video
 
-- `VIDEO_PATH` = Path of input video
+[![Demo](https://share.gifyoutube.com/KzB6Gb.gif)](./results/test.mp4)
+
+
 
 
 # Asone Library Installation
