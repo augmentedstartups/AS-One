@@ -5,7 +5,7 @@ import argparse
 
 def main(args):
     dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=args.use_cuda)
-    dt_obj.start_tracking(args.video_path)
+    dt_obj.track_video(args.video_path)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
