@@ -10,6 +10,12 @@
         - [ByteTrack](#bytetrack)
         - [NorFair](#norfair)
     - [Detectors](#detectors)
+        - [YOLOv5](#yolov5)
+        - [YOLOv6](#yolov6)
+        - [YOLOv7](#yolov7)
+        - [YOLOr](#yolor)
+        - [YOLOx](#yolox)
+
 - Asone Library Installation
     - [Install In Docker Container](#install-in-docker-container)
         - [Prerequisite](#prerequisite)
@@ -87,38 +93,41 @@ cv2.imwrite('result.png', img)
 ```
 
 # Benchmarking
+## Hardware Used:
+- CPU: Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
+- GPU: 8GB (RTX2080)  
 
 ## Trackers
 
 #### DeepSort
 
-| Model           |   Hardware | FPS-GPU | FPS-CPU
-|----------------|----------------|-----------| -----------|
-|[DeepSort-Pytorch-YOLOv3](https://github.com/ZQPei/deep_sort_pytorch)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|12.2|2.5|
-|[DeepSort-ONNX-YOLOv3](https://github.com/ZQPei/deep_sort_pytorch)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|10.3|2.7|
-|[PP-DeepSort](https://github.com/PaddlePaddle/PaddleDetection)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|7.9|-|
-|[mmtracking-DeepSort](https://github.com/open-mmlab/mmtracking/tree/master/configs/mot/deepsort)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|8.2|-|
-|[StrongSort-Pytorch-Yolov5](https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet.git)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|8.5|1|
-|[DeepSort-ONNX-Yolov5](https://github.com/ZQPei/deep_sort_pytorch)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|13|3.2|
-|[StrongSort-ONNX-Yolov5](https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet.git)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|11|5.5|
+| Model           | FPS-GPU | FPS-CPU
+|----------------|-----------| -----------|
+|DeepSort-Pytorch-YOLOv3|12.2|2.5|
+|DeepSort-ONNX-YOLOv3|10.3|2.7|
+|PP-DeepSort|7.9|-|
+|mmtracking-DeepSort|8.2|-|
+|StrongSort-Pytorch-Yolov5|8.5|1|
+|DeepSort-ONNX-Yolov5|13|3.2|
+|StrongSort-ONNX-Yolov5|11|5.5|
 
 ### ByteTrack
 
-| Model           |   Hardware | FPS-GPU | FPS-CPU
-|----------------|----------------|-----------| -----------|
-|[ByteTrack-Pytorch-YOLOX](https://github.com/ifzhang/ByteTrack)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|9|0.5|
-|[ByteTrack-ONNX-YOLOX](https://github.com/ifzhang/ByteTrack)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|4|0.5|
-|[yolox-bytetrack-mcmot-sample](https://github.com/Kazuhito00/yolox-bytetrack-mcmot-sample)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|48|-|
-|[ByteTrack-Sample-YOLOX](https://github.com/Kazuhito00/yolox-bytetrack-mcmot-sample)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|20.9|7|
-|[ByteTrack-ONNX-YOLOv5s](https://github.com/ifzhang/ByteTrack)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|20.1|10.7|
-|[ByteTrack-Sample-YOLOv5s](https://github.com/Kazuhito00/yolox-bytetrack-mcmot-sample)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|33.7|17.4|
+| Model           |  FPS-GPU | FPS-CPU
+|---------------- |-----------| -----------|
+|ByteTrack-Pytorch-YOLOX|9|0.5|
+|ByteTrack-ONNX-YOLOX|4|0.5|
+|yolox-bytetrack-mcmot-sample|48|-|
+|ByteTrack-Sample-YOLOX|20.9|7|
+|ByteTrack-ONNX-YOLOv5s|20.1|10.7|
+|ByteTrack-Sample-YOLOv5s|33.7|17.4|
 
 ### NorFair
 
-| Model           |   Hardware | FPS-GPU | FPS-CPU
-|----------------|----------------|-----------| -----------|
-|[tryolab-YOLOv4](https://github.com/tryolabs/norfair)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|27.3|3.7|
-|[tryolab-ONNX-YOLOv5s](https://github.com/tryolabs/norfair)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|25.8|12|
+| Model          | FPS-GPU | FPS-CPU
+|--------------- |-----------| -----------|
+|tryolab-YOLOv4|27.3|3.7|
+|tryolab-ONNX-YOLOv5s|25.8|12|
 
 ## Detectors
 ### YOLOv5
@@ -131,8 +140,20 @@ cv2.imwrite('result.png', img)
 |:-------------------------------:|:-----------------------------:|
 |<table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV6N_PYTORCH</td>  <td>65.4</td>  <td>35.32</td> </tr>  <tr> <td>YOLOV6T_PYTORCH</td> <td>63</td>  <td>15.21</td>    </tr>  <tr> <td>YOLOV6S_PYTORCH</td> <td>49.24</td>  <td>20</td>    </tr> <tr> <td>YOLOV6M_PYTORCH</td> <td>35</td>  <td>9.96</td>    </tr><tr> <td>YOLOV6L_PYTORCH</td> <td>31</td>  <td>6.2</td> </tr><tr> <td>YOLOV6L_RELU_PYTORCH</td> <td>27</td>  <td>6.3</td>    </tr><tr> <td>YOLOV6S_REPOPT_PYTORCH</td> <td>63.5</td>  <td>39</td>    </tr> </tbody>  </table>| <table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV6N_ONNX</td>  <td>50</td>  <td>30</td> </tr>  <tr> <td>YOLOV6T_ONNX</td> <td>45.8</td>  <td>16</td>    </tr>  <tr> <td>YOLOV6S_ONNX</td> <td>41</td>  <td>13.8</td>    </tr> <tr> <td>YOLOV6M_ONNX</td> <td>25</td>  <td>6.07</td>    </tr><tr> <td>YOLOV6L_ONNNX</td> <td>17.7</td>  <td>3.32</td> </tr><tr> <td>YOLOV6L_RELU_ONNX</td> <td>19.15</td>  <td>4.36</td>    </tr><tr> <td>YOLOV6S_REPOPT_ONNX</td> <td>63.5</td>  <td>39</td>    </tr> </tbody>  </table>|
 
+### YOLOv7
+|    Pytorch                      |ONNX                         |
+|:-------------------------------:|:-----------------------------:|
+|<table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV7_TINY_PYTORCH</td>  <td>53</td>  <td>19</td> </tr>  <tr> <td>YOLOV7_PYTORCH</td> <td>38</td>  <td>6.83</td>    </tr>  <tr> <td>YOLOV7_X_PYTORCH</td> <td>28</td>  <td>4.36</td>    </tr> <tr> <td>YOLOV7_W6_PYTORCH</td> <td>32.7</td>  <td>7.26</td>    </tr><tr> <td>YOLOV7_E6_PYTORCH</td> <td>15.26</td>  <td>3.07</td> </tr><tr> <td>YOLOV7_D6_PYTORCH</td> <td>21</td>  <td>3.78</td>    </tr><tr> <td>YOLOV7_E6E_PYTORCH</td> <td>24</td>  <td>3.36</td>    </tr> </tbody>  </table>| <table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV7_TINY_ONNX</td>  <td>41.6</td>  <td>22</td> </tr>  <tr> <td>YOLOV7_ONNX</td> <td>26</td>  <td>3.78</td>    </tr>  <tr> <td>YOLOV7_X_ONNX</td> <td>19.08</td>  <td>2.35</td>    </tr> <tr> <td>YOLOV7_W6_ONNX</td> <td>28.6</td>  <td>5.2</td>    </tr><tr> <td>YOLOV7_E6_ONNX</td> <td>14.3</td>  <td>2.97</td> </tr><tr> <td>YOLOV7_D6_ONNX</td> <td>18.32</td>  <td>2.58</td>    </tr><tr> <td>YOLOV7_E6E_ONNX</td> <td>15.26</td>  <td>2.09</td>    </tr> </tbody>  </table>|
 
+### YOLOr
+|    Pytorch                      |ONNX                         |
+|:-------------------------------:|:-----------------------------:|
+|<table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOR_CSP_X_PYTORCH</td>  <td>28.6</td>  <td>1.83</td> </tr>  <tr> <td>YOLOR_CSP_X_STAR_PYTORCH</td> <td>30</td>  <td>1.76</td>    </tr>  <tr> <td>YOLOR_CSP_STAR_PYTORCH</td> <td>38.1</td>  <td>2.86</td>    </tr> <tr> <td>YOLOR_CSP_PYTORCH</td> <td>38</td>  <td>2.77</td>    </tr><tr> <td>YOLOR_P6_PYTORCH</td> <td>20</td>  <td>1.57</td> </tr></tbody>  </table>| <table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOR_CSP_X_ONNX</td>  <td>15.7</td>  <td>2.53</td> </tr>  <tr> <td>YOLOR_CSP_X_STAR_ONNX</td> <td>15.79</td>  <td>2.05</td>    </tr>  <tr> <td>YOLOR_CSP_STAR_ONNX</td> <td>18.32</td>  <td>3.34</td>    </tr> <tr> <td>YOLOR_CSP_ONNX</td> <td>15.7</td>  <td>2.53</td>    </tr><tr> <td>YOLOR_P6_ONNX</td> <td>25.4</td>  <td>5.58</td> </tr></tbody>  </table>|
 
+### YOLOx
+|    Pytorch                      |ONNX                         |
+|:-------------------------------:|:-----------------------------:|
+|<table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOX_L_PYTORCH</td>  <td>2.58</td>  <td>2.31</td> </tr>  <tr> <td>YOLOX_NANO_PYTORCH</td> <td>35</td>  <td>32</td>    </tr>  <tr> <td>YOLOX_TINY_PYTORCH</td> <td>25.4</td>  <td>25.4</td>    </tr> <tr> <td>YOLOX_DARKNET_PYTORCH</td> <td>2</td>  <td>1.94</td>    </tr><tr> <td>YOLOX_S_PYTORCH</td> <td>9.54</td>  <td>9.7</td> </tr><tr> <td>YOLOX_M_PYTORCH</td> <td>4.4</td>  <td>4.36</td>    </tr><tr> <td>YOLOX_X_PYTORCH</td> <td>15.64</td>  <td>1.39</td>    </tr> </tbody>  </table>| <table>  <thead>  <tr><th>Model Name</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOX_L_ONNX</td>  <td>22.9</td>  <td>3.07</td> </tr>  <tr> <td>YOLOX_NANO_ONNX</td> <td>59</td>  <td>54</td>    </tr>  <tr> <td>YOLOX_TINY_ONNX</td> <td>60</td>  <td>35</td>    </tr> <tr> <td>YOLOX_DARKNET_ONNX</td> <td>24</td>  <td>3.36</td>    </tr><tr> <td>YOLOX_S_ONNX</td> <td>45</td>  <td>13.8</td> </tr><tr> <td>YOLOX_M_ONNX</td> <td>32</td>  <td>6.54</td>    </tr><tr> <td>YOLOX_X_ONNX</td> <td>15.79</td>  <td>2.03</td>    </tr> </tbody>  </table>|
 
 
 
