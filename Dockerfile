@@ -17,7 +17,7 @@ ADD asone asone
 
 ADD sample_videos sample_videos
 ADD main.py main.py
-ADD demo.py demo.py
+# ADD demo.py demo.py
 
 ADD setup.py setup.py
 ADD requirements.txt requirements.txt
