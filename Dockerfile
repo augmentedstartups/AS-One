@@ -20,15 +20,16 @@ ADD main.py main.py
 ADD demo.py demo.py
 
 ADD setup.py setup.py
-ADD MANIFEST.in MANIFEST.in
 ADD requirements.txt requirements.txt
 
 
 RUN pip3 install Cython numpy
 RUN pip3 install cython-bbox
+ADD pypi_README.md pypi_README.md
 
-RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+RUN pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 RUN pip3 install .
+
 
 WORKDIR /workspace
 # Entry Point

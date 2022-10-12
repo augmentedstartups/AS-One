@@ -5,21 +5,21 @@ services:
         image: "asone:latest"
         volumes:
             - ${PWD}:/workspace
-            # - $HOME/.Xauthority:/root/.Xauthority:rw
-            # - /dev/video0:/dev/video0
+            - $HOME/.Xauthority:/root/.Xauthority:rw
+            - /dev/video0:/dev/video0
         network_mode: host
         restart: always
         privileged: true
         environment:
             DISPLAY: $DISPLAY
-       
+
     linux-gpu:
         build: .
         image: "asone:latest"
         volumes:
             - ${PWD}:/workspace
-            # - $HOME/.Xauthority:/root/.Xauthority:rw
-            # - /dev/video0:/dev/video0
+            - $HOME/.Xauthority:/root/.Xauthority:rw
+            - /dev/video0:/dev/video0
         network_mode: host
         restart: always
         privileged: true
@@ -30,6 +30,7 @@ services:
                 reservations:
                     devices:
                         - capabilities: [gpu]
+
     windows:
         build: .
         image: "asone:latest"
