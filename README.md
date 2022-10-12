@@ -26,6 +26,8 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 Usage:
 
 ```
+pip install numpy Cython
+
 pip install asone
 
 
@@ -170,6 +172,8 @@ source .env/bin/activate
 4. Install asone
 
 ```
+pip install numpy Cython
+
 pip install .
 ```
 
