@@ -8,11 +8,18 @@
 Asone is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 
+
+### Prerequisite
+
+- If using windows, Make sure you have [MS Build tools](https://devblogs.microsoft.com/cppblog/announcing-visual-c-build-tools-2015-standalone-c-tools-for-build-environments) installed in system. 
+
+
 Usage:
 
 ```
-pip install asone
+pip install numpy Cython
 
+pip install asone
 
 # for windows
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
@@ -32,7 +39,11 @@ import asone
 from asone import ASOne
 
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-dt_obj.start_tracking('sample_videos/test.mp4')
+dt_obj.track_video('sample_videos/test.mp4')
+
+# To track using webcam
+dt_obj.track_webcam()
+
 ```
 Results on provided sample video
 
