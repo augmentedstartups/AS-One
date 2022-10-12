@@ -33,15 +33,23 @@ class ASOne:
 
     def start_tracking(self, video_path, output_dir='results', save_result=True, display=False):
 
+
+        if not os.path.isfile(video_path):
+            filename = 'result.mp4'
+            fps = 30
+        else:
+            filename = os.path.basename(video_path)
+
         cap = cv2.VideoCapture(video_path)
         width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         fps = cap.get(cv2.CAP_PROP_FPS)
         frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 
+
         if save_result:
             os.makedirs(output_dir, exist_ok=True)
-            save_path = os.path.join(output_dir, os.path.basename(video_path))
+            save_path = os.path.join(output_dir, filename)
             logger.info(f"video save path is {save_path}")
 
             video_writer = cv2.VideoWriter(
@@ -72,7 +80,7 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000), )
 
-            im0 = utils.draw_boxes(im0, bboxes_xyxy, class_ids, ids)
+            im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
