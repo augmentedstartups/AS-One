@@ -7,6 +7,7 @@ import asone.utils as utils
 from asone.trackers import Tracker
 from asone.detectors import Detector
 
+
 class ASOne:
     def __init__(self,
                  tracker: int = 0,
@@ -28,24 +29,30 @@ class ASOne:
 
     def get_tracker(self, tracker: int):
 
-        tracker = Tracker(tracker, self.detector,  use_cuda=self.use_cuda, use_onnx=self.use_onnx)
+        tracker = Tracker(tracker, self.detector,
+                          use_cuda=self.use_cuda, use_onnx=self.use_onnx)
         return tracker
 
-    def start_tracking(self, video_path, output_dir='results', save_result=True, display=False):
+    def track_video(self, video_path, output_dir='results', save_result=True, display=False):
+        output_filename = os.path.basename(video_path)
+        self._start_tracking(video_path, output_filename,
+                             output_dir=output_dir, save_result=save_result, display=display)
 
+    def track_webcam(self, cam_id=0, output_dir='results', save_result=False, display=True):
 
-        if not os.path.isfile(video_path):
-            filename = 'result.mp4'
-            fps = 30
-        else:
-            filename = os.path.basename(video_path)
+        output_filename = 'results.mp4'
+        self._start_tracking(cam_id, output_filename,
+                             output_dir=output_dir, save_result=save_result, display=display)
 
-        cap = cv2.VideoCapture(video_path)
+    def _start_tracking(self, stream_path, filename,  fps=None, output_dir='results', save_result=True, display=False):
+
+        cap = cv2.VideoCapture(stream_path)
         width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        fps = cap.get(cv2.CAP_PROP_FPS)
         frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 
+        if fps is None:
+            fps = cap.get(cv2.CAP_PROP_FPS)
 
         if save_result:
             os.makedirs(output_dir, exist_ok=True)
@@ -85,8 +92,9 @@ class ASOne:
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
             prevTime = currTime
-            cv2.line(im0, (20,25), (127,25), [85,45,255], 30)
-            cv2.putText(im0, f'FPS: {int(fps)}', (11, 35), 0, 1, [225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
+            cv2.line(im0, (20, 25), (127, 25), [85, 45, 255], 30)
+            cv2.putText(im0, f'FPS: {int(fps)}', (11, 35), 0, 1, [
+                        225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
 
             if display:
                 cv2.imshow(' Sample', im0)
