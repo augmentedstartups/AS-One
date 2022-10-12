@@ -9,7 +9,7 @@ MAINTAINER_EMAIL = ''
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1.2.dev3'
+VERSION = '0.1.2.dev4'
 
 with open('pypi_README.md') as f:
     long_description = f.read()
@@ -79,7 +79,8 @@ def setup_package():
             'Development Status :: 1 - Planning',
             'Intended Audience :: Science/Research',
             'License :: OSI Approved :: MIT License',
-            'Operating System :: POSIX :: Linux :: Windows',
+            'Operating System :: POSIX :: Linux',
+            'Operating System :: Microsoft :: Windows :: Windows 10',
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
