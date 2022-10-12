@@ -46,9 +46,6 @@ pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbo
 # for linux
 pip install cython-bbox
 
-# for cpu
-pip install torch torchvision
-
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 
@@ -255,9 +252,6 @@ pip install cython-bbox
 6. Install torch
 
 ```
-# for cpu
-pip install torch torchvision
-
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
