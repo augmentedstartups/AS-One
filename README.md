@@ -100,8 +100,8 @@ https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada
 
 ### Prerequisite
 
-- Make sure you have docker installed in your system. if not reffer to docker installation for [Linux](asone-linux/README.md), [Windows](asone-windows/README.md)
-
+- Make sure you have docker installed in your system. if not, reffer to docker installation for [Linux](asone-linux/README.md), [Windows](asone-windows/README.md)
+- If using windows, Make sure you have [MS Build tools](https://devblogs.microsoft.com/cppblog/announcing-visual-c-build-tools-2015-standalone-c-tools-for-build-environments) installed in system, 
 
 ### Installation
 
