@@ -3,7 +3,7 @@ from asone.trackers import NorFair
 from asone.trackers import DeepSort
 
 class Tracker:
-    def __init__(self, tracker: int, detector: object, use_cuda=True, use_onnx=True) -> None:
+    def __init__(self, tracker: int, detector: object, use_cuda=True) -> None:
         
         self.trackers = {
             '0': ByteTrack,

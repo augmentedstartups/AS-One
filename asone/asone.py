@@ -12,11 +12,9 @@ class ASOne:
     def __init__(self,
                  tracker: int = 0,
                  detector: int = 0,
-                 use_cuda: bool = True,
-                 use_onnx: bool = False) -> None:
+                 use_cuda: bool = True) -> None:
 
         self.use_cuda = use_cuda
-        self.use_onnx = use_onnx
 
         # get detector object
         self.detector = self.get_detector(detector)
@@ -30,7 +28,7 @@ class ASOne:
     def get_tracker(self, tracker: int):
 
         tracker = Tracker(tracker, self.detector,
-                          use_cuda=self.use_cuda, use_onnx=self.use_onnx)
+                          use_cuda=self.use_cuda)
         return tracker
 
     def track_video(self, video_path, output_dir='results', save_result=True, display=False):
@@ -42,7 +40,7 @@ class ASOne:
 
         output_filename = 'results.mp4'
         self._start_tracking(cam_id, output_filename,
-                             output_dir=output_dir, save_result=save_result, display=display)
+                             output_dir=output_dir, fps=29, save_result=save_result, display=display)
 
     def _start_tracking(self, stream_path, filename,  fps=None, output_dir='results', save_result=True, display=False):
 
