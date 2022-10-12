@@ -11,8 +11,8 @@ import time
 import copy
 
 def main(args):
-    detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector()
-    tracker = Tracker(asone.BYTETRACK, detector).get_tracker()
+    detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=args.use_cuda).get_detector()
+    tracker = Tracker(asone.BYTETRACK, detector, use_cuda=args.use_cuda).get_tracker()
 
     cap = cv2.VideoCapture(args.video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -53,7 +53,7 @@ def main(args):
             'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                              elapsed_time * 1000), )
 
-        im0 = utils.draw_boxes(im0, bboxes_xyxy, class_ids, ids)
+        im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids)
 
         currTime = time.time()
         fps = 1 / (currTime - prevTime)
@@ -81,10 +81,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('video_path', help='Path to input video')
-    parser.add_argument('--tracker', default='byte_track',
-                        help='Path to input video')
-    parser.add_argument('--detector', default='yolov5s',
-                        help='Path to input video')
     parser.add_argument('--cpu', default=True,
                         action='store_false', dest='use_cuda', help='run on cpu')
     parser.add_argument('--display', default=False,
