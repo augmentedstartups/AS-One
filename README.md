@@ -90,38 +90,41 @@ cv2.imwrite('result.png', img)
 ```
 
 # Benchmarking
+## Hardware Used:
+- CPU: Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
+- GPU: 8GB (RTX2080)  
 
 ## Trackers
 
 #### DeepSort
 
-| Model           |   Hardware | FPS-GPU | FPS-CPU
-|----------------|----------------|-----------| -----------|
-|[DeepSort-Pytorch-YOLOv3](https://github.com/ZQPei/deep_sort_pytorch)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|12.2|2.5|
-|[DeepSort-ONNX-YOLOv3](https://github.com/ZQPei/deep_sort_pytorch)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|10.3|2.7|
-|[PP-DeepSort](https://github.com/PaddlePaddle/PaddleDetection)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|7.9|-|
-|[mmtracking-DeepSort](https://github.com/open-mmlab/mmtracking/tree/master/configs/mot/deepsort)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|8.2|-|
-|[StrongSort-Pytorch-Yolov5](https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet.git)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|8.5|1|
-|[DeepSort-ONNX-Yolov5](https://github.com/ZQPei/deep_sort_pytorch)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|13|3.2|
-|[StrongSort-ONNX-Yolov5](https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet.git)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|11|5.5|
+| Model           | FPS-GPU | FPS-CPU
+|----------------|-----------| -----------|
+|DeepSort-Pytorch-YOLOv3|12.2|2.5|
+|DeepSort-ONNX-YOLOv3|10.3|2.7|
+|PP-DeepSort|7.9|-|
+|mmtracking-DeepSort|8.2|-|
+|StrongSort-Pytorch-Yolov5|8.5|1|
+|DeepSort-ONNX-Yolov5|13|3.2|
+|StrongSort-ONNX-Yolov5|11|5.5|
 
 ### ByteTrack
 
-| Model           |   Hardware | FPS-GPU | FPS-CPU
-|----------------|----------------|-----------| -----------|
-|[ByteTrack-Pytorch-YOLOX](https://github.com/ifzhang/ByteTrack)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|9|0.5|
-|[ByteTrack-ONNX-YOLOX](https://github.com/ifzhang/ByteTrack)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|4|0.5|
-|[yolox-bytetrack-mcmot-sample](https://github.com/Kazuhito00/yolox-bytetrack-mcmot-sample)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|48|-|
-|[ByteTrack-Sample-YOLOX](https://github.com/Kazuhito00/yolox-bytetrack-mcmot-sample)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|20.9|7|
-|[ByteTrack-ONNX-YOLOv5s](https://github.com/ifzhang/ByteTrack)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|20.1|10.7|
-|[ByteTrack-Sample-YOLOv5s](https://github.com/Kazuhito00/yolox-bytetrack-mcmot-sample)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|33.7|17.4|
+| Model           |  FPS-GPU | FPS-CPU
+|---------------- |-----------| -----------|
+|ByteTrack-Pytorch-YOLOX|9|0.5|
+|ByteTrack-ONNX-YOLOX|4|0.5|
+|yolox-bytetrack-mcmot-sample|48|-|
+|ByteTrack-Sample-YOLOX|20.9|7|
+|ByteTrack-ONNX-YOLOv5s|20.1|10.7|
+|ByteTrack-Sample-YOLOv5s|33.7|17.4|
 
 ### NorFair
 
-| Model           |   Hardware | FPS-GPU | FPS-CPU
-|----------------|----------------|-----------| -----------|
-|[tryolab-YOLOv4](https://github.com/tryolabs/norfair)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|27.3|3.7|
-|[tryolab-ONNX-YOLOv5s](https://github.com/tryolabs/norfair)|GPU: 8GB (RTX2080)<br>CPU:  Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz|25.8|12|
+| Model          | FPS-GPU | FPS-CPU
+|--------------- |-----------| -----------|
+|tryolab-YOLOv4|27.3|3.7|
+|tryolab-ONNX-YOLOv5s|25.8|12|
 
 ## Detectors
 ### YOLOv5
