@@ -80,7 +80,7 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000), )
 
-            im0 = utils.draw_boxes(im0, bboxes_xyxy, class_ids=class_ids, identities=ids)
+            im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
