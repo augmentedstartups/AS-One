@@ -10,6 +10,12 @@
         - [ByteTrack](#bytetrack)
         - [NorFair](#norfair)
     - [Detectors](#detectors)
+        - [YOLOv5](#yolov5)
+        - [YOLOv6](#yolov6)
+        - [YOLOv7](#yolov7)
+        - [YOLOr](#yolor)
+        - [YOLOx](#yolox)
+
 - Asone Library Installation
     - [Install In Docker Container](#install-in-docker-container)
         - [Prerequisite](#prerequisite)
