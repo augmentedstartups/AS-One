@@ -37,6 +37,14 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 Usage:
 
 ```
+# linux
+python3 -m venv .env
+source .env/bin/activate
+
+# windows
+python -m venv .env
+.env\Scripts\activate
+
 pip install numpy Cython
 
 pip install asone
@@ -172,7 +180,8 @@ dt_obj = ASOne(tracker=asone.BYTERACK, detector=asone.YOLOX_S_PYTORCH, use_cuda=
 ### Prerequisite
 
 - Make sure you have docker installed in your system. if not, reffer to docker installation for [Linux](asone-linux/README.md), [Windows](asone-windows/README.md)
-- If using windows, Make sure you have [MS Build tools](https://devblogs.microsoft.com/cppblog/announcing-visual-c-build-tools-2015-standalone-c-tools-for-build-environments) installed in system. 
+- If using windows, Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system. 
+
 
 ### Installation
 
@@ -198,7 +207,7 @@ docker compose run windows-gpu
 
 ```
 # To test on Linux with CPU 
-docker compose run asone
+docker compose run linux
 
 # To test on Windows with CPU 
 docker compose run windows
