@@ -99,7 +99,7 @@ cv2.imwrite('result.png', img)
 
 ```
 
-[Note]: Change Detector or Tracker,
+Changing Detector or Tracker
 
 You simply need to change the flag of detector or tracker. ( flags are given in benchmark tables down bellow)
 Examples:
