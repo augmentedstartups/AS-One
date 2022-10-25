@@ -34,7 +34,7 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 - If using windows, Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system. 
 - [Download git for windows](https://git-scm.com/download/win) if not installed.
 
-Usage:
+Setup:
 
 ```
 # linux
@@ -99,16 +99,18 @@ cv2.imwrite('result.png', img)
 
 ```
 
-[Note]: To change Detector or Tracker, you only have to change the flag. ( flags are given in benchmark tables down bellow)
+[Note]: Change Detector or Tracker,
 
-change Tracker:
+You simply need to change the flag of detector or tracker. ( flags are given in benchmark tables down bellow)
+Examples:
+Change Tracker
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 // Change tracker
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 ```
-change Detector:
+Change Detector
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
