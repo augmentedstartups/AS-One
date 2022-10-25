@@ -99,20 +99,20 @@ cv2.imwrite('result.png', img)
 
 ```
 
-### To change Detector or Tracker, you only have to chnage the flag.
+[Note]: To change Detector or Tracker, you only have to change the flag. ( flags are given in benchmark tables down bellow)
 
 change Tracker:
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-// Chnage tracker
+// Change tracker
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 ```
 change Detector:
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-// Chnage detector
+// Change detector
 dt_obj = ASOne(tracker=asone.BYTERACK, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 # Benchmarking
