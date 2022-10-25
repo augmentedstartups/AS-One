@@ -31,7 +31,8 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 
 ### Prerequisite
 
-- If using windows, Make sure you have [MS Build tools](https://devblogs.microsoft.com/cppblog/announcing-visual-c-build-tools-2015-standalone-c-tools-for-build-environments) installed in system. 
+- If using windows, Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system. 
+- [Download git for windows](https://git-scm.com/download/win) if not installed.
 
 Usage:
 
@@ -43,11 +44,9 @@ pip install asone
 
 # for windows
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
+
 # for linux
 pip install cython-bbox
-
-# for cpu
-pip install torch torchvision
 
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
@@ -255,9 +254,6 @@ pip install cython-bbox
 6. Install torch
 
 ```
-# for cpu
-pip install torch torchvision
-
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```

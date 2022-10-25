@@ -9,7 +9,7 @@ MAINTAINER_EMAIL = ''
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1.2.dev6'
+VERSION = '0.1.2.dev4'
 
 with open('pypi_README.md') as f:
     long_description = f.read()
