@@ -70,6 +70,8 @@ from asone import ASOne
 
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 dt_obj.track_video('sample_videos/test.mp4')
+# Set the `display` parameter to turn on display 
+# dt_obj.track_video('sample_videos/test.mp4', display=True)
 
 # To track using webcam
 dt_obj.track_webcam()
@@ -78,7 +80,7 @@ Results on provided sample video
 
 https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
 
-Sample code to use detector:
+Sample code (for detector):
 
 ```
 import asone
