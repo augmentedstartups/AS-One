@@ -11,7 +11,8 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 
 ### Prerequisite
 
-- If using windows, Make sure you have [MS Build tools](https://devblogs.microsoft.com/cppblog/announcing-visual-c-build-tools-2015-standalone-c-tools-for-build-environments) installed in system. 
+- If using windows, Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system. 
+- [Download git for windows](https://git-scm.com/download/win) if not installed.
 
 
 Usage:
