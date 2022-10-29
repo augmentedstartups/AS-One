@@ -83,16 +83,14 @@ img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
 ```
 
-Change detector by simply changing detector flag.
-
-flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.
+Change detector by simply changing detector flag. flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.
 
 ```
 # Change detector
 detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
 ```
 
-You can also run the `demo_detector.py` to test detector.
+Run the `demo_detector.py` to test detector.
 
 ```
 # run on gpu
