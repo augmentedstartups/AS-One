@@ -38,3 +38,5 @@ python main.py [VIDEO_PATH]
 # if using cpu
 python main.py [VIDEO_PATH] --cpu
 ```
+
+Return to [main page](../../README.md)
