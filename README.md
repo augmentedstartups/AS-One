@@ -147,6 +147,7 @@ Results on provided sample video
 
 https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
 
+To setup ASOne using Docker follow instructions given in [docker setup](asone-linux/Instructions/Docker-Setup.md) 
 
 
 |Offered By: |Maintained By:|
