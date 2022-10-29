@@ -118,7 +118,7 @@ dt_obj.track_video('sample_videos/test.mp4')
 
 Change Tracker by simply changing the tracker flag.
 
-flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md
+flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
