@@ -61,8 +61,8 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 
 ### Usage
-
-Use detector on a img using gpu. (Set `use_cuda` flag in sample code to Flase to test it on cpu.)
+#### Detector
+Use detector on a img using gpu
 
 ```
 import asone
@@ -71,7 +71,8 @@ from asone.detectors import Detector
 import cv2
 
 img = cv2.imread('sample_imgs/test2.jpg')
-detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector()
+detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector() # Set use_cuda to False for cpu
+
 dets, img_info = detector.detect(img)
 
 bbox_xyxy = dets[:, :4]
@@ -82,14 +83,16 @@ img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
 ```
 
-[Note]: To change Detector, you only have to change the flag. (flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.)
+Change detector by simply changing detector flag.
+
+flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.
 
 ```
 # Change detector
 detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
 ```
 
-You can also run the `demo_detector.py` to test the above code.
+You can also run the `demo_detector.py` to test detector.
 
 ```
 # run on gpu
@@ -100,21 +103,24 @@ python demo_detector.py --cpu
 ```
 
 
-Use tracker on sample video using gpu. (Set `use_cuda` flag in sample code to Flase to test it on cpu.)
+#### Tracker
+Use tracker on sample video using gpu. 
 
 
 ```
 import asone
 from asone import ASOne
 
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
 dt_obj.track_video('sample_videos/test.mp4')
 
 # To track using webcam
 # dt_obj.track_webcam()
 ```
 
-change Tracker:
+Change Tracker by simply changing the tracker flag.
+
+flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
@@ -122,13 +128,13 @@ dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, us
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 ```
 
-[Note]: To change Detector or Tracker, you only have to change the flag. (flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.)
+
 
 ```
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
-You can also run the `main.py` to test the above code.
+Run `main.py` to test tracker.
 
 ```
 # run on gpu
