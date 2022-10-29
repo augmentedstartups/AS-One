@@ -60,13 +60,9 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 ```
 
 
-### Usage
 
 Use detector on a img using gpu. (Set `use_cuda` flag in sample code to Flase to test it on cpu.)
 
-```
-import asone
-from asone import utils
 from asone.detectors import Detector
 import cv2
 
@@ -82,9 +78,6 @@ img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
 ```
 
-[Note]: To change Detector, you only have to change the flag. (flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.)
-
-```
 # Change detector
 detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
 ```
@@ -114,38 +107,10 @@ dt_obj.track_video('sample_videos/test.mp4')
 # dt_obj.track_webcam()
 ```
 
-change Tracker:
 
-```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-// Change tracker
-dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-```
-
 [Note]: To change Detector or Tracker, you only have to change the flag. (flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.)
 
 ```
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
-
-You can also run the `main.py` to test the above code.
-
-```
-# run on gpu
-python main.py
-
-# run on cpu
-python main.py --cpu
-```
-
-
-Results on provided sample video
-
-https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
-
-
-
-|Offered By: |Maintained By:|
-|-------------|-------------|
-|[![AugmentedStarups](https://user-images.githubusercontent.com/107035454/195115263-d3271ef3-973b-40a4-83c8-0ade8727dd40.png)](https://augmentedstartups.com)|[![AxcelerateAI](https://user-images.githubusercontent.com/107035454/195114870-691c8a52-fcf0-462e-9e02-a720fc83b93f.png)](https://axcelerate.ai/)|
-
