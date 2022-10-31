@@ -1,0 +1,17 @@
+lap
+loguru
+norfair
+onnxruntime-gpu==1.12.1
+opencv-python
+scipy
+pyyaml
+easydict
+gdown
+pandas
+tabulate
+typing-extensions==3.10.0.2
+wheel
+torch
+torchvision
+numpy
+Cython

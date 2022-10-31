@@ -1,0 +1,63 @@
+version: "3.9"
+services:
+    linux:
+        build: .
+        image: "asone:latest"
+        volumes:
+            - ${PWD}:/workspace
+            - $HOME/.Xauthority:/root/.Xauthority:rw
+            - /dev/video0:/dev/video0
+        network_mode: host
+        restart: always
+        privileged: true
+        environment:
+            DISPLAY: $DISPLAY
+
+    linux-gpu:
+        build: .
+        image: "asone:latest"
+        volumes:
+            - ${PWD}:/workspace
+            - $HOME/.Xauthority:/root/.Xauthority:rw
+            - /dev/video0:/dev/video0
+        network_mode: host
+        restart: always
+        privileged: true
+        environment:
+            DISPLAY: $DISPLAY
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - capabilities: [gpu]
+
+    windows:
+        build: .
+        image: "asone:latest"
+        volumes:
+            - ${PWD}:/workspace
+            # - $HOME/.Xauthority:/root/.Xauthority:rw
+            # - /dev/video0:/dev/video0
+        network_mode: host
+        restart: always
+        privileged: true
+        environment:
+            DISPLAY: $DISPLAY
+
+    windows-gpu:
+        build: .
+        image: "asone:latest"
+        volumes:
+            - ${PWD}:/workspace
+            # - $HOME/.Xauthority:/root/.Xauthority:rw
+            # - /dev/video0:/dev/video0
+        network_mode: host
+        restart: always
+        privileged: true
+        environment:
+            DISPLAY: $DISPLAY
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - capabilities: [gpu]
