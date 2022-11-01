@@ -11,7 +11,7 @@ DOWNLOAD_URL = URL
 
 VERSION = '0.1.2.dev4'
 
-with open('pypi_README.md') as f:
+with open('README.md') as f:
     long_description = f.read()
 
 requirements_txt = pathlib.Path('requirements.txt').open()
