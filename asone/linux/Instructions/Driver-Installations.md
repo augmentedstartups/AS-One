@@ -3,20 +3,23 @@
 
 ### Linux
 
-For systems with `GPU` please verify you have nvidia drivers installed. run
+For systems with `GPU` please verify you have nvidia drivers installed.
+
+Run
 
 ```
 nvidia-smi
 ```
-if you see something like the following.
+Drivers are installed if you see following.
 
 ![](../imgs/nvidia-drivers.png)
 
- or you can install nvidia drivers using following command:
+If drivers are not installed, you can do so using following command:
 
 ```
 sudo apt-get install nvidia-driver-YYY nvidia-dkms-YYY
 ```
+where,
 - `YYY`= Nvidia driver version
 
 e.g `sudo apt-get install nvidia-driver-510 nvidia-dkms-510`
@@ -27,4 +30,4 @@ sudo reboot
 ```
 
 
-Return to [Installation Page](../../README.md) 
+Return to [Installation Page](../../../README.md) 
