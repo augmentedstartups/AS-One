@@ -1,6 +1,6 @@
-import asone
-from asone import utils
-from detectors import Detector
+import asone.asone
+from .utils import draw_boxes
+from .detectors import Detector
 import cv2
 import argparse
 
@@ -14,8 +14,8 @@ def main(args):
     scores = dets[:, 4]
     class_ids = dets[:, 5]
 
-    img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
-    cv2.imwrite('result.png', img)
+    img = draw_boxes(img, bbox_xyxy, class_ids=class_ids)
+    cv2.imwrite('data/results/result.png', img)
 
 if __name__=='__main__':
     
