@@ -94,10 +94,10 @@ Run the `asone/demo_detector.py` to test detector.
 
 ```
 # run on gpu
-python asone/demo_detector.py data/sample_imgs/test2.jpg
+python -m asone.demo_detector data/sample_imgs/test2.jpg
 
 # run on cpu
-python demo_detector.py data/sample_imgs/test2.jpg --cpu
+python -m asone.demo_detector data/sample_imgs/test2.jpg --cpu
 ```
 
 
@@ -132,14 +132,14 @@ dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
-Run `main.py` to test tracker.
+Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
 
 ```
 # run on gpu
-python main.py
+python main.py data/sample_videos/test.mp4
 
 # run on cpu
-python main.py --cpu
+python main.py data/sample_videos/test.mp4 --cpu
 ```
 
 
