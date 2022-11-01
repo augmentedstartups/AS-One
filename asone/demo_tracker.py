@@ -1,9 +1,9 @@
 import argparse
-from asone.trackers import Tracker
+from trackers import Tracker
 import argparse
 import asone
-from asone import utils
-from asone.detectors import Detector
+import utils
+from detectors import Detector
 import cv2
 import os
 from loguru import logger

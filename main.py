@@ -14,9 +14,9 @@ if __name__ == '__main__':
     parser.add_argument('video_path', help='Path to input video')
     parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda',
                         help='run on cpu if not provided the program will run on gpu.')
-    parser.add_argument('--dont_save', default=True, action='store_false',
+    parser.add_argument('--no_save', default=True, action='store_false',
                         dest='save_result', help='if provided the results will not save.')
-    parser.add_argument('--dont_display', default=True, action='store_false',
+    parser.add_argument('--no_display', default=True, action='store_false',
                         dest='display', help='if provided the results will not be displayed on screen')
     parser.add_argument('--output_dir', default='results',  help='Path to output directory')
     

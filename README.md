@@ -7,7 +7,7 @@
 - [Prerequisite](#prerequisite)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Benchmarks](asone-linux/Instructions/Benchmarking.md)
+- [Benchmarks](asone/linux/Instructions/Benchmarking.md)
 
 ### Introduction
 
@@ -16,8 +16,8 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 
 ### Prerequisite
 
-- If you want to use `GPU` make sure you have `GPU` drivers installed in your system. Follow instructions given in [driver installation](asone-linux/Instructions/Driver-Installations.md).
-- If using windows, Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system. 
+- Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
+- Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows. 
 - [Download git for windows](https://git-scm.com/download/win) if not installed.
 
 ### Installation
@@ -70,7 +70,7 @@ from asone import utils
 from asone.detectors import Detector
 import cv2
 
-img = cv2.imread('sample_imgs/test2.jpg')
+img = cv2.imread('data/sample_imgs/test2.jpg')
 detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector() # Set use_cuda to False for cpu
 
 dets, img_info = detector.detect(img)
@@ -83,21 +83,21 @@ img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
 ```
 
-Change detector by simply changing detector flag. flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.
+Change detector by simply changing detector flag. flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```
 # Change detector
 detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
 ```
 
-Run the `demo_detector.py` to test detector.
+Run the `asone/demo_detector.py` to test detector.
 
 ```
 # run on gpu
-python demo_detector.py
+python asone/demo_detector.py data/sample_imgs/test2.jpg
 
 # run on cpu
-python demo_detector.py --cpu
+python demo_detector.py data/sample_imgs/test2.jpg --cpu
 ```
 
 
@@ -118,7 +118,7 @@ dt_obj.track_video('sample_videos/test.mp4')
 
 Change Tracker by simply changing the tracker flag.
 
-flags are provided in [benchmark](asone-linux/Instructions/Benchmarking.md) tables.
+flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
@@ -147,7 +147,7 @@ Results on provided sample video
 
 https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
 
-To setup ASOne using Docker follow instructions given in [docker setup](asone-linux/Instructions/Docker-Setup.md) 
+To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
 
 
 |Offered By: |Maintained By:|
