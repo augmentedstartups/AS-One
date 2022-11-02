@@ -18,12 +18,12 @@ If you would like to delve deeper into YOLO and object tracking then check out o
 ### Prerequisite
 
 - Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
-- Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows. 
-- [Download git for windows](https://git-scm.com/download/win) if not installed.
+- Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using Windows. 
+- [Download git for Windows](https://git-scm.com/download/win) if not installed.
 
 ### Installation
 
-For linux
+For Linux
 
 ```
 python3 -m venv .env
@@ -43,7 +43,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 ```
 
-For windows
+For Windows
 
 ```
 python -m venv .env
