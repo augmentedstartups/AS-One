@@ -11,9 +11,9 @@
 
 ### Introduction
 
-AS-One (Augmented Startups-One Library) is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with various versions of `YOLO` with minimum lines of code. This is One Library for most of your computer vision needs.
+AS-One (Augmented Startups-One Library) is a low-code python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with various versions of `YOLO` with minimum lines of code. This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions. This is One Library for most of your computer vision needs.
 
-This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions.
+If you would like to delve deeper into YOLO and object tracking then check out our [courses](www.augmentedstartups.com/store) and [projects](store.augmentedstartups.com) at Augmented Startups
 
 ### Prerequisite
 
