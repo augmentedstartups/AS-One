@@ -1,9 +1,9 @@
 import argparse
-from trackers import Tracker
+from .trackers import Tracker
 import argparse
 import asone
-import utils
-from detectors import Detector
+from .utils import draw_boxes
+from .detectors import Detector
 import cv2
 import os
 from loguru import logger
@@ -19,7 +19,7 @@ def main(args):
     height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-    output_dir = 'results'
+    output_dir = 'data/results'
     if args.save_results:
         os.makedirs(output_dir, exist_ok=True)
         save_path = os.path.join(output_dir, os.path.basename(args.video_path))
@@ -47,13 +47,13 @@ def main(args):
 
         bboxes_xyxy, ids, scores, class_ids = tracker.detect_and_track(
             frame)
+
         elapsed_time = time.time() - start_time
 
         logger.info(
-            'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
-                                             elapsed_time * 1000), )
+            f'frame {frame_id}/{int(frame_count)} {elapsed_time * 1000:.2f} ms')
 
-        im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids)
+        im0 = draw_boxes(im0, bboxes_xyxy, identities=ids)
 
         currTime = time.time()
         fps = 1 / (currTime - prevTime)
@@ -83,10 +83,10 @@ if __name__ == '__main__':
     parser.add_argument('video_path', help='Path to input video')
     parser.add_argument('--cpu', default=True,
                         action='store_false', dest='use_cuda', help='run on cpu')
-    parser.add_argument('--display', default=False,
-                        action='store_true', dest='display', help='Display Results')
-    parser.add_argument('--save', default=False,
-                        action='store_true', dest='save_results', help='Save Results')
+    parser.add_argument('--no_display', default=True,
+                        action='store_false', dest='display', help='Disable display')
+    parser.add_argument('--no_save', default=True,
+                        action='store_false', dest='save_results', help='Disable result saving')
 
     args = parser.parse_args()
 
