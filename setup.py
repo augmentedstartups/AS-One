@@ -9,9 +9,9 @@ MAINTAINER_EMAIL = ''
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1.2.dev4'
+VERSION = '0.1.2.dev8'
 
-with open('pypi_README.md') as f:
+with open('README.md') as f:
     long_description = f.read()
 
 requirements_txt = pathlib.Path('requirements.txt').open()
@@ -28,6 +28,7 @@ def setup_package():
         author=MAINTAINER,
         author_email=MAINTAINER_EMAIL,
         license='BSD 2-clause',
+        keywords='asone bytetrack deepsort norfair yolo yolox yolor yolov5 yolov7 installation inferencing',
         # package_dir={"":""},
         packages=[DISTNAME,
                   f'{DISTNAME}.detectors',

@@ -112,4 +112,5 @@ if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
     asone = ASOne()
 
-    asone.start_tracking('video2.mp4', save_result=True, display=False)
+    asone.start_tracking('data/sample_videos/video2.mp4',
+                        save_result=True, display=False)
