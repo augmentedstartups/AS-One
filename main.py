@@ -9,7 +9,7 @@ def main(args):
         detector=asone.YOLOX_DARKNET_PYTORCH,
         use_cuda=args.use_cuda
         )
-    # Instantiate tracking function
+    # Get tracking function
     track_fn = dt_obj.track_video(args.video_path,
                                 output_dir=args.output_dir,
                                 save_result=args.save_result,
