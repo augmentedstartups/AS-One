@@ -22,7 +22,7 @@ This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 
 ## 3. Installation
 
-For Linux
+For `Linux`
 
 ```
 python3 -m venv .env
@@ -42,7 +42,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 ```
 
-For Windows
+For `Windows 10/11`
 
 ```
 python -m venv .env
