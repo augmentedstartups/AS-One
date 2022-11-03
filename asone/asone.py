@@ -33,14 +33,27 @@ class ASOne:
 
     def track_video(self, video_path, output_dir='results', save_result=True, display=False):
         output_filename = os.path.basename(video_path)
-        self._start_tracking(video_path, output_filename,
-                             output_dir=output_dir, save_result=save_result, display=display)
+
+        for (bbox_details, frame_details) in self._start_tracking(video_path,
+                                                                    output_filename,
+                                                                    output_dir=output_dir,
+                                                                    save_result=save_result,
+                                                                    display=display):
+            # yeild bbox_details, frame_details to main script
+            yield bbox_details, frame_details
 
     def track_webcam(self, cam_id=0, output_dir='results', save_result=False, display=True):
 
         output_filename = 'results.mp4'
-        self._start_tracking(cam_id, output_filename,
-                             output_dir=output_dir, fps=29, save_result=save_result, display=display)
+
+        for (bbox_details, frame_details) in self._start_tracking(cam_id,
+                                                                    output_filename,
+                                                                    output_dir=output_dir,
+                                                                    fps=29,
+                                                                    save_result=save_result,
+                                                                    display=display):
+            # yeild bbox_details, frame_details to main script
+            yield bbox_details, frame_details
 
     def _start_tracking(self, stream_path, filename,  fps=None, output_dir='results', save_result=True, display=False):
 
@@ -104,9 +117,11 @@ class ASOne:
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 break
 
+            # yeild required values in form of (bbox_details, frames_details)
+            yield (bboxes_xyxy, ids, scores, class_ids), (im0 if display else frame, frame_id-1, fps)
+            
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
-
 
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
