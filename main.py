@@ -30,11 +30,11 @@ if __name__ == '__main__':
     parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda',
                         help='run on cpu if not provided the program will run on gpu.')
     parser.add_argument('--no_save', default=True, action='store_false',
-                        dest='save_result', help='if provided the results will not save.')
+                        dest='save_result', help='whether or not save results')
     parser.add_argument('--no_display', default=True, action='store_false',
-                        dest='display', help='if provided the results will not be displayed on screen')
+                        dest='display', help='whether or not display results on screen')
     parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
-    parser.add_argument('--draw_trails', default=False,  help='if provided object motion trails will be drawn.')
+    parser.add_argument('--draw_trails', default=False,  help='whether or not draw object motion trails')
     
     args = parser.parse_args()
 
