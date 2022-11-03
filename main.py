@@ -9,15 +9,19 @@ def main(args):
         detector=asone.YOLOX_DARKNET_PYTORCH,
         use_cuda=args.use_cuda
         )
-    for bbox_details, frame_details in dt_obj.track_video(args.video_path,
-                                                          output_dir=args.output_dir,
-                                                          save_result=args.save_result,
-                                                          display=args.display,
-                                                          draw_trails=args.draw_trails):
-        # bbox_details = bbox_xyxy, ids, scores, class_ids
-        # frame_details = frame, frame_no, fps
+    # Instantiate tracking function
+    track_fn = dt_obj.track_video(args.video_path,
+                                output_dir=args.output_dir,
+                                save_result=args.save_result,
+                                display=args.display,
+                                draw_trails=args.draw_trails)
+    
+    # Loop over track_fn to retrieve outputs of each frame 
+    for bbox_details, frame_details in track_fn:
+        bbox_xyxy, ids, scores, class_ids = bbox_details
+        frame, frame_num, fps = frame_details
+        print(frame)
         
-        pass
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
