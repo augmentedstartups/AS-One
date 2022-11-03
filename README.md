@@ -42,7 +42,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 ```
 
-For windows
+For Windows
 
 ```
 python -m venv .env
@@ -59,6 +59,9 @@ pip install torch torchvision
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 
+## Clone the Repo
+
+```git clone https://github.com/augmentedstartups/AS-One.git```
 
 ### Usage
 #### Detector
