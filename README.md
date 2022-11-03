@@ -175,6 +175,10 @@ https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
 
+# ToDo
+- [x] First Release
+- [ ] Simplify code even further
+- [ ] Add support for other Trackers and Detectors
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
