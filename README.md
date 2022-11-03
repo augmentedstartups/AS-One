@@ -9,20 +9,20 @@
 - [Usage](#usage)
 - [Benchmarks](asone/linux/Instructions/Benchmarking.md)
 
-### Introduction
+## 1. Introduction
 
 Asone is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
 
-### Prerequisite
+## 2. Prerequisite
 
 - Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
 - Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows. 
 - [Download git for windows](https://git-scm.com/download/win) if not installed.
 
-### Installation
+## 3. Installation
 
-For linux
+For Linux
 
 ```
 python3 -m venv .env
@@ -59,7 +59,7 @@ pip install torch torchvision
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 
-## Clone the Repo
+## 4. Clone the Repo
 
 Navigate to an empty folder of your choice.
 
@@ -69,7 +69,7 @@ Change Directory to AS-One
 
 ```cd AS-One```
 
-## Running AS-One
+## 5. Running AS-One
 
 Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
 
@@ -83,7 +83,7 @@ python main.py data/sample_videos/test.mp4 --cpu
 
 ### Usage
 #### Detector
-Use detector on a img using gpu
+Use detector on an image using GPU
 
 ```
 import asone
