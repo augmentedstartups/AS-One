@@ -61,7 +61,13 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 ## Clone the Repo
 
+Navigate to an empty folder of your choice.
+
 ```git clone https://github.com/augmentedstartups/AS-One.git```
+
+Change Directory to AS-One
+
+```cd AS-One```
 
 ### Usage
 #### Detector
