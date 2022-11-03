@@ -19,7 +19,7 @@ def main(args):
     for bbox_details, frame_details in track_fn:
         bbox_xyxy, ids, scores, class_ids = bbox_details
         frame, frame_num, fps = frame_details
-        print(frame)
+        print(frame_num)
         
 
 if __name__ == '__main__':
