@@ -13,7 +13,8 @@ def main(args):
     track_fn = dt_obj.track_video(args.video_path,
                                 output_dir=args.output_dir,
                                 save_result=args.save_result,
-                                display=args.display)
+                                display=args.display,
+                                draw_trails=args.draw_trails)
     
     # Loop over track_fn to retrieve outputs of each frame 
     for bbox_details, frame_details in track_fn:
@@ -33,6 +34,7 @@ if __name__ == '__main__':
     parser.add_argument('--no_display', default=True, action='store_false',
                         dest='display', help='if provided the results will not be displayed on screen')
     parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
+    parser.add_argument('--draw_trails', default=False,  help='if provided object motion trails will be drawn.')
     
     args = parser.parse_args()
 

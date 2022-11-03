@@ -3,8 +3,10 @@ from numpy import random
 import numpy as np
 from asone.utils import compute_color_for_labels
 from asone.utils import get_names
+from collections import deque
 
 names = get_names()
+data_deque = {}
 
 
 def draw_ui_box(x, img, id, color=None, label=None, line_thickness=None):
@@ -42,9 +44,7 @@ def draw_ui_box(x, img, id, color=None, label=None, line_thickness=None):
 def draw_border(img, pt1, pt2, color, thickness, r, d):
     x1, y1 = pt1
     x2, y2 = pt2
-    # Top left
-    cv2.line(img, (x1 + r, y1), (x1 + r + d, y1), color, thickness)
-    cv2.line(img, (x1, y1 + r), (x1, y1 + r + d), color, thickness)
+    # Top leftfrom collections import deque (x1, y1 + r + d), color, thickness)
     cv2.ellipse(img, (x1 + r, y1 + r), (r, r), 180, 0, 90, color, thickness)
 
     # Top right
@@ -71,10 +71,16 @@ def draw_border(img, pt1, pt2, color, thickness, r, d):
     return img
 
 
-def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, offset=(0, 0)):
+def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=False, offset=(0, 0)):
     # cv2.line(img, line2[0], line2[1], (0,200,0), 3)
     height, width, _ = img.shape
+
     # remove tracked point from buffer if object is lost
+    if draw_trails:
+        for key in list(data_deque):
+            if key not in identities:
+                data_deque.pop(key)
+    
     for i, box in enumerate(bbox_xyxy):
         x1, y1, x2, y2 = [int(i) for i in box]
         x1 += offset[0]
@@ -85,18 +91,46 @@ def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, offset=(0, 0)):
         # box_area = (x2-x1) * (y2-y1)
         box_height = (y2-y1)
 
-        # code to find center of bottom edge
-        center = (int((x2+x1) / 2), int((y2+y2)/2))
-
         # get ID of object
         id = int(identities[i]) if identities is not None else None
 
         color = compute_color_for_labels(0)
 
+        
         label = None
         if class_ids is not None:
             color = compute_color_for_labels(int(class_ids[i]))
             obj_name = names[int(class_ids[i])]
             label = '%s' % (obj_name)            
         draw_ui_box(box, img, id=id, label=label, color=color, line_thickness=2)
+
+        # Draw trails
+        
+        # code to find center of bottom edge
+        center = (int((x2+x1) / 2), int((y2+y2)/2))
+
+        if draw_trails:
+            # create new buffer for new object
+            if id not in data_deque:  
+                data_deque[id] = deque(maxlen= 64)
+        
+            data_deque[id].appendleft(center)    
+            drawtrails(data_deque, id, color, img)
+ 
+
+
     return img
+
+def drawtrails(data_deque, id, color, img):
+    # draw trail
+    for i in range(1, len(data_deque[id])):
+        # check if on buffer value is none
+        if data_deque[id][i - 1] is None or data_deque[id][i] is None:
+            continue
+
+        # generate dynamic thickness of trails
+        thickness = int(np.sqrt(64 / float(i + i)) * 1.5)
+        
+        # draw trails
+        cv2.line(img, data_deque[id][i - 1], data_deque[id][i], color, thickness)
+
