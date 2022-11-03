@@ -12,7 +12,9 @@
 ## 1. Introduction
 
 Asone is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
-This python wrapper provides yolo models in both `ONNX` and `PyTorch` versions.
+This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions. We plan to offer support for future versions of YOLO when they get released.
+
+This is One Library for most of your computer vision needs.
 
 ## 2. Prerequisite
 
