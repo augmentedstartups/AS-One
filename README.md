@@ -69,6 +69,18 @@ Change Directory to AS-One
 
 ```cd AS-One```
 
+## Running AS-One
+
+Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
+
+```
+# run on gpu
+python main.py data/sample_videos/test.mp4
+
+# run on cpu
+python main.py data/sample_videos/test.mp4 --cpu
+```
+
 ### Usage
 #### Detector
 Use detector on a img using gpu
@@ -156,17 +168,6 @@ dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use
 ```
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
-
-Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
-
-```
-# run on gpu
-python main.py data/sample_videos/test.mp4
-
-# run on cpu
-python main.py data/sample_videos/test.mp4 --cpu
-```
-
 
 Results on provided sample video
 
