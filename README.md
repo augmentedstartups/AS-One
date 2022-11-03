@@ -110,10 +110,31 @@ import asone
 from asone import ASOne
 
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
-dt_obj.track_video('sample_videos/test.mp4')
+
+for bbox_details, frame_details in dt_obj.track_video(
+                                                        args.video_path,
+                                                        output_dir=args.output_dir,
+                                                        save_result=args.save_result,
+                                                        display=args.display
+                                                        ):
+        # bbox_details = bbox_xyxy, ids, scores, class_ids
+        # frame_details = frame, frame_no, fps
+        
+        # Do anything with bboxes here
+        pass
 
 # To track using webcam
-# dt_obj.track_webcam()
+# for bbox_details, frame_details in dt_obj.track_video(
+#                                                        args.video_path,
+#                                                        output_dir=args.output_dir,
+#                                                        save_result=args.save_result,
+#                                                        display=args.display
+#                                                        ):
+#        # bbox_details = bbox_xyxy, ids, scores, class_ids
+#        # frame_details = frame, frame_no, fps
+        
+#        # Do anything with bboxes here
+#        pass
 ```
 
 Change Tracker by simply changing the tracker flag.
