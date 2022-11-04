@@ -91,8 +91,10 @@ Results on provided sample video
 
 https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
 
-### Usage
-#### Detector
+# Usage
+## Object Detection
+
+### Image
 Use detector on an image using GPU
 
 ```
@@ -132,7 +134,9 @@ python -m asone.demo_detector data/sample_imgs/test2.jpg --cpu
 ```
 
 
-#### Tracker
+## Object Tracking
+
+### Video
 Use tracker on sample video using gpu. 
 
 
@@ -141,7 +145,7 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=args.use_cuda)
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 
 # Get tracking function
 track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True)
