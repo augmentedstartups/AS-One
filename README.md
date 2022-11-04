@@ -83,6 +83,10 @@ python main.py data/sample_videos/test.mp4
 python main.py data/sample_videos/test.mp4 --cpu
 ```
 
+Results on provided sample video
+
+https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
+
 ### Usage
 #### Detector
 Use detector on an image using GPU
@@ -171,16 +175,13 @@ dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
-Results on provided sample video
-
-https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
-
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
 
 # ToDo
 - [x] First Release
 - [ ] Simplify code even further
 - [ ] Add support for other Trackers and Detectors
+- [ ] M1/2 Apple Silicon Compatibility
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
