@@ -1,7 +1,6 @@
 import argparse
 import asone
 from asone import ASOne
-import argparse
 
 def main(args):
     dt_obj = ASOne(
