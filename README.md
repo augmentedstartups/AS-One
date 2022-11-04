@@ -48,10 +48,10 @@ pip install cython-bbox
 pip install asone
 
 
-# for cpu
+# for CPU
 pip install torch torchvision
 
-# for gpu
+# for GPU
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 
 ```
@@ -115,7 +115,7 @@ class_ids = dets[:, 5]
 img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
 ```
-### Changing Detector and Tracking Models
+### Changing Detector Models
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```
