@@ -24,7 +24,17 @@ If you would like to dive deeper into YOLO Object Detection and Tracking, then c
 - Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows. 
 - [Download git for windows](https://git-scm.com/download/win) if not installed.
 
-## 3. Installation
+## 3. Clone the Repo
+
+Navigate to an empty folder of your choice.
+
+```git clone https://github.com/augmentedstartups/AS-One.git```
+
+Change Directory to AS-One
+
+```cd AS-One```
+
+## 4. Installation
 
 For `Linux`
 
@@ -62,16 +72,6 @@ pip install torch torchvision
 # for gpu
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
-
-## 4. Clone the Repo
-
-Navigate to an empty folder of your choice.
-
-```git clone https://github.com/augmentedstartups/AS-One.git```
-
-Change Directory to AS-One
-
-```cd AS-One```
 
 ## 5. Running AS-One
 
