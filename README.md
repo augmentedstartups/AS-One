@@ -115,8 +115,8 @@ class_ids = dets[:, 5]
 img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
 ```
-
-Change detector by simply changing detector flag. flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
+### Changing Detector and Tracking Models
+Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```
 # Change detector
@@ -166,10 +166,11 @@ for bbox_details, frame_details in track_fn:
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
 ```
+### Changing Detector and Tracking Models
 
 Change Tracker by simply changing the tracker flag.
 
-flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
+The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
