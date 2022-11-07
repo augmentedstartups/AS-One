@@ -20,7 +20,7 @@ This is One Library for most of your computer vision needs.
 
 If you would like to dive deeper into YOLO Object Detection and Tracking, then check out our [courses](https://www.augmentedstartups.com/store) and [projects](https://store.augmentedstartups.com)
 
-[<img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/blogs/22606/images/KoyacJIGQOagI2NRoYjP_ASOne_Windows.jpg" width="50%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
+[<img src="https://s3.amazonaws.com/kajabi-storefronts-production/blogs/22606/images/0FDx83VXSYOY0NAO2kMc_ASOne_Windows_Play.jpg" width="50%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
 
 ## 2. Prerequisites
 
