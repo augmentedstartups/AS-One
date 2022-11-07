@@ -4,7 +4,7 @@
 
 #### Table of Contents
 - [Introduction](#introduction)
-- [Prerequisite](#prerequisite)
+- [Prerequisites](#prerequisite)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Benchmarks](asone/linux/Instructions/Benchmarking.md)
@@ -18,7 +18,7 @@ This is One Library for most of your computer vision needs.
 
 If you would like to dive deeper into YOLO Object Detection and Tracking, then check out our [courses](https://www.augmentedstartups.com/store) and [projects](https://store.augmentedstartups.com)
 
-## 2. Prerequisite
+## 2. Prerequisites
 
 - Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
 - Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows. 
