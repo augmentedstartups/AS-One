@@ -3,13 +3,13 @@
 ![croped](https://user-images.githubusercontent.com/107035454/195083948-4873d60a-3ac7-4279-8770-535488f4a097.png)
 
 #### Table of Contents
-- [Introduction](#Introduction)
+- [Introduction](#1.Introduction)
 - [Prerequisites](#prerequisite)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Benchmarks](asone/linux/Instructions/Benchmarking.md)
 
-## 1. Introduction
+## 1.Introduction
 
 AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions. We plan to offer support for future versions of YOLO when they get released.
