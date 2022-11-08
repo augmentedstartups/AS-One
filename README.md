@@ -64,7 +64,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 #### Detector
 Use detector on a img using gpu
 
-```
+```python
 import asone
 from asone import utils
 from asone.detectors import Detector
