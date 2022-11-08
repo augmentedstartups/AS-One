@@ -22,6 +22,8 @@ If you would like to dive deeper into YOLO Object Detection and Tracking, then c
 
 [<img src="https://s3.amazonaws.com/kajabi-storefronts-production/blogs/22606/images/0FDx83VXSYOY0NAO2kMc_ASOne_Windows_Play.jpg" width="50%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
 
+Watch the step-by-step tutorial
+
 ## 2. Prerequisites
 
 - Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
