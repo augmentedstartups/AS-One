@@ -44,7 +44,7 @@ Change Directory to AS-One
 
 For `Linux`
 
-```zsh
+```shell
 python3 -m venv .env
 source .env/bin/activate
 
@@ -64,7 +64,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 For `Windows 10/11`
 
-```
+```shell
 python -m venv .env
 .env\Scripts\activate
 pip install numpy Cython
@@ -85,7 +85,7 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 
 Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
 
-```
+```shell
 # run on gpu
 python main.py data/sample_videos/test.mp4
 
@@ -131,7 +131,7 @@ detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
 
 Run the `asone/demo_detector.py` to test detector.
 
-```
+```shell
 # run on gpu
 python -m asone.demo_detector data/sample_imgs/test2.jpg
 
@@ -139,12 +139,10 @@ python -m asone.demo_detector data/sample_imgs/test2.jpg
 python -m asone.demo_detector data/sample_imgs/test2.jpg --cpu
 ```
 
-
 ## Object Tracking
 
 ### Video
 Use tracker on sample video using gpu. 
-
 
 ```python
 import asone
@@ -184,8 +182,6 @@ dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, us
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 ```
 
-
-
 ```python
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
@@ -202,4 +198,3 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 |Offered By: |Maintained By:|
 |-------------|-------------|
 |[![AugmentedStarups](https://user-images.githubusercontent.com/107035454/195115263-d3271ef3-973b-40a4-83c8-0ade8727dd40.png)](https://augmentedstartups.com)|[![AxcelerateAI](https://user-images.githubusercontent.com/107035454/195114870-691c8a52-fcf0-462e-9e02-a720fc83b93f.png)](https://axcelerate.ai/)|
-
