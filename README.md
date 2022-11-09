@@ -103,7 +103,7 @@ https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada
 ### Image
 Use detector on an image using GPU
 
-```
+```python
 import asone
 from asone import utils
 from asone.detectors import Detector
@@ -124,7 +124,7 @@ cv2.imwrite('result.png', img)
 ### Changing Detector Models
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
-```
+```python
 # Change detector
 detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
 ```
@@ -146,7 +146,7 @@ python -m asone.demo_detector data/sample_imgs/test2.jpg --cpu
 Use tracker on sample video using gpu. 
 
 
-```
+```python
 import asone
 from asone import ASOne
 
@@ -178,7 +178,7 @@ Change Tracker by simply changing the tracker flag.
 
 The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
-```
+```python
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 // Change tracker
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
@@ -186,7 +186,7 @@ dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use
 
 
 
-```
+```python
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
