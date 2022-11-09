@@ -44,7 +44,7 @@ Change Directory to AS-One
 
 For `Linux`
 
-```shell
+```zsh
 python3 -m venv .env
 source .env/bin/activate
 
