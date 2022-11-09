@@ -25,7 +25,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('video_path', help='Path to input video')
+    parser.add_argument('--video_path', help='Path to input video')
     parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda',
                         help='run on cpu if not provided the program will run on gpu.')
     parser.add_argument('--no_save', default=True, action='store_false',
