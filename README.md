@@ -72,10 +72,10 @@ pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbo
 
 pip install asone
 
-# for cpu
+# for CPU
 pip install torch torchvision
 
-# for gpu
+# for GPU
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
