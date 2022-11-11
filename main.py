@@ -6,7 +6,7 @@ def main(args):
     filter_classes = args.filter_classes
 
     if filter_classes:
-        filter_classes = filter_classes.split(',')
+        filter_classes = [filter_classes]
 
     dt_obj = ASOne(
         tracker=asone.BYTETRACK,
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                         dest='display', help='whether or not display results on screen')
     parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
     parser.add_argument('--draw_trails', default=False,  help='if provided object motion trails will be drawn.')
-    parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
+    parser.add_argument('--filter_classes', default=None, help='Filter class name')
 
     args = parser.parse_args()
 
