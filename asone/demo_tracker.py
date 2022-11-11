@@ -11,6 +11,11 @@ import time
 import copy
 
 def main(args):
+    filter_classes = args.filter_classes
+
+    if filter_classes:
+        filter_classes = filter_classes.split(',')
+    
     detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=args.use_cuda).get_detector()
     tracker = Tracker(asone.BYTETRACK, detector, use_cuda=args.use_cuda).get_tracker()
 
@@ -46,7 +51,7 @@ def main(args):
         im0 = copy.deepcopy(frame)
 
         bboxes_xyxy, ids, scores, class_ids = tracker.detect_and_track(
-            frame)
+            frame, filter_classes=filter_classes)
 
         elapsed_time = time.time() - start_time
 
@@ -87,6 +92,8 @@ if __name__ == '__main__':
                         action='store_false', dest='display', help='Disable display')
     parser.add_argument('--no_save', default=True,
                         action='store_false', dest='save_results', help='Disable result saving')
+
+    parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
 
     args = parser.parse_args()
 

@@ -18,10 +18,10 @@ class ByteTrack(object):
 
         self.tracker = BYTETracker(frame_rate=30)
 
-    def detect_and_track(self, image: np.ndarray):
+    def detect_and_track(self, image: np.ndarray, filter_classes:list = None):
 
         dets_xyxy, image_info = self.detector.detect(
-            image, input_shape=self.input_shape)
+            image, input_shape=self.input_shape, filter_classes=filter_classes)
 
         class_ids = []
         ids = []

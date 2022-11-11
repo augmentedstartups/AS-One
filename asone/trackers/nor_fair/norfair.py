@@ -19,9 +19,9 @@ class NorFair:
     def _euclidean_distance(self, detection, tracked_object):
         return np.linalg.norm(detection.points - tracked_object.estimate)
 
-    def detect_and_track(self, image):
+    def detect_and_track(self, image:np.ndarray, filter_classes:list = None):
         _dets_xyxy, image_info = self.detector.detect(
-            image, input_shape=self.input_shape)
+            image, input_shape=self.input_shape, filter_classes = filter_classes)
 
         class_ids = []
         ids = []

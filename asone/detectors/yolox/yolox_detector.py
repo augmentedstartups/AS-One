@@ -1,6 +1,9 @@
 
 import os
+from asone.utils import get_names
 import numpy as np
+import warnings
+
 import torch
 import onnxruntime
 
@@ -73,7 +76,8 @@ class YOLOxDetector:
                iou_thres: float = 0.45,
                with_p6 = False,
                agnostic_nms: bool = True,
-               input_shape=(640, 640)) -> list:
+               input_shape=(640, 640),
+               filter_classes:list=None) -> list:
         
         original_image = image.copy()
         if self.weights_name in ['yolox_tiny.onnx','yolox_nano.onnx']:
@@ -133,7 +137,19 @@ class YOLOxDetector:
                 else:
                     detection = prediction
             
-    
+        if filter_classes:
+            class_names = get_names()
+
+            filter_class_idx = []
+            if filter_classes:
+                for _class in filter_classes:
+                    if _class.lower() in class_names:
+                        filter_class_idx.append(class_names.index(_class.lower()))
+                    else:
+                        warnings.warn(f"class {_class} not found in model classes list.")
+
+            detection = detection[np.in1d(detection[:,5].astype(int), filter_class_idx)]
+
         image_info = {
             'width': image.shape[1],
             'height': image.shape[0],

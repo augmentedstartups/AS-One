@@ -1,6 +1,7 @@
 import os
-import sys
+from asone.utils import get_names
 import numpy as np
+import warnings
 import torch
 import onnxruntime
 
@@ -61,7 +62,8 @@ class YOLOv5Detector:
                classes: int = None,
                agnostic_nms: bool = False,
                input_shape=(640, 640),
-               max_det: int = 1000) -> list:
+               max_det: int = 1000,
+               filter_classes = None) -> list:
      
         # Image Preprocessing
         original_image, processed_image = self.image_preprocessing(image, input_shape)
@@ -101,6 +103,20 @@ class YOLOv5Detector:
         self.boxes = detections[:, :4]
         self.scores = detections[:, 4:5]
         self.class_ids = detections[:, 5:6]
+
+        if filter_classes:
+            class_names = get_names()
+
+            filter_class_idx = []
+            if filter_classes:
+                for _class in filter_classes:
+                    if _class.lower() in class_names:
+                        filter_class_idx.append(class_names.index(_class.lower()))
+                    else:
+                        warnings.warn(f"class {_class} not found in model classes list.")
+
+            detection = detection[np.in1d(detection[:,5].astype(int), filter_class_idx)]
+
         return detections, image_info
 
  
