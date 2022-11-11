@@ -3,6 +3,11 @@ import asone
 from asone import ASOne
 
 def main(args):
+    filter_classes = args.filter_classes
+
+    if filter_classes:
+        filter_classes = filter_classes.split(',')
+
     dt_obj = ASOne(
         tracker=asone.BYTETRACK,
         detector=asone.YOLOX_DARKNET_PYTORCH,
@@ -13,7 +18,8 @@ def main(args):
                                 output_dir=args.output_dir,
                                 save_result=args.save_result,
                                 display=args.display,
-                                draw_trails=args.draw_trails)
+                                draw_trails=args.draw_trails,
+                                filter_classes=filter_classes)
     
     # Loop over track_fn to retrieve outputs of each frame 
     for bbox_details, frame_details in track_fn:
@@ -33,8 +39,9 @@ if __name__ == '__main__':
     parser.add_argument('--no_display', default=True, action='store_false',
                         dest='display', help='whether or not display results on screen')
     parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
-    parser.add_argument('--draw_trails', default=False,  help='whether or not draw object motion trails')
-    
+    parser.add_argument('--draw_trails', default=False,  help='if provided object motion trails will be drawn.')
+    parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
+
     args = parser.parse_args()
 
     main(args)

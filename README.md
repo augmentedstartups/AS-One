@@ -85,24 +85,6 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 
 Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
 
-```shell
-# run on gpu
-python main.py data/sample_videos/test.mp4
-
-# run on cpu
-python main.py data/sample_videos/test.mp4 --cpu
-```
-
-Results on provided sample video
-
-https://user-images.githubusercontent.com/107035454/195079926-aee47eac-0430-4ada-8cc7-cc9d1d13c889.mp4
-
-# Usage
-## Object Detection
-
-### Image
-Use detector on an image using GPU
-
 ```python
 import asone
 from asone import utils
@@ -112,7 +94,9 @@ import cv2
 img = cv2.imread('data/sample_imgs/test2.jpg')
 detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector() # Set use_cuda to False for cpu
 
-dets, img_info = detector.detect(img)
+filter_classes = ['person'] # Set to None to detect all classes
+
+dets, img_info = detector.detect(img, , filter_classes=filter_classes)
 
 bbox_xyxy = dets[:, :4]
 scores = dets[:, 4]
@@ -126,7 +110,7 @@ Change detector by simply changing detector flag. The flags are provided in [ben
 
 ```python
 # Change detector
-detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
+detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -151,8 +135,10 @@ from asone import ASOne
 # Instantiate Asone object
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
 
+filter_classes = ['person'] # set to None to track all classes
+
 # Get tracking function
-track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True)
+track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
 # Loop over track_fn to retrieve outputs of each frame 
 for bbox_details, frame_details in track_fn:
@@ -162,7 +148,7 @@ for bbox_details, frame_details in track_fn:
 
 # To track using webcam
 # Get tracking function
-track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True)
+track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
 # Loop over track_fn to retrieve outputs of each frame 
 for bbox_details, frame_details in track_fn:

@@ -1,4 +1,3 @@
-import os
 import cv2
 
 from asone.detectors.yolov5 import YOLOv5Detector 
@@ -11,9 +10,11 @@ from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
 from asone.detectors.utils.exp_name import get_exp__name 
 
-
 class Detector:
-    def __init__(self, model_flag: int, use_cuda=True):
+    def __init__(self,
+                model_flag: int,
+                use_cuda: bool=True):
+                 
         self.model = self._select_detector(model_flag, use_cuda)
      
 
@@ -58,12 +59,12 @@ class Detector:
             
           
         return _detector
+    
     def get_detector(self):
         return self.model
         
-    def detect(self, image):
-        return self.model.detect(image)
-            
+    def detect(self, image, filter_classes:list = None):
+        return self.model.detect(image, filter_classes = filter_classes)
 
 if __name__ == '__main__':
     

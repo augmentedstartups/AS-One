@@ -1,7 +1,8 @@
 import os
 import sys
-import time
+from asone.utils import get_names
 import numpy as np
+import warnings
 import torch
 import onnxruntime
 
@@ -18,7 +19,7 @@ class YOLOv6Detector:
 
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
-   
+
         if not os.path.exists(weights):
             utils.download_weights(weights)
         #If incase weighst is a list of paths then select path at first index
@@ -75,7 +76,8 @@ class YOLOv6Detector:
                input_shape=(640, 640),
                agnostic_nms: bool = False,
                max_det: int = 1000,
-               iou_thres: float = 0.5,) -> list:
+               iou_thres: float = 0.5,
+               filter_classes: list = None) -> list:
         
         # Prepare Input
         img_height, img_width = image.shape[:2]
@@ -115,7 +117,19 @@ class YOLOv6Detector:
             detection[:, :4] /= np.array([input_shape[1], input_shape[0], input_shape[1], input_shape[0]])
             detection[:, :4] *= np.array([img_width, img_height, img_width, img_height])
             
-            
+        if filter_classes:
+            class_names = get_names()
+
+            filter_class_idx = []
+            if filter_classes:
+                for _class in filter_classes:
+                    if _class.lower() in class_names:
+                        filter_class_idx.append(class_names.index(_class.lower()))
+                    else:
+                        warnings.warn(f"class {_class} not found in model classes list.")
+
+            detection = detection[np.in1d(detection[:,5].astype(int), filter_class_idx)]
+    
         image_info = {
             'width': image.shape[1],
             'height': image.shape[0],
