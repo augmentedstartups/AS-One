@@ -64,7 +64,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 #### Detector
 Use detector on a img using gpu
 
-```
+```python
 import asone
 from asone import utils
 from asone.detectors import Detector
@@ -109,32 +109,27 @@ Use tracker on sample video using gpu.
 import asone
 from asone import ASOne
 
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
+# Instantiate Asone object
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=args.use_cuda)
 
-for bbox_details, frame_details in dt_obj.track_video(
-                                                        args.video_path,
-                                                        output_dir=args.output_dir,
-                                                        save_result=args.save_result,
-                                                        display=args.display
-                                                        ):
-        # bbox_details = bbox_xyxy, ids, scores, class_ids
-        # frame_details = frame, frame_no, fps
-        
-        # Do anything with bboxes here
-        pass
+# Get tracking function
+track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True)
+
+# Loop over track_fn to retrieve outputs of each frame 
+for bbox_details, frame_details in track_fn:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
 
 # To track using webcam
-# for bbox_details, frame_details in dt_obj.track_video(
-#                                                        args.video_path,
-#                                                        output_dir=args.output_dir,
-#                                                        save_result=args.save_result,
-#                                                        display=args.display
-#                                                        ):
-#        # bbox_details = bbox_xyxy, ids, scores, class_ids
-#        # frame_details = frame, frame_no, fps
-        
-#        # Do anything with bboxes here
-#        pass
+# Get tracking function
+track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True)
+
+# Loop over track_fn to retrieve outputs of each frame 
+for bbox_details, frame_details in track_fn:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
 ```
 
 Change Tracker by simply changing the tracker flag.

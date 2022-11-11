@@ -14,7 +14,7 @@ def main(args):
         detector=asone.YOLOX_DARKNET_PYTORCH,
         use_cuda=args.use_cuda
         )
-    # Instantiate tracking function
+    # Get tracking function
     track_fn = dt_obj.track_video(args.video_path,
                                 output_dir=args.output_dir,
                                 save_result=args.save_result,
@@ -26,7 +26,7 @@ def main(args):
     for bbox_details, frame_details in track_fn:
         bbox_xyxy, ids, scores, class_ids = bbox_details
         frame, frame_num, fps = frame_details
-        # print(frame)
+        print(frame_num)
         
 
 if __name__ == '__main__':
