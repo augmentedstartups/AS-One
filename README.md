@@ -73,7 +73,9 @@ import cv2
 img = cv2.imread('data/sample_imgs/test2.jpg')
 detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector() # Set use_cuda to False for cpu
 
-dets, img_info = detector.detect(img)
+filter_classes = ['person'] # Set to None to detect all classes
+
+dets, img_info = detector.detect(img, , filter_classes=filter_classes)
 
 bbox_xyxy = dets[:, :4]
 scores = dets[:, 4]
@@ -87,7 +89,7 @@ Change detector by simply changing detector flag. flags are provided in [benchma
 
 ```
 # Change detector
-detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True).get_detector()
+detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -105,15 +107,17 @@ python -m asone.demo_detector data/sample_imgs/test2.jpg --cpu
 Use tracker on sample video using gpu. 
 
 
-```
+```python
 import asone
 from asone import ASOne
 
 # Instantiate Asone object
 dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=args.use_cuda)
 
+filter_classes = ['person'] # set to None to track all classes
+
 # Get tracking function
-track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True)
+track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
 # Loop over track_fn to retrieve outputs of each frame 
 for bbox_details, frame_details in track_fn:
@@ -123,7 +127,7 @@ for bbox_details, frame_details in track_fn:
 
 # To track using webcam
 # Get tracking function
-track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True)
+track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
 # Loop over track_fn to retrieve outputs of each frame 
 for bbox_details, frame_details in track_fn:
