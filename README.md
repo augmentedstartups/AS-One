@@ -81,6 +81,10 @@ or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 ```
 
+Run in `Google Colab`
+
+Visit this [link](https://colab.research.google.com/drive/19noVn6S0I0I7Uh0cVNEroYTmQaWDifun?authuser=1#scrollTo=q2M6h7caeSq0)
+
 ## 5. Running AS-One
 
 Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
