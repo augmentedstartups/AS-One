@@ -12,17 +12,18 @@ class ASOne:
     def __init__(self,
                  tracker: int = 0,
                  detector: int = 0,
+                 weights: str = None,
                  use_cuda: bool = True) -> None:
 
         self.use_cuda = use_cuda
 
         # get detector object
-        self.detector = self.get_detector(detector)
+        self.detector = self.get_detector(detector, weights)
 
         self.tracker = self.get_tracker(tracker)
 
-    def get_detector(self, detector: int):
-        detector = Detector(detector, use_cuda=self.use_cuda).get_detector()
+    def get_detector(self, detector: int, weights: str):
+        detector = Detector(detector, weights=weights, use_cuda=self.use_cuda).get_detector()
         return detector
 
     def get_tracker(self, tracker: int):
@@ -37,7 +38,8 @@ class ASOne:
                     save_result=True, 
                     display=False, 
                     draw_trails=False, 
-                    filter_classes=None):
+                    filter_classes=None,
+                    class_names=None):
         
         output_filename = os.path.basename(video_path)
 
@@ -47,7 +49,8 @@ class ASOne:
                                                                     save_result=save_result,
                                                                     display=display,
                                                                     draw_trails=draw_trails,
-                                                                    filter_classes=filter_classes):
+                                                                    filter_classes=filter_classes,
+                                                                    class_names=class_names):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
 
@@ -57,7 +60,8 @@ class ASOne:
                      save_result=False, 
                      display=True, 
                      draw_trails=False, 
-                     filter_classes=None):
+                     filter_classes=None,
+                     class_names=None):
 
         output_filename = 'results.mp4'
 
@@ -68,7 +72,8 @@ class ASOne:
                                                                     save_result=save_result,
                                                                     display=display,
                                                                     draw_trails=draw_trails,
-                                                                    filter_classes=filter_classes):
+                                                                    filter_classes=filter_classes,
+                                                                    class_names=class_names):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
 
@@ -80,7 +85,8 @@ class ASOne:
                         save_result=True, 
                         display=False, 
                         draw_trails=False, 
-                        filter_classes=None):
+                        filter_classes=None,
+                        class_names=None):
 
         cap = cv2.VideoCapture(stream_path)
         width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -123,7 +129,7 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000), )
 
-            im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids, draw_trails=draw_trails)
+            im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids, draw_trails=draw_trails, class_names=class_names)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
