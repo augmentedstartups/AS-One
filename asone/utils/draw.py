@@ -71,7 +71,7 @@ def draw_border(img, pt1, pt2, color, thickness, r, d):
     return img
 
 
-def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=False, offset=(0, 0)):
+def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=False, offset=(0, 0), class_names=None):
     # cv2.line(img, line2[0], line2[1], (0,200,0), 3)
     height, width, _ = img.shape
 
@@ -100,7 +100,10 @@ def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=Fals
         label = None
         if class_ids is not None:
             color = compute_color_for_labels(int(class_ids[i]))
-            obj_name = names[int(class_ids[i])]
+            if class_names:
+                obj_name = class_names[int(class_ids[i])]
+            else:                
+                obj_name = names[int(class_ids[i])]
             label = '%s' % (obj_name)            
         draw_ui_box(box, img, id=id, label=label, color=color, line_thickness=2)
 
