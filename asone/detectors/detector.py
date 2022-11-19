@@ -13,15 +13,23 @@ from asone.detectors.utils.exp_name import get_exp__name
 class Detector:
     def __init__(self,
                 model_flag: int,
+                weights: str = None,
                 use_cuda: bool=True):
                  
-        self.model = self._select_detector(model_flag, use_cuda)
+        self.model = self._select_detector(model_flag, weights, use_cuda)
      
 
-    def _select_detector(self, model_flag, cuda):
+    def _select_detector(self, model_flag, weights, cuda):
         # Get required weight using model_flag
-        onnx, weight = get_weight_path(model_flag)
-       
+        if weights and weights.split('.')[-1] == 'onnx':
+            onnx = True
+            weight = weights
+        elif weights:
+            onnx = False
+            weight = weights            
+        else:
+            onnx, weight = get_weight_path(model_flag)
+
         if model_flag in range(0, 20):
             _detector = YOLOv5Detector(weights=weight,
                                        use_onnx=onnx,
