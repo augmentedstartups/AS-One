@@ -188,7 +188,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 
 # ToDo
 - [x] First Release
-- [ ] Import trained models
+- [x] Import trained models
 - [ ] Simplify code even further
 - [ ] Add support for other Trackers and Detectors
 - [ ] M1/2 Apple Silicon Compatibility
