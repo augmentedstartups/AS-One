@@ -16,7 +16,7 @@ def main(args):
     if filter_classes:
         filter_classes = filter_classes.split(',')
     
-    detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=args.use_cuda).get_detector()
+    detector = Detector(asone.YOLOV7_E6_ONNX, weights=args.weights, use_cuda=args.use_cuda).get_detector()
     tracker = Tracker(asone.BYTETRACK, detector, use_cuda=args.use_cuda).get_tracker()
 
     cap = cv2.VideoCapture(args.video_path)
@@ -94,6 +94,7 @@ if __name__ == '__main__':
                         action='store_false', dest='save_results', help='Disable result saving')
 
     parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
+    parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
 
     args = parser.parse_args()
 

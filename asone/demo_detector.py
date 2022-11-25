@@ -12,7 +12,7 @@ def main(args):
 
     img_path = args.image
     img = cv2.imread(img_path)
-    detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=args.use_cuda)
+    detector = Detector(asone.YOLOV7_E6_ONNX, weights=args.weights, use_cuda=args.use_cuda)
     dets, img_info = detector.detect(img, filter_classes=filter_classes)
 
     bbox_xyxy = dets[:, :4]
@@ -28,6 +28,7 @@ if __name__=='__main__':
     parser.add_argument("image", help="Path of test image")
     parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda', help='If provided the model will run on cpu otherwise it will run on gpu')
     parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
+    parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
 
     args = parser.parse_args()
     main(args)
