@@ -10,7 +10,7 @@ def main(args):
 
     dt_obj = ASOne(
         tracker=asone.BYTETRACK,
-        detector=asone.YOLOX_DARKNET_PYTORCH,
+        detector=asone.YOLOV7_PYTORCH,
         weights=args.weights,
         use_cuda=args.use_cuda
         )
@@ -20,7 +20,8 @@ def main(args):
                                 save_result=args.save_result,
                                 display=args.display,
                                 draw_trails=args.draw_trails,
-                                filter_classes=filter_classes)
+                                filter_classes=filter_classes,
+                                class_names=None) # class_names=['License Plate'] for custom weights
     
     # Loop over track_fn to retrieve outputs of each frame 
     for bbox_details, frame_details in track_fn:
@@ -40,7 +41,8 @@ if __name__ == '__main__':
     parser.add_argument('--no_display', default=True, action='store_false',
                         dest='display', help='whether or not display results on screen')
     parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
-    parser.add_argument('--draw_trails', default=False,  help='if provided object motion trails will be drawn.')
+    parser.add_argument('--draw_trails', action='store_true', default=False,
+                        help='if provided object motion trails will be drawn.')
     parser.add_argument('--filter_classes', default=None, help='Filter class name')
     parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
 
