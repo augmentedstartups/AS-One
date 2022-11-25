@@ -91,7 +91,7 @@ def download_weights(weights):
     else:
         raise ValueError(f'No model named {model} found.')
 
-    url = f'https://drive.google.com/uc?id={model_key}'
+    url = f'https://drive.google.com/uc?id={model_key}&confirm=t'
     gdown.download(url, output=filename, quiet=False)
 
     if not os.path.exists(outputpath):
