@@ -92,7 +92,7 @@ from asone.detectors import Detector
 import cv2
 
 img = cv2.imread('data/sample_imgs/test2.jpg')
-detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True).get_detector() # Set use_cuda to False for cpu
+detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = ['person'] # Set to None to detect all classes
 
@@ -104,6 +104,12 @@ class_ids = dets[:, 5]
 
 img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
 cv2.imwrite('result.png', img)
+```
+
+### Use Custom Trained Weights
+Use your custom trained weights by simply providing path of your trained weights.
+```
+detector = Detector(asone.YOLOV7_E6_ONNX, weights='YOUR_WEIGHTS_PATH' use_cuda=True)
 ```
 ### Changing Detector Models
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
@@ -156,6 +162,12 @@ for bbox_details, frame_details in track_fn:
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
 ```
+### Use Custom Trained Weights for Detector
+Use your custom trained weights by simply providing path of your trained weights.
+```
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, weights='YOUR_WEIGHTS_PATH' use_cuda=True)
+```
+
 ### Changing Detector and Tracking Models
 
 Change Tracker by simply changing the tracker flag.
