@@ -60,12 +60,8 @@ class YOLOxDetector:
         ckpt = torch.load(weights, map_location="cpu")
 
         # get number of classes from weights
-        # head.stems.* are the heads of model which defines number of classes in it.
-        # because each stem have batch normailzation, weight, biases etc soto tal weights for each head are 6
-        # this is why we're dividing the sum(head.stem) by 6 to gewt number of classes
-        exp.num_classes = int(sum('head.stems.' in s for s in list(ckpt['model'].keys()))/6)
-
-
+        # head.cls_preds.0.weight weights contains number of classes so simply extract it and with in exp file.
+        exp.num_classes = ckpt['model']['head.cls_preds.0.weight'].size()[0]
         self.classes =  exp.num_classes
         model = exp.get_model()
         if self.device == "cuda":
@@ -73,6 +69,7 @@ class YOLOxDetector:
             if self.fp16:  # to FP16
                 model.half()
         model.eval()
+   
         # load the model state dict
         model.load_state_dict(ckpt["model"])
         if fuse:
