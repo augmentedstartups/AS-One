@@ -112,9 +112,27 @@ cv2.imwrite('result.png', img)
 ```
 
 ### Use Custom Trained Weights
-Use your custom trained weights by simply providing path of your trained weights.
-```
-detector = Detector(asone.YOLOV7_E6_ONNX, weights='YOUR_WEIGHTS_PATH' use_cuda=True)
+Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
+
+```python
+import asone
+from asone import utils
+from asone.detectors import Detector
+import cv2
+
+img = cv2.imread('data/sample_imgs/test2.jpg')
+detector = Detector(asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
+
+filter_classes = ['person'] # Set to None to detect all classes
+
+dets, img_info = detector.detect(img, , filter_classes=filter_classes)
+
+bbox_xyxy = dets[:, :4]
+scores = dets[:, 4]
+class_ids = dets[:, 5]
+
+img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids, class_names=['License Plate']) # class_names are names of classes in your dataset
+cv2.imwrite('result.png', img)
 ```
 ### Changing Detector Models
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
@@ -168,9 +186,25 @@ for bbox_details, frame_details in track_fn:
     # Do anything with bboxes here
 ```
 ### Use Custom Trained Weights for Detector
-Use your custom trained weights by simply providing path of your trained weights.
-```
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, weights='YOUR_WEIGHTS_PATH' use_cuda=True)
+Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
+
+```python
+import asone
+from asone import ASOne
+
+# Instantiate Asone object
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True)
+
+filter_classes = ['person'] # set to None to track all classes
+
+# Get tracking function
+track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes, class_names=['License Plate']) #class_names are class names in your custom data
+
+# Loop over track_fn to retrieve outputs of each frame 
+for bbox_details, frame_details in track_fn:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
 ```
 
 ### Changing Detector and Tracking Models
