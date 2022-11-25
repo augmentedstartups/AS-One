@@ -42,7 +42,7 @@ Change Directory to AS-One
 
 ## 4. Installation
 
-For `Linux`
+### For `Linux`
 
 ```shell
 python3 -m venv .env
@@ -62,7 +62,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 ```
 
-For `Windows 10/11`
+### For `Windows 10/11`
 
 ```shell
 python -m venv .env
@@ -80,6 +80,11 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 ```
+
+### Run in `Google Colab`
+
+ <a href="https://colab.research.google.com/drive/19noVn6S0I0I7Uh0cVNEroYTmQaWDifun?authuser=1#scrollTo=q2M6h7caeSq0"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+
 
 ## 5. Running AS-One
 
