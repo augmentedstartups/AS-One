@@ -96,7 +96,7 @@ class Detect(nn.Module):
         return grid, anchor_grid
 
 
-class Model(nn.Module):
+class DetectionModel(nn.Module):
     # YOLOv5 model
     def __init__(self, cfg='yolov5s.yaml', ch=3, nc=None, anchors=None):  # model, input channels, number of classes
         super().__init__()
@@ -254,6 +254,8 @@ class Model(nn.Module):
             if isinstance(m.anchor_grid, list):
                 m.anchor_grid = list(map(fn, m.anchor_grid))
         return self
+
+Model = DetectionModel  # retain YOLOv5 'Model' class for backwards compatibility
 
 
 def parse_model(d, ch):  # model_dict, input_channels(3)
