@@ -95,7 +95,6 @@ def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=Fals
         id = int(identities[i]) if identities is not None else None
 
         color = compute_color_for_labels(0)
-
         
         label = None
         if class_ids is not None:
@@ -107,8 +106,7 @@ def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=Fals
             label = '%s' % (obj_name)            
         draw_ui_box(box, img, id=id, label=label, color=color, line_thickness=2)
 
-        # Draw trails
-        
+        # Draw trails        
         # code to find center of bottom edge
         center = (int((x2+x1) / 2), int((y2+y2)/2))
 
@@ -120,8 +118,6 @@ def draw_boxes(img, bbox_xyxy, class_ids=None, identities=None, draw_trails=Fals
             data_deque[id].appendleft(center)    
             drawtrails(data_deque, id, color, img)
  
-
-
     return img
 
 def drawtrails(data_deque, id, color, img):
