@@ -12,14 +12,14 @@ def main(args):
 
     img_path = args.image
     img = cv2.imread(img_path)
-    detector = Detector(asone.YOLOV7_E6_ONNX, weights=args.weights, use_cuda=args.use_cuda)
+    detector = Detector(asone.YOLOV7_PYTORCH, weights=args.weights, use_cuda=args.use_cuda)
     dets, img_info = detector.detect(img, filter_classes=filter_classes)
 
     bbox_xyxy = dets[:, :4]
     scores = dets[:, 4]
     class_ids = dets[:, 5]
 
-    img = draw_boxes(img, bbox_xyxy, class_ids=class_ids)
+    img = draw_boxes(img, bbox_xyxy, class_ids=class_ids, class_names=None) # class_names=['License Plate'] for custom_trained_model
     cv2.imwrite('data/results/result.png', img)
 
 if __name__=='__main__':
