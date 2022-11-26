@@ -8,8 +8,9 @@
 3. Clone the Repo
 4. Installation
 5. Running AS-One
-6. [Usage](#usage)
-7. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
+6. Train detectors with custom datasets
+7. [Usage](#usage)
+8. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
 
 ## 1. Introduction
 
@@ -224,6 +225,20 @@ dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=
 ```
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
+
+## 6. Train custom detection models
+
+Learn and train your object detection model! Search for dataset perfect for your use-case on [Roboflow Universe](https://universe.roboflow.com/).
+
+| **model** |                                                                       **open notebook in github**                                                                       | **open notebook in colab or kaggle** | **complementary materials** |
+|:---------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------:|:---------------------------:|
+|  YOLOv7   | [![GitHub](https://badges.aleen42.com/src/github.svg)](https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolov7-object-detection-on-custom-data.ipynb) | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov7-object-detection-on-custom-data.ipynb) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://kaggle.com/kernels/welcome?src=https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolov7-object-detection-on-custom-data.ipynb) | [![Roboflow](https://raw.githubusercontent.com/roboflow-ai/notebooks/main/assets/badges/roboflow-blogpost.svg)](https://blog.roboflow.com/yolov7-custom-dataset-training-tutorial) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/watch?v=5nsmXLyDaU4) |
+|  YOLOv6   | [![GitHub](https://badges.aleen42.com/src/github.svg)](https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolov6-object-detection-on-custom-data.ipynb) | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov6-object-detection-on-custom-data.ipynb) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://kaggle.com/kernels/welcome?src=https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolov6-object-detection-on-custom-data.ipynb) | [![Roboflow](https://raw.githubusercontent.com/roboflow-ai/notebooks/main/assets/badges/roboflow-blogpost.svg)](https://blog.roboflow.com/how-to-train-yolov6-on-a-custom-dataset) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/watch?v=fFCWrMFH2UY) |
+|  YOLOv5   | [![GitHub](https://badges.aleen42.com/src/github.svg)](https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolov5-object-detection-on-custom-data.ipynb) | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov5-object-detection-on-custom-data.ipynb) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://kaggle.com/kernels/welcome?src=https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolov5-object-detection-on-custom-data.ipynb) | [![Roboflow](https://raw.githubusercontent.com/roboflow-ai/notebooks/main/assets/badges/roboflow-blogpost.svg)](https://blog.roboflow.com/how-to-train-yolov5-on-a-custom-dataset) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/watch?v=MdF6x6ZmLAY) |
+|   YOLOR   | [![GitHub](https://badges.aleen42.com/src/github.svg)](https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolor-object-detection-on-custom-data.ipynb)  | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolor-object-detection-on-custom-data.ipynb) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://kaggle.com/kernels/welcome?src=https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolor-object-detection-on-custom-data.ipynb) | [![Roboflow](https://raw.githubusercontent.com/roboflow-ai/notebooks/main/assets/badges/roboflow-blogpost.svg)](https://blog.roboflow.com/train-yolor-on-a-custom-dataset) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/watch?v=sZ5DiXDOHEM) |
+|   YOLOX   | [![GitHub](https://badges.aleen42.com/src/github.svg)](https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolox-object-detection-on-custom-data.ipynb)  | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolox-object-detection-on-custom-data.ipynb) [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://kaggle.com/kernels/welcome?src=https://github.com/roboflow-ai/notebooks/blob/main/notebooks/train-yolox-object-detection-on-custom-data.ipynb) | [![Roboflow](https://raw.githubusercontent.com/roboflow-ai/notebooks/main/assets/badges/roboflow-blogpost.svg)](https://blog.roboflow.com/how-to-train-yolox-on-a-custom-dataset) [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/watch?v=q3RbFbaQQGw) |
+
+Find more training tutorials at [Roboflow Notebooks](https://github.com/roboflow-ai/notebooks).
 
 # ToDo
 - [x] First Release
