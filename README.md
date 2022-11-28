@@ -83,7 +83,7 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 
 ### Run in `Google Colab`
 
- <a href="https://colab.research.google.com/drive/19noVn6S0I0I7Uh0cVNEroYTmQaWDifun?authuser=1#scrollTo=q2M6h7caeSq0"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+ <a href="https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 
 
 ## 5. Running AS-One
