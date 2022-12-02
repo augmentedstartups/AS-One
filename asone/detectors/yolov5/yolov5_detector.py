@@ -115,7 +115,7 @@ class YOLOv5Detector:
                     else:
                         warnings.warn(f"class {_class} not found in model classes list.")
 
-            detection = detection[np.in1d(detection[:,5].astype(int), filter_class_idx)]
+            detections = detections[np.in1d(detections[:,5].astype(int), filter_class_idx)]
 
         return detections, image_info
 

@@ -42,7 +42,7 @@ Change Directory to AS-One
 
 ## 4. Installation
 
-For `Linux`
+### For `Linux`
 
 ```shell
 python3 -m venv .env
@@ -62,7 +62,7 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 
 ```
 
-For `Windows 10/11`
+### For `Windows 10/11`
 
 ```shell
 python -m venv .env
@@ -80,6 +80,11 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 ```
+
+### Run in `Google Colab`
+
+ <a href="https://colab.research.google.com/drive/19noVn6S0I0I7Uh0cVNEroYTmQaWDifun?authuser=1#scrollTo=q2M6h7caeSq0"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+
 
 ## 5. Running AS-One
 
@@ -107,9 +112,27 @@ cv2.imwrite('result.png', img)
 ```
 
 ### Use Custom Trained Weights
-Use your custom trained weights by simply providing path of your trained weights.
-```
-detector = Detector(asone.YOLOV7_E6_ONNX, weights='YOUR_WEIGHTS_PATH' use_cuda=True)
+Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
+
+```python
+import asone
+from asone import utils
+from asone.detectors import Detector
+import cv2
+
+img = cv2.imread('data/sample_imgs/test2.jpg')
+detector = Detector(asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
+
+filter_classes = ['person'] # Set to None to detect all classes
+
+dets, img_info = detector.detect(img, , filter_classes=filter_classes)
+
+bbox_xyxy = dets[:, :4]
+scores = dets[:, 4]
+class_ids = dets[:, 5]
+
+img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids, class_names=['License Plate']) # class_names are names of classes in your dataset
+cv2.imwrite('result.png', img)
 ```
 ### Changing Detector Models
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
@@ -163,9 +186,25 @@ for bbox_details, frame_details in track_fn:
     # Do anything with bboxes here
 ```
 ### Use Custom Trained Weights for Detector
-Use your custom trained weights by simply providing path of your trained weights.
-```
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, weights='YOUR_WEIGHTS_PATH' use_cuda=True)
+Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
+
+```python
+import asone
+from asone import ASOne
+
+# Instantiate Asone object
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True)
+
+filter_classes = ['person'] # set to None to track all classes
+
+# Get tracking function
+track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes, class_names=['License Plate']) #class_names are class names in your custom data
+
+# Loop over track_fn to retrieve outputs of each frame 
+for bbox_details, frame_details in track_fn:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
 ```
 
 ### Changing Detector and Tracking Models
@@ -188,7 +227,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 
 # ToDo
 - [x] First Release
-- [ ] Import trained models
+- [x] Import trained models
 - [ ] Simplify code even further
 - [ ] Add support for other Trackers and Detectors
 - [ ] M1/2 Apple Silicon Compatibility
