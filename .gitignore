@@ -9,3 +9,6 @@
 build/
 dist/
 asone.egg-info/
+test_custom_tracker.py
+custom_weights.py
+data/results/
