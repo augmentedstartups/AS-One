@@ -58,7 +58,7 @@ def main(args):
         logger.info(
             f'frame {frame_id}/{int(frame_count)} {elapsed_time * 1000:.2f} ms')
 
-        im0 = draw_boxes(im0, bboxes_xyxy, identities=ids)
+        im0 = draw_boxes(im0, bboxes_xyxy, class_ids, identities=ids)
 
         currTime = time.time()
         fps = 1 / (currTime - prevTime)

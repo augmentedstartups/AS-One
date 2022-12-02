@@ -129,7 +129,8 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000), )
 
-            im0 = utils.draw_boxes(im0, bboxes_xyxy, identities=ids, draw_trails=draw_trails, class_names=class_names)
+            im0 = utils.draw_boxes(im0, bboxes_xyxy, class_ids,
+                                   identities=ids, draw_trails=draw_trails, class_names=class_names)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
