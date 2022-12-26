@@ -5,7 +5,6 @@ import torch
 from asone.utils import get_names
 import numpy as np
 import warnings
-
 from asone.detectors.yolov7.yolov7.utils.yolov7_utils import (prepare_input,
                                  process_output,
                                  non_max_suppression)
@@ -73,7 +72,10 @@ class YOLOv7Detector:
             processed_image = torch.from_numpy(processed_image).to(self.device)
             # Change image floating point precision if fp16 set to true
             processed_image = processed_image.half() if self.fp16 else processed_image.float() 
-            prediction = self.model(processed_image, augment=False)[0]
+
+            with torch.no_grad():
+                prediction = self.model(processed_image, augment=False)[0]
+                
         detection = []
         # Postprocess prediction
         if self.use_onnx:
