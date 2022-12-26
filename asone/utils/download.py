@@ -64,7 +64,7 @@ def download_weights(weights):
         model_key = '1FiGLXG6_3He21ean4bFET471Wrj-3oc3'
     elif model == 'yolor_csp':
         model_key = '1G3FBZKrznW_64mGfs6b3nAJiJv6GmmV0'
-    elif model == 'yolor_csp-star':
+    elif model == 'yolor_csp_star':
         model_key = '15WDl46ZthFGZfpOyI3qXx6gC9FQLH_wH'
     elif model == 'yolor_csp_x':
         model_key = '1LU2ckh7eSpVD0nyPSdq1n34lKmNAX39T'
