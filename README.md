@@ -81,6 +81,11 @@ or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 ```
 
+### Run AS-One
+```
+python main.py data/sample_videos/test.mp4
+```
+
 ### Run in `Google Colab`
 
  <a href="https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
