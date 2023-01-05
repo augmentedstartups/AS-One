@@ -1,7 +1,10 @@
 import os
-configuration = {'0': os.path.join('asone','detectors','yolor','cfg','yolor_csp_x.cfg'),
-                 '1': os.path.join('asone','detectors','yolor','cfg','yolor_csp.cfg'),
-                 '2': os.path.join('asone','detectors','yolor','cfg','yolor_p6.cfg')}
+
+cfg_dir = os.path.dirname(os.path.dirname(__file__))
+
+configuration = {'0': os.path.join(cfg_dir, 'yolor','cfg','yolor_csp_x.cfg'),
+                 '1': os.path.join(cfg_dir, 'yolor','cfg','yolor_csp.cfg'),
+                 '2': os.path.join(cfg_dir, 'yolor','cfg','yolor_p6.cfg')}
 
 def get_cfg_path(model_flag):
     if model_flag in [48,50]:
