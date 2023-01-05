@@ -47,7 +47,7 @@ class YOLOrDetector:
             model = onnxruntime.InferenceSession(weights, providers=providers)
         # Load Pytorch
         else:
-            model = Darknet(cfg, img_size).cuda()
+            model = Darknet(cfg, img_size).to(self.device)
             model.load_state_dict(torch.load(
                 weights, map_location=self.device)['model'])
             model.to(self.device).eval()
