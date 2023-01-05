@@ -30,10 +30,14 @@ class DeepSort:
             self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
         except AttributeError as e:
             self.input_shape = (640, 640)
-    def detect_and_track(self, image:np.ndarray, filter_classes:list = None):
+    def detect_and_track(self, image:np.ndarray, conf_thres: float = 0.25, filter_classes:list = None):
 
         dets_xyxy, image_info = self.detector.detect(
-            image, input_shape=self.input_shape, filter_classes=filter_classes)
+            image,
+            input_shape=self.input_shape,
+            conf_thres = conf_thres,
+            filter_classes=filter_classes)
+        
         image_info['im0'] = image
 
         class_ids = []

@@ -71,8 +71,24 @@ class Detector:
     def get_detector(self):
         return self.model
         
-    def detect(self, image, filter_classes:list = None):
-        return self.model.detect(image, filter_classes = filter_classes)
+    def detect(self,
+               image: list,
+               conf_thres: float = 0.25,
+               iou_thres: float = 0.45,
+               classes: int = None,
+               agnostic_nms: bool = False,
+               input_shape=(640, 640),
+               max_det: int = 1000,
+               filter_classes:list=None):
+        
+        return self.model.detect(image=image,
+               conf_thres= conf_thres,
+               iou_thres = iou_thres,
+               classes = classes,
+               agnostic_nms = agnostic_nms,
+               input_shape = input_shape,
+               max_det = max_det,
+               filter_classes = filter_classes)
 
 if __name__ == '__main__':
     
