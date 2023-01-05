@@ -127,7 +127,7 @@ class ASOne:
             im0 = copy.deepcopy(frame)
 
             bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
-                frame, filter_classes=filter_classes)
+                frame, conf_thres=conf_thres, filter_classes=filter_classes)
             elapsed_time = time.time() - start_time
 
             logger.info(
