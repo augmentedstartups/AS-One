@@ -20,6 +20,7 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '17': os.path.join('yolov5','weights','yolov5m6.onnx'),
             '18': os.path.join('yolov5','weights','yolov5l6.pt'),
             '19': os.path.join('yolov5','weights','yolov5l6.onnx'),
+            # YOLOv6
             '20': os.path.join('yolov6','weights','yolov6n.pt'),
             '21': os.path.join('yolov6','weights','yolov6n.onnx'),
             '22': os.path.join('yolov6','weights','yolov6t.pt'),
@@ -34,6 +35,7 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '31': os.path.join('yolov6','weights','yolov6l_relu.onnx'),
             '32': os.path.join('yolov6','weights','yolov6s_repopt.pt'),
             '33': os.path.join('yolov6','weights','yolov6s_repopt.onnx'),
+            # YOLOv7
             '34': os.path.join('yolov7','weights','yolov7-tiny.pt'),
             '35': os.path.join('yolov7','weights','yolov7-tiny.onnx'),
             '36': os.path.join('yolov7','weights','yolov7.pt'),
@@ -48,6 +50,7 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '45': os.path.join('yolov7','weights','yolov7-d6.onnx'),
             '46': os.path.join('yolov7','weights','yolov7-e6e.pt'),
             '47': os.path.join('yolov7','weights','yolov7-e6e.onnx'),
+            # YOLOR
             '48': os.path.join('yolor','weights','yolor_csp_x.pt'),
             '49': os.path.join('yolor','weights','yolor_csp_x.onnx'),
             '50': os.path.join('yolor','weights','yolor_csp_x_star.pt'),
@@ -58,6 +61,7 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '55': os.path.join('yolor','weights','yolor_csp.onnx'),
             '56': os.path.join('yolor','weights','yolor_p6.pt'),
             '57': os.path.join('yolor','weights','yolor_p6.onnx'),
+            # YOLOX
             '58': os.path.join('yolox','weights','yolox_l.pth'),
             '59': os.path.join('yolox','weights','yolox_l.onnx'),
             '60': os.path.join('yolox','weights','yolox_nano.pth'),
@@ -71,7 +75,21 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '68': os.path.join('yolox','weights','yolox_m.pth'),
             '69': os.path.join('yolox','weights','yolox_m.onnx'),
             '70': os.path.join('yolox','weights','yolox_x.pth'),
-            '71': os.path.join('yolox','weights','yolox_x.onnx')
+            '71': os.path.join('yolox','weights','yolox_x.onnx'),
+            # YOLOv8
+            '72': os.path.join('yolov8','weights','yolov8n.pt'),
+            '73': os.path.join('yolov8','weights','yolov8n.onnx'),
+            '74': os.path.join('yolov8','weights','yolov8s.pt'),
+            '75': os.path.join('yolov8','weights','yolov8s.onnx'),
+            '76': os.path.join('yolov8','weights','yolov8m.pt'),
+            '77': os.path.join('yolov8','weights','yolov8m.onnx'),
+            '78': os.path.join('yolov8','weights','yolov8l.pt'),
+            '79': os.path.join('yolov8','weights','yolov8l.onnx'),
+            '80': os.path.join('yolov8','weights','yolov8x.pt'),
+            '81': os.path.join('yolov8','weights','yolov8x.onnx')
+
+
+
 }
 
 def get_weight_path(model_flag):
@@ -90,6 +108,10 @@ def get_weight_path(model_flag):
     elif model_flag in range(58, 72):
         onnx = False if (model_flag % 2 == 0) else True
         weight = weights[str(model_flag)]
+    elif model_flag in range(72, 82):
+        onnx = False if (model_flag % 2 == 0) else True
+        weight = weights[str(model_flag)]
+
         
     return onnx, weight
         
