@@ -9,7 +9,7 @@ from asone.detectors.yolox import YOLOxDetector
 from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
 from asone.detectors.utils.exp_name import get_exp__name 
-
+from .yolov8 import YOLOv8Detector
 class Detector:
     def __init__(self,
                 model_flag: int,
@@ -62,6 +62,11 @@ class Detector:
             _detector = YOLOxDetector(model_name=model_name,
                                       exp_file=exp,
                                       weights=weight,
+                                      use_onnx=onnx,
+                                      use_cuda=cuda)
+        elif model_flag in range(72, 82):
+            # Get exp file and corresponding model for pytorch only
+            _detector = YOLOv8Detector(weights=weight,
                                       use_onnx=onnx,
                                       use_cuda=cuda)
             
