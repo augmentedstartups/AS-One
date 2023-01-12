@@ -88,6 +88,18 @@ def download_weights(weights):
         model_key = '13HNnlILCx_XamNJWwJ1MG5x0XfP6HL1U'
     elif model == 'ckpt':
         model_key = '1VZ05gzg249Q1m8BJVQxl3iHoNIbjzJf8'
+
+    elif model == 'yolov8s':
+        model_key = '1rokjGeiLlLSNugd6LuGQj6Yr_i5_XH3Y'
+    elif model == 'yolov8n':
+        model_key = '1JslnzKzY7bHRQWiLfvcINteIOgyOv_oU'
+    elif model == 'yolov8l':
+        model_key = '1Zlp3e9gBQtgt76SHWpRNdEw4rXeT4GxE'
+    elif model == 'yolov8m':
+        model_key = '1ijE_fou-U-UJb4xRspFK0OnPfsLcuw3U'
+    elif model == 'yolov8x':
+        model_key = '1vtkXtgSLG49l-mh8zzgF9xZdM1ZuRldI'
+        
     else:
         raise ValueError(f'No model named {model} found.')
 
