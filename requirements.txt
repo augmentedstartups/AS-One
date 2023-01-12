@@ -15,3 +15,4 @@ torch
 torchvision
 numpy==1.23.3
 Cython
+ultralytics
