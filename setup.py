@@ -1,11 +1,11 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from pkg_resources import parse_requirements
 import pathlib
 
 DISTNAME = 'asone'
 DESCRIPTION = ''
 MAINTAINER = 'AxcelerateAI'
-MAINTAINER_EMAIL = ''
+MAINTAINER_EMAIL = 'umair.imran@axcelerate.ai'
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
@@ -30,40 +30,7 @@ def setup_package():
         license='BSD 2-clause',
         keywords='asone bytetrack deepsort norfair yolo yolox yolor yolov5 yolov7 installation inferencing',
         # package_dir={"":""},
-        packages=[DISTNAME,
-                  f'{DISTNAME}.detectors',
-                  f'{DISTNAME}.detectors.utils',
-                  f'{DISTNAME}.detectors.yolov5',
-                  f'{DISTNAME}.detectors.yolov5.yolov5.models',
-                  f'{DISTNAME}.detectors.yolov5.yolov5.utils',
-                  f'{DISTNAME}.detectors.yolov6',
-                  f'{DISTNAME}.detectors.yolov6.yolov6.layers',
-                  f'{DISTNAME}.detectors.yolov6.yolov6.assigners',
-                  f'{DISTNAME}.detectors.yolov6.yolov6.models',
-                  f'{DISTNAME}.detectors.yolov6.yolov6.utils',
-                  f'{DISTNAME}.detectors.yolov7',
-                  f'{DISTNAME}.detectors.yolov7.yolov7.models',
-                  f'{DISTNAME}.detectors.yolov7.yolov7.utils',
-                  f'{DISTNAME}.detectors.yolor',
-                  f'{DISTNAME}.detectors.yolor.models',
-                  f'{DISTNAME}.detectors.yolor.utils',
-                  f'{DISTNAME}.detectors.yolor.cfg',
-                  f'{DISTNAME}.detectors.yolox',
-                  f'{DISTNAME}.detectors.yolox.exps',
-                  f'{DISTNAME}.detectors.yolox.yolox',
-                  f'{DISTNAME}.detectors.yolox.yolox.exp',
-                  f'{DISTNAME}.detectors.yolox.yolox.models',
-                  f'{DISTNAME}.detectors.yolox.yolox.utils',
-                  f'{DISTNAME}.trackers',
-                  f'{DISTNAME}.trackers.byte_track',
-                  f'{DISTNAME}.trackers.byte_track.tracker',
-                  f'{DISTNAME}.trackers.deep_sort',
-                  f'{DISTNAME}.trackers.deep_sort.tracker',
-                  f'{DISTNAME}.trackers.deep_sort.tracker.deep',
-                  f'{DISTNAME}.trackers.deep_sort.tracker.sort',
-                  f'{DISTNAME}.trackers.nor_fair',
-                  f'{DISTNAME}.utils',
-                  ],
+        packages=find_packages(),
 
         dependency_links=[
             "https://download.pytorch.org/whl/cu113/",
