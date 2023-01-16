@@ -30,17 +30,12 @@ def process_output(detections,
                                           max_det=max_det,
                                           )
 
-    for i in range(len(detections)):
-
-        # convert tensor to numpy array
-        # detections[i] = detections[i].cpu().numpy()
-        
+    for i in range(len(detections)): 
         # Extract boxes from predictions
         detections[i][:, :4] = ops.scale_boxes(input_shape, detections[i][:, :4], ori_shape).round()
-        # detections[i][:, :4] = rescale_boxes(
-        #     detections[i][:, :4], ori_shape, input_shape)
+
     
-    return detections
+    return detections[0].cpu().numpy()
 
 
 def rescale_boxes(boxes, ori_shape, input_shape):
