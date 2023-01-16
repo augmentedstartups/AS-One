@@ -82,17 +82,12 @@ class YOLOv8Detector:
                                     original_image.shape[:2],
                                     processed_image.shape[2:],
                                     conf_thres,
-                                    iou_thres)[0]
+                                    iou_thres)
 
         image_info = {
             'width': original_image.shape[1],
             'height': original_image.shape[0],
         }
-
-        if len(detection) > 0:
-            self.boxes = detection[:, :4]
-            self.scores = detection[:, 4]
-            self.class_ids = detection[:, 5]
 
         if filter_classes:
             class_names = get_names()
