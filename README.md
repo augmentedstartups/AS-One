@@ -93,15 +93,15 @@ Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
 ```python
 import asone
 from asone import utils
-from asone.detectors import Detector
+from asone import ASOne
 import cv2
 
-img = cv2.imread('data/sample_imgs/test2.jpg')
-detector = Detector(asone.YOLOV7_E6_ONNX, use_cuda=True) # Set use_cuda to False for cpu
+img_path = 'data/sample_imgs/test2.jpg'
+detector = ASOne(asone.YOLOV7_E6_ONNX, use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = ['person'] # Set to None to detect all classes
 
-dets, img_info = detector.detect(img, , filter_classes=filter_classes)
+dets, img_info = detector.detect(img_path, filter_classes=filter_classes)
 
 bbox_xyxy = dets[:, :4]
 scores = dets[:, 4]
@@ -117,15 +117,15 @@ Use your custom weights of a detector model trained on custom data by simply pro
 ```python
 import asone
 from asone import utils
-from asone.detectors import Detector
+from asone import ASOne
 import cv2
 
-img = cv2.imread('data/sample_imgs/test2.jpg')
-detector = Detector(asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
+img_path = 'data/sample_imgs/test2.jpg'
+detector = ASOne(asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = ['person'] # Set to None to detect all classes
 
-dets, img_info = detector.detect(img, , filter_classes=filter_classes)
+dets, img_info = detector.detect(img_path , filter_classes=filter_classes)
 
 bbox_xyxy = dets[:, :4]
 scores = dets[:, 4]
@@ -139,7 +139,7 @@ Change detector by simply changing detector flag. The flags are provided in [ben
 
 ```python
 # Change detector
-detector = Detector(asone.YOLOX_S_PYTORCH, use_cuda=True)
+detector = ASOne(asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
