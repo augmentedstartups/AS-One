@@ -24,8 +24,9 @@ class Tracker:
         else:
             raise ValueError(f'Invalid tracker: {tracker}')
 
-    def detect_and_track(self, image, conf_thres=0.25,  filter_classes=None):
-        return self.tracker.detect_and_track(image, conf_thres = conf_thres, filter_classes=filter_classes)
+    def detect_and_track(self, image, config: dict):
+        
+        return self.tracker.detect_and_track(image, config)
 
     def get_tracker(self):
         return self.tracker

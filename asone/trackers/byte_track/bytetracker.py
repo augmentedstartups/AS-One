@@ -4,8 +4,10 @@ from asone import utils
 
 
 class ByteTrack(object):
-    def __init__(self, detector, min_box_area: int = 10) -> None:
+    def __init__(self, detector, min_box_area: int = 10, aspect_ratio_thresh:float= 1.6) -> None:
 
+        self.min_box_area = min_box_area
+        self.aspect_ratio_thresh = aspect_ratio_thresh
         self.min_box_area = min_box_area
         self.rgb_means = (0.485, 0.456, 0.406)
         self.std = (0.229, 0.224, 0.225)
@@ -18,12 +20,8 @@ class ByteTrack(object):
 
         self.tracker = BYTETracker(frame_rate=30)
 
-    def detect_and_track(self, image: np.ndarray, conf_thres: float = 0.25, filter_classes:list = None):
-
-        dets_xyxy, image_info = self.detector.detect(
-            image, input_shape=self.input_shape,
-            conf_thres = conf_thres,
-            filter_classes=filter_classes)
+    def detect_and_track(self, image: np.ndarray, config: dict) -> tuple:
+        dets_xyxy, image_info = self.detector.detect(image, **config)
 
         class_ids = []
         ids = []
@@ -53,7 +51,7 @@ class ByteTrack(object):
         for online_target in online_targets:
             tlwh = online_target.tlwh
             track_id = online_target.track_id
-            vertical = tlwh[2] / tlwh[3] > 1.6
+            vertical = tlwh[2] / tlwh[3] > self.aspect_ratio_thresh
             if tlwh[2] * tlwh[3] > self.min_box_area and not vertical:
                 online_xyxys.append(utils.tlwh_to_xyxy(tlwh))
                 online_ids.append(track_id)
