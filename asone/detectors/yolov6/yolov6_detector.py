@@ -69,15 +69,15 @@ class YOLOv6Detector:
         output_names = [model_outputs[i].name for i in range(len(model_outputs))]
         
         return input_names, output_names  
-    
+        
     def detect(self, image: list,
-               conf_thres: float = 0.3,
-               classes: int = None,
-               input_shape=(640, 640),
-               agnostic_nms: bool = False,
+               input_shape: tuple = (640, 640),
+               conf_thres: float = 0.25,
+               iou_thres: float = 0.45,
                max_det: int = 1000,
-               iou_thres: float = 0.5,
-               filter_classes: list = None) -> list:
+               filter_classes: bool = None,
+               agnostic_nms: bool = True,
+               with_p6: bool = False) -> list:
         
         # Prepare Input
         img_height, img_width = image.shape[:2]
@@ -109,9 +109,10 @@ class YOLOv6Detector:
             detection = np.array(detection)
         else:
             detection = non_max_suppression(prediction,
-                                     conf_thres,
-                                     iou_thres,
-                                    classes, agnostic_nms, max_det=max_det)[0]
+                                    conf_thres,
+                                    iou_thres,
+                                    agnostic=agnostic_nms, 
+                                    max_det=max_det)[0]
             
             detection = detection.detach().cpu().numpy()
             detection[:, :4] /= np.array([input_shape[1], input_shape[0], input_shape[1], input_shape[0]])

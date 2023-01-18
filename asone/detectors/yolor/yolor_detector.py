@@ -23,7 +23,7 @@ class YOLOrDetector:
 
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
-        
+
         if not os.path.exists(weights):
             utils.download_weights(weights)
 
@@ -68,13 +68,13 @@ class YOLOrDetector:
         return original_image, image
 
     def detect(self, image: list,
+               input_shape: tuple = (640, 640),
                conf_thres: float = 0.25,
                iou_thres: float = 0.45,
-               classes: int = None,
-               agnostic_nms: bool = False,
-               input_shape=(640, 640),
                max_det: int = 1000,
-               filter_classes:list=None) -> list:
+               filter_classes: bool = None,
+               agnostic_nms: bool = True,
+               with_p6: bool = False) -> list:
 
         # Image Preprocessing
         original_image, processed_image = self.image_preprocessing(
@@ -99,8 +99,8 @@ class YOLOrDetector:
             pred = torch.tensor(pred, device=self.device)
         predictions = non_max_suppression(
             pred, conf_thres,
-            iou_thres, classes,
-            agnostic_nms,
+            iou_thres,
+            agnostic=agnostic_nms,
             max_det=max_det)
 
         for i, prediction in enumerate(predictions):  # per image
@@ -108,6 +108,7 @@ class YOLOrDetector:
                 prediction[:, :4] = scale_coords(
                     processed_image.shape[2:], prediction[:, :4], original_image.shape).round()
                 predictions[i] = prediction
+
         predictions = predictions[0].cpu().numpy()
         image_info = {
             'width': original_image.shape[1],
@@ -125,15 +126,13 @@ class YOLOrDetector:
             if filter_classes:
                 for _class in filter_classes:
                     if _class.lower() in class_names:
-                        filter_class_idx.append(class_names.index(_class.lower()))
+                        filter_class_idx.append(
+                            class_names.index(_class.lower()))
                     else:
-                        warnings.warn(f"class {_class} not found in model classes list.")
+                        warnings.warn(
+                            f"class {_class} not found in model classes list.")
 
-            detection = detection[np.in1d(detection[:,5].astype(int), filter_class_idx)]
+            detection = detection[np.in1d(
+                detection[:, 5].astype(int), filter_class_idx)]
 
         return predictions, image_info
-
-
-
-
-

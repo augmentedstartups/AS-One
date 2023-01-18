@@ -1,23 +1,24 @@
 import cv2
 
-from asone.detectors.yolov5 import YOLOv5Detector 
-from asone.detectors.yolov6 import YOLOv6Detector 
+from asone.detectors.yolov5 import YOLOv5Detector
+from asone.detectors.yolov6 import YOLOv6Detector
 from asone.detectors.yolov7 import YOLOv7Detector
 from asone.detectors.yolor import YOLOrDetector
 from asone.detectors.yolox import YOLOxDetector
 
 from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
-from asone.detectors.utils.exp_name import get_exp__name 
+from asone.detectors.utils.exp_name import get_exp__name
 from .yolov8 import YOLOv8Detector
+
+
 class Detector:
     def __init__(self,
-                model_flag: int,
-                weights: str = None,
-                use_cuda: bool=True):
-                 
+                 model_flag: int,
+                 weights: str = None,
+                 use_cuda: bool = True):
+
         self.model = self._select_detector(model_flag, weights, use_cuda)
-     
 
     def _select_detector(self, model_flag, weights, cuda):
         # Get required weight using model_flag
@@ -26,7 +27,7 @@ class Detector:
             weight = weights
         elif weights:
             onnx = False
-            weight = weights            
+            weight = weights
         else:
             onnx, weight = get_weight_path(model_flag)
 
@@ -44,7 +45,7 @@ class Detector:
                                        use_cuda=cuda)
         elif model_flag in range(48, 58):
             # Get Configuration file for Yolor
-            if model_flag in range(48,57,2): 
+            if model_flag in range(48, 57, 2):
                 cfg = get_cfg_path(model_flag)
             else:
                 cfg = None
@@ -52,10 +53,10 @@ class Detector:
                                       cfg=cfg,
                                       use_onnx=onnx,
                                       use_cuda=cuda)
-        
+
         elif model_flag in range(58, 72):
             # Get exp file and corresponding model for pytorch only
-            if model_flag in range(58,71,2):     
+            if model_flag in range(58, 71, 2):
                 exp, model_name = get_exp__name(model_flag)
             else:
                 exp = model_name = None
@@ -67,35 +68,25 @@ class Detector:
         elif model_flag in range(72, 82):
             # Get exp file and corresponding model for pytorch only
             _detector = YOLOv8Detector(weights=weight,
-                                      use_onnx=onnx,
-                                      use_cuda=cuda)
-            
-          
+                                       use_onnx=onnx,
+                                       use_cuda=cuda)
+
         return _detector
-    
+
     def get_detector(self):
         return self.model
-        
+
     def detect(self,
                image: list,
-               conf_thres: float = 0.25,
-               iou_thres: float = 0.45,
-               input_shape=(640, 640),
-               filter_classes:list=None):
-        
-        return self.model.detect(image=image,
-               conf_thres= conf_thres,
-               iou_thres = iou_thres,
-               input_shape = input_shape,
-               filter_classes = filter_classes)
+               **kwargs: dict):
+        return self.model.detect(image, **kwargs)
+
 
 if __name__ == '__main__':
-    
+
     # Initialize YOLOv6 object detector
     model_type = 56
     result = Detector(model_flag=model_type, use_cuda=True)
     img = cv2.imread('asone/asone-linux/test.jpeg')
     pred = result.get_detector(img)
     print(pred)
-   
-  

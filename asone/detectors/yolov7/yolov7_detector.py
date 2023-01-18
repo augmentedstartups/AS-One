@@ -50,12 +50,14 @@ class YOLOv7Detector:
 
 
     def detect(self, image: list,
+               input_shape: tuple = (640, 640),
                conf_thres: float = 0.25,
                iou_thres: float = 0.45,
-               classes: int = None,
-               agnostic_nms: bool = False,
-               input_shape=(640, 640),
-               filter_classes:list=None) -> list:
+               max_det: int = 1000,
+               filter_classes: bool = None,
+               agnostic_nms: bool = True,
+               with_p6: bool = False) -> list:
+
         # Preprocess input image and also copying original image for later use
         original_image = image.copy()
         img_height, img_width = original_image.shape[:2]
@@ -88,8 +90,7 @@ class YOLOv7Detector:
             detection = non_max_suppression(prediction,
                                             conf_thres,
                                             iou_thres,
-                                            classes,
-                                            agnostic_nms)[0]
+                                            agnostic=agnostic_nms)[0]
             
             detection = detection.detach().cpu().numpy()
             # Rescaling Bounding Boxes

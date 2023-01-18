@@ -54,16 +54,15 @@ class YOLOv5Detector:
         if len(image.shape) == 3:
             image = image[None]  # expand for batch dim  
         return original_image, image
-
-    def detect(self, 
-               image: list,
+    
+    def detect(self, image: list,
+               input_shape: tuple = (640, 640),
                conf_thres: float = 0.25,
                iou_thres: float = 0.45,
-               classes: int = None,
-               agnostic_nms: bool = False,
-               input_shape=(640, 640),
                max_det: int = 1000,
-               filter_classes = None) -> list:
+               filter_classes: bool = None,
+               agnostic_nms: bool = True,
+               with_p6: bool = False) -> list:
      
         # Image Preprocessing
         original_image, processed_image = self.image_preprocessing(image, input_shape)
@@ -85,8 +84,8 @@ class YOLOv5Detector:
         if isinstance(pred, np.ndarray):
             pred = torch.tensor(pred, device=self.device)
         predictions = non_max_suppression(pred, conf_thres, 
-                                          iou_thres, classes, 
-                                          agnostic_nms, 
+                                          iou_thres, 
+                                          agnostic=agnostic_nms, 
                                           max_det=max_det)
         
         for i, prediction in enumerate(predictions):  # per image

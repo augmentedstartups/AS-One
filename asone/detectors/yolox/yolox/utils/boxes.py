@@ -69,22 +69,6 @@ def postprocess(prediction, num_classes, conf_thre=0.7, nms_thre=0.45, class_agn
             )
 
         detections = detections[nms_out_index]
-        # bboxes = prediction[:, 0:4]
-        # preprocessing: resize
-        # bboxes /= ratio
-        # cls = prediction[:, 6]
-        # scores = prediction[:, 4] * prediction[:, 5]
-        # dets = np.concatenate(
-            # [bboxes, scores, cls], 1
-        # )
-        # dets = dets[nms_out_index]
-        # print(dets.shape)
-        # print(nms_out_index)
-        # exit()
-        # if nms_out_index:
-        #     dets = np.concatenate(
-        #     [bboxes[nms_out_index], scores[nms_out_index, None], cls[nms_out_index, None]], 1
-        # )
         if output[i] is None:
             output[i] = detections
         else:
