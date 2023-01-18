@@ -1,6 +1,6 @@
 import asone
+from asone import ASOne
 from .utils import draw_boxes
-from .detectors import Detector
 import cv2
 import argparse
 
@@ -12,7 +12,7 @@ def main(args):
 
     img_path = args.image
     img = cv2.imread(img_path)
-    detector = Detector(asone.YOLOV7_PYTORCH, weights=args.weights, use_cuda=args.use_cuda)
+    detector = ASOne(asone.YOLOV7_PYTORCH, weights=args.weights, use_cuda=args.use_cuda)
     dets, img_info = detector.detect(img, filter_classes=filter_classes)
 
     bbox_xyxy = dets[:, :4]
