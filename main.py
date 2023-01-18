@@ -17,7 +17,8 @@ def main(args):
     # Get tracking function
     track_fn = dt_obj.track_video(args.video_path,
                                 output_dir=args.output_dir,
-                                save_result=args.save_result,
+                                conf_thres=args.conf_thres,
+                                iou_thres=args.iou_thres,
                                 display=args.display,
                                 draw_trails=args.draw_trails,
                                 filter_classes=filter_classes,
@@ -45,6 +46,8 @@ if __name__ == '__main__':
                         help='if provided object motion trails will be drawn.')
     parser.add_argument('--filter_classes', default=None, help='Filter class name')
     parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
+    parser.add_argument('-ct', '--config_thres', default=0.25, type=float, help='confidence score threshold')
+    parser.add_argument('-it', '--iou_thres', default=0.45, type=float, help='iou score threshold')
 
     args = parser.parse_args()
 
