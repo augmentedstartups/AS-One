@@ -6,6 +6,7 @@ import time
 import asone.utils as utils
 from asone.trackers import Tracker
 from asone.detectors import Detector
+from asone.utils.default_cfg import config
 
 
 class ASOne:
@@ -23,7 +24,8 @@ class ASOne:
         self.tracker = self.get_tracker(tracker)
 
     def get_detector(self, detector: int, weights: str):
-        detector = Detector(detector, weights=weights, use_cuda=self.use_cuda).get_detector()
+        detector = Detector(detector, weights=weights,
+                            use_cuda=self.use_cuda).get_detector()
         return detector
 
     def get_tracker(self, tracker: int):
@@ -32,66 +34,63 @@ class ASOne:
                           use_cuda=self.use_cuda)
         return tracker
 
-    def track_video(self, 
-                    video_path, 
-                    output_dir='results',
-                    conf_thres = 0.25, 
-                    save_result=True, 
-                    display=False, 
-                    draw_trails=False, 
-                    filter_classes=None,
-                    class_names=None):
-        
-        output_filename = os.path.basename(video_path)
+    # def track_video(self,
+    #                 video_path,
+    #                 output_dir='results',
+    #                 conf_thres = 0.25,
+    #                 save_result=True,
+    #                 display=False,
+    #                 draw_trails=False,
+    #                 filter_classes=None,
+    #                 class_names=None):
+    
+    def _update_args(self, kwargs):
+        for key, value in kwargs.items():
+            if key in config.keys():
+                config[key] = value
+            else:
+                print(f'"{key}" argument not found! valid args: {list(config.keys())}')
+                exit()
+        return config
 
-        for (bbox_details, frame_details) in self._start_tracking(video_path,
-                                                                    output_filename,
-                                                                    output_dir=output_dir,
-                                                                    conf_thres=conf_thres,
-                                                                    save_result=save_result,
-                                                                    display=display,
-                                                                    draw_trails=draw_trails,
-                                                                    filter_classes=filter_classes,
-                                                                    class_names=class_names):
+    def track_video(self,
+                    video_path,
+                    **kwargs
+                    ):
+
+        output_filename = os.path.basename(video_path)
+        kwargs['filename'] = output_filename
+        config = self._update_args(kwargs)
+
+        for (bbox_details, frame_details) in self._start_tracking(video_path, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
 
-    def track_webcam(self, 
-                     cam_id=0, 
-                     output_dir='results',
-                     conf_thres = 0.25, 
-                     save_result=False, 
-                     display=True, 
-                     draw_trails=False, 
-                     filter_classes=None,
-                     class_names=None):
-
+    def track_webcam(self,
+                     cam_id=0,
+                     **kwargs):
         output_filename = 'results.mp4'
 
-        for (bbox_details, frame_details) in self._start_tracking(cam_id,
-                                                                    output_filename,
-                                                                    output_dir=output_dir,
-                                                                    fps=29,
-                                                                    conf_thres=conf_thres,
-                                                                    save_result=save_result,
-                                                                    display=display,
-                                                                    draw_trails=draw_trails,
-                                                                    filter_classes=filter_classes,
-                                                                    class_names=class_names):
+        kwargs['filename'] = output_filename
+        kwargs['fps'] = 29
+        config = self._update_args(kwargs)
+
+
+        for (bbox_details, frame_details) in self._start_tracking(cam_id, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
 
-    def _start_tracking(self, 
-                        stream_path, 
-                        filename,  
-                        fps=None, 
-                        conf_thres=0.25,
-                        output_dir='results',
-                        save_result=True, 
-                        display=False, 
-                        draw_trails=False, 
-                        filter_classes=None,
-                        class_names=None):
+    def _start_tracking(self,
+                        stream_path: str,
+                        config: dict) -> tuple:
+
+        fps = config.pop('fps')
+        output_dir = config.pop('output_dir')
+        filename = config.pop('filename')
+        save_result = config.pop('save_result')
+        display = config.pop('display')
+        draw_trails = config.pop('draw_trails')
+        class_names = config.pop('class_names')
 
         cap = cv2.VideoCapture(stream_path)
         width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -127,15 +126,19 @@ class ASOne:
             im0 = copy.deepcopy(frame)
 
             bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
-                frame, conf_thres=conf_thres, filter_classes=filter_classes)
+                frame, config)
             elapsed_time = time.time() - start_time
 
             logger.info(
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
-                                                 elapsed_time * 1000), )
+                                                 elapsed_time * 1000))
 
-            im0 = utils.draw_boxes(im0, bboxes_xyxy, class_ids,
-                                   identities=ids, draw_trails=draw_trails, class_names=class_names)
+            im0 = utils.draw_boxes(im0,
+                                   bboxes_xyxy,
+                                   class_ids,
+                                   identities=ids,
+                                   draw_trails=draw_trails,
+                                   class_names=class_names)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
@@ -156,13 +159,14 @@ class ASOne:
 
             # yeild required values in form of (bbox_details, frames_details)
             yield (bboxes_xyxy, ids, scores, class_ids), (im0 if display else frame, frame_id-1, fps)
-            
+
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
+
 
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
     asone = ASOne()
 
     asone.start_tracking('data/sample_videos/video2.mp4',
-                        save_result=True, display=False)
+                         save_result=True, display=False)
