@@ -53,6 +53,20 @@ class ASOne:
                 exit()
         return config
 
+    def track_stream(self,
+                    stream_url,
+                    **kwargs
+                    ):
+
+        output_filename = 'result.mp4'
+        kwargs['filename'] = output_filename
+        config = self._update_args(kwargs)
+
+        for (bbox_details, frame_details) in self._start_tracking(stream_url, config):
+            # yeild bbox_details, frame_details to main script
+            yield bbox_details, frame_details
+
+
     def track_video(self,
                     video_path,
                     **kwargs
