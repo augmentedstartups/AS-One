@@ -7,12 +7,12 @@ import asone.utils as utils
 from asone.trackers import Tracker
 from asone.detectors import Detector
 from asone.utils.default_cfg import config
-
+import numpy as np
 
 class ASOne:
     def __init__(self,
-                 tracker: int = 0,
                  detector: int = 0,
+                 tracker: int = -1,
                  weights: str = None,
                  use_cuda: bool = True) -> None:
 
@@ -21,7 +21,12 @@ class ASOne:
         # get detector object
         self.detector = self.get_detector(detector, weights)
 
+        if tracker == -1:
+            self.tracker = None
+            return
+         
         self.tracker = self.get_tracker(tracker)
+
 
     def get_detector(self, detector: int, weights: str):
         detector = Detector(detector, weights=weights,
@@ -34,16 +39,6 @@ class ASOne:
                           use_cuda=self.use_cuda)
         return tracker
 
-    # def track_video(self,
-    #                 video_path,
-    #                 output_dir='results',
-    #                 conf_thres = 0.25,
-    #                 save_result=True,
-    #                 display=False,
-    #                 draw_trails=False,
-    #                 filter_classes=None,
-    #                 class_names=None):
-    
     def _update_args(self, kwargs):
         for key, value in kwargs.items():
             if key in config.keys():
@@ -70,8 +65,7 @@ class ASOne:
     def track_video(self,
                     video_path,
                     **kwargs
-                    ):
-
+                    ):            
         output_filename = os.path.basename(video_path)
         kwargs['filename'] = output_filename
         config = self._update_args(kwargs)
@@ -79,6 +73,19 @@ class ASOne:
         for (bbox_details, frame_details) in self._start_tracking(video_path, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
+
+    def detect(self, source, **kwargs)->np.ndarray:
+        """ Function to perform detection on an img
+
+        Args:
+            source (_type_): if str read the image. if nd.array pass it directly to detect
+
+        Returns:
+            _type_: ndarray of detection
+        """
+        if isinstance(source, str):
+            source = cv2.imread(source)
+        return self.detector.detect(source, **kwargs)
 
     def track_webcam(self,
                      cam_id=0,
@@ -97,6 +104,9 @@ class ASOne:
     def _start_tracking(self,
                         stream_path: str,
                         config: dict) -> tuple:
+        if not self.tracker:
+            print(f'No tracker is selected. use detect() function perform detcetion or pass a tracker.')
+            exit()
 
         fps = config.pop('fps')
         output_dir = config.pop('output_dir')
@@ -176,7 +186,6 @@ class ASOne:
 
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
-
 
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
