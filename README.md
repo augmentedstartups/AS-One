@@ -234,6 +234,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] First Release
 - [x] Import trained models
 - [x] Simplify code even further
+- [x] Updated for YOLOv8
 - [ ] Add support for other Trackers and Detectors
 - [ ] M1/2 Apple Silicon Compatibility
 
