@@ -81,6 +81,11 @@ or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 ```
 
+### Run AS-One
+```
+python main.py data/sample_videos/test.mp4
+```
+
 ### Run in `Google Colab`
 
  <a href="https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
@@ -228,7 +233,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 # ToDo
 - [x] First Release
 - [x] Import trained models
-- [ ] Simplify code even further
+- [x] Simplify code even further
 - [ ] Add support for other Trackers and Detectors
 - [ ] M1/2 Apple Silicon Compatibility
 
