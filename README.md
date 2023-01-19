@@ -97,7 +97,7 @@ from asone import ASOne
 import cv2
 
 img_path = 'data/sample_imgs/test2.jpg'
-detector = ASOne(asone.YOLOV7_E6_ONNX, use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=asone.YOLOV7_E6_ONNX, use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = ['person'] # Set to None to detect all classes
 
@@ -121,7 +121,7 @@ from asone import ASOne
 import cv2
 
 img_path = 'data/sample_imgs/test2.jpg'
-detector = ASOne(asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = ['person'] # Set to None to detect all classes
 
@@ -139,7 +139,7 @@ Change detector by simply changing detector flag. The flags are provided in [ben
 
 ```python
 # Change detector
-detector = ASOne(asone.YOLOX_S_PYTORCH, use_cuda=True)
+detector = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
