@@ -6,7 +6,7 @@
 
 ## Trackers
 
-#### DeepSort
+### DeepSort
 
 | Model           |  Model Flag  |  FPS-GPU   | FPS-CPU
 |---------------- |-----------| -----------| --------
