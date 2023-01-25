@@ -7,8 +7,10 @@
 2. Prerequisites
 3. Clone the Repo
 4. Installation
+    - [Linux](#4-installation)
+    - [Windows 10/11](#4-installation) 
 5. Running AS-One
-6. [Usage](#usage)
+6. [Sample Code Snippets](#6-sample-code-snippets)
 7. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
 
 ## 1. Introduction
@@ -41,8 +43,8 @@ Change Directory to AS-One
 ```cd AS-One```
 
 ## 4. Installation
-
-### For `Linux`
+<details open>
+<summary>For Linux</summary>
 
 ```shell
 python3 -m venv .env
@@ -61,8 +63,10 @@ pip install torch torchvision
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 
 ```
+</details>
 
-### For `Windows 10/11`
+<details>
+<summary> For Windows 10/11</summary>
 
 ```shell
 python -m venv .env
@@ -80,8 +84,12 @@ pip install torch torchvision --extra-index-url https://download.pytorch.org/whl
 or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 ```
+</details>
 
-### Run AS-One
+## 5. Running AS-One
+
+Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
+
 ```
 python main.py data/sample_videos/test.mp4
 ```
@@ -91,9 +99,9 @@ python main.py data/sample_videos/test.mp4
  <a href="https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 
 
-## 5. Running AS-One
-
-Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
+## 6. Sample Code Snippets
+<details>
+<summary>6.1. Object Detection</summary>
 
 ```python
 import asone
@@ -101,22 +109,48 @@ from asone import utils
 from asone import ASOne
 import cv2
 
-img_path = 'data/sample_imgs/test2.jpg'
-detector = ASOne(detector=asone.YOLOV7_E6_ONNX, use_cuda=True) # Set use_cuda to False for cpu
+video_path = 'data/sample_videos/test.mp4'
+detector = ASOne(detector=asone.YOLOV7_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
 
-filter_classes = ['person'] # Set to None to detect all classes
+filter_classes = ['car'] # Set to None to detect all classes
 
-dets, img_info = detector.detect(img_path, filter_classes=filter_classes)
+cap = cv2.VideoCapture(video_path)
 
-bbox_xyxy = dets[:, :4]
-scores = dets[:, 4]
-class_ids = dets[:, 5]
+while True:
+    _, frame = cap.read()
+    if not _:
+        break
 
-img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
-cv2.imwrite('result.png', img)
+    dets, img_info = detector.detect(frame, filter_classes=filter_classes)
+
+    bbox_xyxy = dets[:, :4]
+    scores = dets[:, 4]
+    class_ids = dets[:, 5]
+
+    frame = utils.draw_boxes(frame, bbox_xyxy, class_ids=class_ids)
+
+    cv2.imshow('result', frame)
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
 ```
 
-### Use Custom Trained Weights
+
+Run the `asone/demo_detector.py` to test detector.
+
+```shell
+# run on gpu
+python -m asone.demo_detector data/sample_videos/test.mp4
+
+# run on cpu
+python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
+```
+
+<details>
+<summary>6.1.1 Use Custom Trained Weights for Detector</summary>
+
+<!-- ### 6.1.2 Use Custom Trained Weights -->
+
 Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
 
 ```python
@@ -125,21 +159,36 @@ from asone import utils
 from asone import ASOne
 import cv2
 
-img_path = 'data/sample_imgs/test2.jpg'
-detector = ASOne(detector=asone.YOLOV7_PYTORCH, weights="data/custom_weights/yolov7_custom.pt", use_cuda=True) # Set use_cuda to False for cpu
+video_path = 'data/sample_videos/license_video.webm'
+detector = ASOne(detector=asone.YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
 
-filter_classes = ['person'] # Set to None to detect all classes
+class_names = ['license_plate'] # your custom classes list
 
-dets, img_info = detector.detect(img_path , filter_classes=filter_classes)
+cap = cv2.VideoCapture(video_path)
 
-bbox_xyxy = dets[:, :4]
-scores = dets[:, 4]
-class_ids = dets[:, 5]
+while True:
+    _, frame = cap.read()
+    if not _:
+        break
 
-img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids, class_names=['License Plate']) # class_names are names of classes in your dataset
-cv2.imwrite('result.png', img)
+    dets, img_info = detector.detect(frame)
+
+    bbox_xyxy = dets[:, :4]
+    scores = dets[:, 4]
+    class_ids = dets[:, 5]
+
+    frame = utils.draw_boxes(frame, bbox_xyxy, class_ids=class_ids, class_names=class_names) # simply pass custom classes list to write your classes on result video
+
+    cv2.imshow('result', frame)
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
 ```
-### Changing Detector Models
+</details>
+
+<details>
+<summary>6.1.2. Changing Detector Models </summary>
+
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```python
@@ -147,30 +196,27 @@ Change detector by simply changing detector flag. The flags are provided in [ben
 detector = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
-Run the `asone/demo_detector.py` to test detector.
+</details>
 
-```shell
-# run on gpu
-python -m asone.demo_detector data/sample_imgs/test2.jpg
+</details>
 
-# run on cpu
-python -m asone.demo_detector data/sample_imgs/test2.jpg --cpu
-```
+<details>
+<summary>6.2. Object Tracking </summary>
 
-## Object Tracking
-
-### Video
-Use tracker on sample video using gpu. 
+Use tracker on sample video. 
 
 ```python
 import asone
 from asone import ASOne
 
 # Instantiate Asone object
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
 
 filter_classes = ['person'] # set to None to track all classes
 
+# ##############################################
+#           To track using video file
+# ##############################################
 # Get tracking function
 track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
@@ -180,7 +226,9 @@ for bbox_details, frame_details in track_fn:
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
 
-# To track using webcam
+# ##############################################
+#           To track using webcam
+# ##############################################
 # Get tracking function
 track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
@@ -189,21 +237,13 @@ for bbox_details, frame_details in track_fn:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
-```
-### Use Custom Trained Weights for Detector
-Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
 
-```python
-import asone
-from asone import ASOne
-
-# Instantiate Asone object
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True)
-
-filter_classes = ['person'] # set to None to track all classes
-
+# ##############################################
+#           To track using web stream
+# ##############################################
 # Get tracking function
-track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes, class_names=['License Plate']) #class_names are class names in your custom data
+stream_url = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
+track_fn = dt_obj.track_stream(stream_url, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
 # Loop over track_fn to retrieve outputs of each frame 
 for bbox_details, frame_details in track_fn:
@@ -212,21 +252,32 @@ for bbox_details, frame_details in track_fn:
     # Do anything with bboxes here
 ```
 
-### Changing Detector and Tracking Models
+[Note] Use can use custom weights for a detector model by simply providing path of the weights file. in `ASOne` class.
+
+
+<details>
+<summary>6.2.1 Changing Detector and Tracking Models</summary>
+
+<!-- ### Changing Detector and Tracking Models -->
 
 Change Tracker by simply changing the tracker flag.
 
 The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```python
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
-// Change tracker
-dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_DARKNET_PYTORCH, use_cuda=True)
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
+# Change tracker
+dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
 ```
 
 ```python
+# Change Detector
 dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
+</details>
+</details>
+
+
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
 
