@@ -14,6 +14,7 @@
 7. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
 
 ## 1. Introduction
+==UPDATE: YOLOv8 Now Supported==
 
 AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions. We plan to offer support for future versions of YOLO when they get released.
@@ -285,6 +286,8 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] First Release
 - [x] Import trained models
 - [x] Simplify code even further
+- [x] Updated for YOLOv8
+- [ ] OCSORT, StrongSORT, MoTPy
 - [ ] Add support for other Trackers and Detectors
 - [ ] M1/2 Apple Silicon Compatibility
 
