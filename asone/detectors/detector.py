@@ -10,7 +10,7 @@ from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
 from asone.detectors.utils.exp_name import get_exp__name
 from .yolov8 import YOLOv8Detector
-from asone.detectors.ocr.detector.text_detector import TextDetector
+from asone.detectors.text_detector import TextDetector
 
 
 class Detector:
@@ -73,7 +73,7 @@ class Detector:
             _detector = YOLOv8Detector(weights=weight,
                                        use_onnx=onnx,
                                        use_cuda=cuda)
-        
+        # Get TextDetector model
         elif model_flag  in range(82, 84):
             _detector = TextDetector(use_cuda=cuda)
         return _detector
