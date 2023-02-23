@@ -96,8 +96,14 @@ class ASOne:
     
     def detect_text(self, image, languages=['en']):
         horizontal_list, free_list = self.detector.detect(image)
+        if self.recognizer is None:
+                raise TypeError("Recognizer can not be None")
+        reformated_input = []
+        for dets in horizontal_list.tolist():
+            reformated_input.append(dets[:4])
+
         recognizer = self.get_recognizer(self.recognizer, languages)
-        return recognizer.recognize(image, horizontal_list=horizontal_list,
+        return recognizer.recognize(image, horizontal_list=[reformated_input],
                             free_list=free_list)
         
     def track_webcam(self,

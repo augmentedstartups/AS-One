@@ -73,8 +73,6 @@ class Detector:
                                        use_cuda=cuda)
         # Get TextDetector model
         elif model_flag  in range(82, 85):
-            if recognizer is None:
-                raise TypeError("Recognizer can not be none")
             _detector = TextDetector(detect_network=weight, use_cuda=cuda)
         return _detector
 

@@ -17,5 +17,9 @@ class TextDetector:
         """
 
         reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
-        horizontal_list, free_list = reader.detect(image)   
-        return   horizontal_list, free_list
+        horizontal_list, free_list = reader.detect(image) 
+        formated_output = []
+        for bbx in horizontal_list[0]:
+            bbx.extend([0, 80])
+            formated_output.append(bbx)
+        return   np.array(formated_output), free_list

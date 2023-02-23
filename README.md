@@ -278,6 +278,57 @@ dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=
 </details>
 </details>
 
+Run the `asone/demo_detector.py` to test detector.
+
+```shell
+# run on gpu
+python -m asone.demo_detector data/sample_videos/test.mp4
+
+# run on cpu
+python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
+```
+
+<details>
+<summary>6.3. Text Detection</summary>
+
+```python
+
+# Detect Text 
+
+import asone
+from asone import utils
+from asone import ASOne
+import cv2
+from asone import utils
+
+img_path = 'data/sample_imgs/sample_text.jpeg'
+detector = ASOne(detector=asone.CRAFT ,use_cuda=True) # Set use_cuda to False for cpu
+
+img = cv2.imread(img_path)
+dets, img_info = detector.detect(img) 
+bbox_xyxy = dets[:, :4]
+scores = dets[:, 4]
+class_ids = dets[:, 5]
+img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
+cv2.imwrite("results.jpg", img)
+
+
+# Detect and recognize text
+import asone
+from asone import utils
+from asone import ASOne
+import cv2
+from asone import utils
+
+
+img_path = 'data/sample_imgs/sample_text.jpeg'
+detector = ASOne(detector=asone.CRAFT, recognizer=asone.STANDARD ,use_cuda=True) # Set use_cuda to False for cpu
+img = cv2.imread(img_path)
+results = detector.detect_text(img) 
+img = utils.draw_text(img, results)
+cv2.imwrite("results.jpg", img)
+```
+</details>
 
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
