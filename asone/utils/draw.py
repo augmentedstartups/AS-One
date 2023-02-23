@@ -119,3 +119,19 @@ def drawtrails(data_deque, id, color, img):
         # draw trails
         cv2.line(img, data_deque[id][i - 1], data_deque[id][i], color, thickness)
 
+def draw_text(img, results, offset=(0, 0)):
+    color = compute_color_for_labels(int(0))
+    for res in results:
+        box = res[:4]
+        text = res[4]
+        x1, y1, x2, y2 = box
+        x1 += offset[0]
+        x2 += offset[0]
+        y1 += offset[1]
+        y2 += offset[1]
+        label = text
+
+        draw_ui_box(box, img, label=label, color=color, line_thickness=2)
+        center = (int((x2+x1) / 2), int((y2+y2)/2))
+ 
+    return img

@@ -14,5 +14,10 @@ class EasyocrRecognizer:
         return   horizontal_list, free_list
     
     def recognize(self, img, horizontal_list=None, free_list=None):    
-        dets = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
-        return dets
+        results = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
+        formated_output = []
+        
+        for result in results:
+            formated_output.append((result[0][0][0], result[0][0][1], result[0][2][0], 
+                    result[0][2][1], result[1], result[2]))
+        return formated_output

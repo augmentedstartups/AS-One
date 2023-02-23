@@ -6,3 +6,4 @@ from asone.utils.ponits_conversion import xyxy_to_tlwh, xyxy_to_xywh, tlwh_to_xy
 from asone.utils.temp_loader import get_detector, get_tracker
 
 from asone.utils.draw import draw_boxes
+from asone.utils.draw import draw_text
