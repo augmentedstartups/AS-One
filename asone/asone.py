@@ -10,45 +10,39 @@ from asone.recognizer.recognizer import TextRecognizer
 from asone.utils.default_cfg import config
 import numpy as np
 
+
 class ASOne:
     def __init__(self,
                  detector: int = 0,
                  tracker: int = -1,
                  weights: str = None,
                  use_cuda: bool = True,
-                 recognizer: int = -2
+                 recognizer: int = None
                  ) -> None:
 
         self.use_cuda = use_cuda
 
         # get detector object
-        self.detector = self.get_detector(detector, weights)
+        self.detector = self.get_detector(detector, weights, recognizer)
         self.recognizer = recognizer
         if tracker == -1:
             self.tracker = None
             return
         
-        if recognizer == -2:
-            self.recognizer = None
-            return
-            
-        
         self.tracker = self.get_tracker(tracker)
 
-    def get_detector(self, detector: int, weights: str):
+    def get_detector(self, detector: int, weights: str, recognizer):
         detector = Detector(detector, weights=weights,
-                            use_cuda=self.use_cuda).get_detector()
+                            use_cuda=self.use_cuda, recognizer=recognizer).get_detector()
         return detector
 
     def get_recognizer(self, recognizer: int, languages):
-        
         recognizer = TextRecognizer(recognizer,
                             use_cuda=self.use_cuda, languages=languages).get_recognizer()
 
         return recognizer
 
     def get_tracker(self, tracker: int):
-
         tracker = Tracker(tracker, self.detector,
                           use_cuda=self.use_cuda)
         return tracker
@@ -74,7 +68,6 @@ class ASOne:
         for (bbox_details, frame_details) in self._start_tracking(stream_url, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
-
 
     def track_video(self,
                     video_path,

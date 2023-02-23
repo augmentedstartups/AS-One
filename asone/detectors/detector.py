@@ -17,11 +17,11 @@ class Detector:
     def __init__(self,
                  model_flag: int,
                  weights: str = None,
-                 use_cuda: bool = True):
-
-        self.model = self._select_detector(model_flag, weights, use_cuda)
-
-    def _select_detector(self, model_flag, weights, cuda):
+                 use_cuda: bool = True,
+                 recognizer:int = None):
+        
+        self.model = self._select_detector(model_flag, weights, use_cuda, recognizer)
+    def _select_detector(self, model_flag, weights, cuda, recognizer):
         # Get required weight using model_flag
         if weights and weights.split('.')[-1] == 'onnx':
             onnx = True
@@ -73,6 +73,8 @@ class Detector:
                                        use_cuda=cuda)
         # Get TextDetector model
         elif model_flag  in range(82, 85):
+            if recognizer is None:
+                raise TypeError("Recognizer can not be none")
             _detector = TextDetector(detect_network=weight, use_cuda=cuda)
         return _detector
 

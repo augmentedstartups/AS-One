@@ -5,7 +5,7 @@ import cv2
 
 
 video_path = 'data/sample_imgs/sample_text.jpeg'
-detector = ASOne(detector=asone.CRAFT, recognizer=asone.STANDARD, use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=asone.YOLOV7_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = [] # Set to None to detect all classes
 
@@ -16,5 +16,5 @@ while True:
     if not _:
         break
 
-    res = detector.detect_text(frame, languages=['en'])
+    res = detector.detect(frame)
     print(res)
