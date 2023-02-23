@@ -3,9 +3,10 @@ import numpy as np
 
 
 class TextDetector:
-    def __init__(self, use_cuda=True):
+    def __init__(self, detect_network, use_cuda=True):
         self.use_cuda = use_cuda
-        
+        self.detect_network = detect_network
+
     def detect(self, image: list, languages: list = ['en']) -> list:
         """_summary_
         Args:
@@ -14,7 +15,8 @@ class TextDetector:
         Returns:
             list: numpy array of extracted text and img info(heigh, width)
         """
-        reader = easyocr.Reader(languages, gpu=self.use_cuda)
+
+        reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
         extracted_text = reader.readtext(image)
         img_info = {"widh" : image.shape[0], "height" : image.shape[1]}
         

@@ -86,10 +86,10 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '78': os.path.join('yolov8','weights','yolov8l.pt'),
             '79': os.path.join('yolov8','weights','yolov8l.onnx'),
             '80': os.path.join('yolov8','weights','yolov8x.pt'),
-            '81': os.path.join('yolov8','weights','yolov8x.onnx')
-
-
-
+            '81': os.path.join('yolov8','weights','yolov8x.onnx'),
+            # Text Detectors
+            '82': 'craft',
+            '83': 'dbnet18'
 }
 
 def get_weight_path(model_flag):
@@ -111,7 +111,8 @@ def get_weight_path(model_flag):
     elif model_flag in range(72, 82):
         onnx = False if (model_flag % 2 == 0) else True
         weight = weights[str(model_flag)]
-
-        
+    elif model_flag in range(82, 85):
+        onnx = False
+        weight = weights[str(model_flag)]
     return onnx, weight
         

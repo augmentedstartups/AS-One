@@ -110,6 +110,13 @@ YOLOV8L_ONNX = 79
 YOLOV8X_PYTORCH = 80
 YOLOV8X_ONNX = 81
 
-# Text_Detector
-Text_Detector = 83
+# Text Detectors
+
+# easyocr
+CRAFT = 82
+DBNET18 = 83
+# Text Recognizers
+
+
+
 __all__ = ['ASOne', 'detectors', 'trackers'] 

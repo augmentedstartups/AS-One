@@ -14,7 +14,9 @@ class ASOne:
                  detector: int = 0,
                  tracker: int = -1,
                  weights: str = None,
-                 use_cuda: bool = True) -> None:
+                 use_cuda: bool = True,
+                 recognizer: int = 200
+                 ) -> None:
 
         self.use_cuda = use_cuda
 
@@ -26,7 +28,6 @@ class ASOne:
             return
          
         self.tracker = self.get_tracker(tracker)
-
 
     def get_detector(self, detector: int, weights: str):
         detector = Detector(detector, weights=weights,
@@ -86,7 +87,12 @@ class ASOne:
         if isinstance(source, str):
             source = cv2.imread(source)
         return self.detector.detect(source, **kwargs)
+    
+    def detect_text(self, image, lang=['en']):
+        
+        ...
 
+        
     def track_webcam(self,
                      cam_id=0,
                      **kwargs):

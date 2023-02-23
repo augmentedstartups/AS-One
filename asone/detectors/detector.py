@@ -10,7 +10,7 @@ from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
 from asone.detectors.utils.exp_name import get_exp__name
 from .yolov8 import YOLOv8Detector
-from asone.detectors.text_detector import TextDetector
+from asone.detectors.easyocr.easyocr_detector.text_detector import TextDetector
 
 
 class Detector:
@@ -29,8 +29,6 @@ class Detector:
         elif weights:
             onnx = False
             weight = weights
-        elif model_flag == 83:
-            pass
         else:
             onnx, weight = get_weight_path(model_flag)
 
@@ -74,8 +72,8 @@ class Detector:
                                        use_onnx=onnx,
                                        use_cuda=cuda)
         # Get TextDetector model
-        elif model_flag  in range(82, 84):
-            _detector = TextDetector(use_cuda=cuda)
+        elif model_flag  in range(82, 85):
+            _detector = TextDetector(detect_network=weight, use_cuda=cuda)
         return _detector
 
     def get_detector(self):

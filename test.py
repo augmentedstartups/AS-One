@@ -5,7 +5,7 @@ import cv2
 
 
 video_path = 'data/sample_imgs/sample_text.jpeg'
-detector = ASOne(detector=asone.Text_Detector, use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=asone.CRAFT, use_cuda=True) # Set use_cuda to False for cpu
 
 filter_classes = [] # Set to None to detect all classes
 
@@ -27,4 +27,4 @@ while True:
 
     # if cv2.waitKey(25) & 0xFF == ord('q'):
     #     break
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
