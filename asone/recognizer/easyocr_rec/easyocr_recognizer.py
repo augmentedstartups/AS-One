@@ -9,11 +9,10 @@ class EasyocrRecognizer:
         self.gpu = gpu
         self.model = easyocr.Reader(languages, detect_network=self.detect_network, gpu=self.gpu)    
     
-    def text_detector(self, img):
+    def detect(self, img):
         horizontal_list, free_list = self.model.detect(img)   
         return   horizontal_list, free_list
     
-    def text_recognizer(self, img):    
-        horizontal_list, free_list = self.text_detector(img)   
+    def recognize(self, img, horizontal_list=None, free_list=None):    
         dets = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
         return dets

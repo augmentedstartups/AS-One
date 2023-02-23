@@ -111,11 +111,12 @@ YOLOV8X_PYTORCH = 80
 YOLOV8X_ONNX = 81
 
 # Text Detectors
-
 # easyocr
 CRAFT = 82
 DBNET18 = 83
+
 # Text Recognizers
+STANDARD = 200
 
 
 

@@ -6,6 +6,7 @@ import time
 import asone.utils as utils
 from asone.trackers import Tracker
 from asone.detectors import Detector
+from asone.recognizer.recognizer import TextRecognizer
 from asone.utils.default_cfg import config
 import numpy as np
 
@@ -15,24 +16,36 @@ class ASOne:
                  tracker: int = -1,
                  weights: str = None,
                  use_cuda: bool = True,
-                 recognizer: int = 200
+                 recognizer: int = -2
                  ) -> None:
 
         self.use_cuda = use_cuda
 
         # get detector object
         self.detector = self.get_detector(detector, weights)
-
+        self.recognizer = recognizer
         if tracker == -1:
             self.tracker = None
             return
-         
+        
+        if recognizer == -2:
+            self.recognizer = None
+            return
+            
+        
         self.tracker = self.get_tracker(tracker)
 
     def get_detector(self, detector: int, weights: str):
         detector = Detector(detector, weights=weights,
                             use_cuda=self.use_cuda).get_detector()
         return detector
+
+    def get_recognizer(self, recognizer: int, languages):
+        
+        recognizer = TextRecognizer(recognizer,
+                            use_cuda=self.use_cuda, languages=languages).get_recognizer()
+
+        return recognizer
 
     def get_tracker(self, tracker: int):
 
@@ -88,10 +101,11 @@ class ASOne:
             source = cv2.imread(source)
         return self.detector.detect(source, **kwargs)
     
-    def detect_text(self, image, lang=['en']):
-        
-        ...
-
+    def detect_text(self, image, languages=['en']):
+        horizontal_list, free_list = self.detector.detect(image)
+        recognizer = self.get_recognizer(self.recognizer, languages)
+        return recognizer.recognize(image, horizontal_list=horizontal_list,
+                            free_list=free_list)
         
     def track_webcam(self,
                      cam_id=0,

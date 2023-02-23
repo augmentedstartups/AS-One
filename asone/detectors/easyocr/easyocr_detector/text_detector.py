@@ -17,14 +17,5 @@ class TextDetector:
         """
 
         reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
-        extracted_text = reader.readtext(image)
-        img_info = {"widh" : image.shape[0], "height" : image.shape[1]}
-        
-        if extracted_text == []:
-            return np.empty((0, 6)), img_info
-        filtered_text = []
-        
-        for text in extracted_text:
-            filtered_text.append([text[0][0][0], text[0][0][1], text[0][2][0], text[0][2][1], text[2], 80])
-        
-        return np.array(filtered_text), img_info
+        horizontal_list, free_list = reader.detect(image)   
+        return   horizontal_list, free_list
