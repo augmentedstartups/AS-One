@@ -132,7 +132,7 @@ class YOLOrDetector:
                         warnings.warn(
                             f"class {_class} not found in model classes list.")
 
-            detection = detection[np.in1d(
-                detection[:, 5].astype(int), filter_class_idx)]
+            # detection = detection[np.in1d(
+            #     detection[:, 5].astype(int), filter_class_idx)]
 
         return predictions, image_info
