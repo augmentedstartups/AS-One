@@ -1,4 +1,4 @@
-from asone.recognizer.easyocr_rec.easyocr_recognizer import EasyocrRecognizer
+from asone.recognizer.easyocr_recognizer.easyocr_recognizer import EasyOCRRecognizer
 from asone.recognizer.utils.recognizer_name import get_recognizer_name
 
 
@@ -14,7 +14,7 @@ class TextRecognizer:
     def _select_recognizer(self, model_flag, use_cuda, languages):
         recognizer_name = get_recognizer_name(model_flag)
         if recognizer_name == 'standard':
-            _recognizer = EasyocrRecognizer(gpu=use_cuda, languages=languages)
+            _recognizer = EasyOCRRecognizer(gpu=use_cuda, languages=languages)
         return _recognizer
 
     def get_recognizer(self):

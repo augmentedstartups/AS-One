@@ -14,7 +14,7 @@ class EasyOCRRecognizer:
         return   horizontal_list, free_list
     
     def recognize(self, img, horizontal_list=None, free_list=None):   
-        
+
         results = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
         formated_output = []
         

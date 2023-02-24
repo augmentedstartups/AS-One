@@ -10,7 +10,7 @@ from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
 from asone.detectors.utils.exp_name import get_exp__name
 from .yolov8 import YOLOv8Detector
-from asone.detectors.easyocr.easyocr_detector.text_detector import TextDetector
+from asone.detectors.easyocr_detector.text_detector import TextDetector
 
 
 class Detector:

@@ -100,6 +100,8 @@ class ASOne:
                 raise TypeError("Recognizer can not be None")
         reformated_input = []
         for dets in horizontal_list.tolist():
+            # Reformat xyxy to xxyy
+            dets[1], dets[2] = dets[2], dets[1]
             reformated_input.append(dets[:4])
 
         recognizer = self.get_recognizer(self.recognizer, languages)
