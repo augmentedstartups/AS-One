@@ -1,5 +1,5 @@
 import easyocr
-
+import numpy as np
 
 class EasyOCRRecognizer:
     
@@ -14,6 +14,10 @@ class EasyOCRRecognizer:
         return   horizontal_list, free_list
     
     def recognize(self, img, horizontal_list=None, free_list=None):   
+        
+        horizontal_list = np.array(horizontal_list)
+        horizontal_list = horizontal_list.astype(int)
+        horizontal_list = horizontal_list.tolist()
 
         results = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
         formated_output = []

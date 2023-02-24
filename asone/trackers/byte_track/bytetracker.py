@@ -21,8 +21,8 @@ class ByteTrack(object):
         self.tracker = BYTETracker(frame_rate=30)
 
     def detect_and_track(self, image: np.ndarray, config: dict) -> tuple:
-        dets_xyxy, image_info = self.detector.detect(image, **config)
-
+        dets_xyxy, free_list = self.detector.detect(image, **config)
+        image_info = {"width":image.shape[0],"height":image.shape[1]}
         class_ids = []
         ids = []
         bboxes_xyxy = []
@@ -38,13 +38,14 @@ class ByteTrack(object):
 
     def _tracker_update(self, dets: np.ndarray, image_info: dict):
         online_targets = []
+        class_id = 0
         if dets is not None:
             online_targets = self.tracker.update(
                 dets[:, :-1],
                 [image_info['height'], image_info['width']],
                 [image_info['height'], image_info['width']],
             )
-
+            
         online_xyxys = []
         online_ids = []
         online_scores = []
@@ -52,9 +53,9 @@ class ByteTrack(object):
             tlwh = online_target.tlwh
             track_id = online_target.track_id
             vertical = tlwh[2] / tlwh[3] > self.aspect_ratio_thresh
+            vertical = None
             if tlwh[2] * tlwh[3] > self.min_box_area and not vertical:
                 online_xyxys.append(utils.tlwh_to_xyxy(tlwh))
                 online_ids.append(track_id)
                 online_scores.append(online_target.score)
-
         return online_xyxys, online_ids, online_scores
