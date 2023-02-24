@@ -1,6 +1,7 @@
 lap
 loguru
 norfair
+numpy
 onnxruntime-gpu==1.12.1
 opencv-python==4.5.5.64
 scipy
