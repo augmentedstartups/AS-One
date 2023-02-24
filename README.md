@@ -329,6 +329,15 @@ img = utils.draw_text(img, results)
 cv2.imwrite("results.jpg", img)
 ```
 </details>
+Run the `asone/demo_ocr.py` to test ocr.
+
+```shell
+# run on gpu
+ python -m asone.demo_ocr data/sample_imgs/sample_text.jpeg
+
+# run on cpu
+ python -m asone.demo_ocr data/sample_imgs/sample_text.jpeg --cpu
+```
 
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
