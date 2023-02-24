@@ -7,7 +7,7 @@ class TextDetector:
         self.use_cuda = use_cuda
         self.detect_network = detect_network
 
-    def detect(self, image: list, languages: list = ['en']) -> list:
+    def detect(self, image: list, languages: list = ['en'], filter_classes=None) -> list:
         """_summary_
         Args:
             image : Image 
