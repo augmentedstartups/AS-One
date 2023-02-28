@@ -294,15 +294,15 @@ python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
 ```python
 
 # Detect Text 
-
 import asone
-from asone import utils
-from asone import ASOne
 import cv2
 from asone import utils
+from asone import ASOne
+from asone import utils
+
 
 img_path = 'data/sample_imgs/sample_text.jpeg'
-detector = ASOne(detector=asone.CRAFT ,use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=asone.CRAFT, use_cuda=True) # Set use_cuda to False for cpu
 
 img = cv2.imread(img_path)
 dets, img_info = detector.detect(img) 
