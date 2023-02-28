@@ -1,7 +1,7 @@
 import os 
 
 recognizers = {
-    '200': 'standard'
+    '200': 'easyocr'
 }
 
 def get_recognizer_name(model_flag):

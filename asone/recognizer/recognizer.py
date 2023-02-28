@@ -13,7 +13,7 @@ class TextRecognizer:
 
     def _select_recognizer(self, model_flag, use_cuda, languages):
         recognizer_name = get_recognizer_name(model_flag)
-        if recognizer_name == 'standard':
+        if recognizer_name == 'easyocr':
             _recognizer = EasyOCRRecognizer(gpu=use_cuda, languages=languages)
         return _recognizer
 
