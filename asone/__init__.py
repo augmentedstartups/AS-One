@@ -116,7 +116,7 @@ CRAFT = 82
 DBNET18 = 83
 
 # Text Recognizers
-STANDARD = 200
+EASYOCR = 200
 
 
 
