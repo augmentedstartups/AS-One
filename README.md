@@ -333,10 +333,10 @@ Run the `asone/demo_ocr.py` to test ocr.
 
 ```shell
 # run on gpu
- python -m asone.demo_ocr data/sample_imgs/sample_text2.jpeg
+ python -m asone.demo_ocr data/sample_imgs/sample_text2.jpg
 
 # run on cpu
- python -m asone.demo_ocr data/sample_imgs/sample_text2.jpeg --cpu
+ python -m asone.demo_ocr data/sample_imgs/sample_text2.jpg --cpu
 ```
 
 
