@@ -1,5 +1,7 @@
 import easyocr
 import numpy as np
+from PIL import *
+
 
 class EasyOCRRecognizer:
     
@@ -18,11 +20,15 @@ class EasyOCRRecognizer:
         horizontal_list = np.array(horizontal_list)
         horizontal_list = horizontal_list.astype(int)
         horizontal_list = horizontal_list.tolist()
-
         results = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
+
         formated_output = []
-        
-        for result in results:
-            formated_output.append((result[0][0][0], result[0][0][1], result[0][2][0], 
-                    result[0][2][1], result[1], result[2]))
+        for data in results:
+            x_list = []
+            y_list = []
+            for bbx in data[0]:
+                x_list.append(int(bbx[0]))
+                y_list.append(int(bbx[1]))
+            formated_output.append([min(x_list), min(y_list), max(x_list), max(y_list), data[1], data[2]])
+
         return formated_output
