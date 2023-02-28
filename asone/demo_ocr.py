@@ -10,7 +10,7 @@ import os
 def main(args):
     
     image_path = args.image
-    detector = ASOne(asone.CRAFT, recognizer=asone.STANDARD, use_cuda=args.use_cuda)
+    detector = ASOne(asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=args.use_cuda)
     img = cv2.imread(image_path)      
     results = detector.detect_text(img)
     img = draw_text(img, results)
