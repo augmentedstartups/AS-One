@@ -4,7 +4,7 @@ from asone import utils
 
 
 class ByteTrack(object):
-    def __init__(self, detector, min_box_area: int = 10, aspect_ratio_thresh:float= 1.6) -> None:
+    def __init__(self, detector, min_box_area: int = 10, aspect_ratio_thresh:float= 3.0) -> None:
 
         self.min_box_area = min_box_area
         self.aspect_ratio_thresh = aspect_ratio_thresh
@@ -53,7 +53,6 @@ class ByteTrack(object):
             tlwh = online_target.tlwh
             track_id = online_target.track_id
             vertical = tlwh[2] / tlwh[3] > self.aspect_ratio_thresh
-            vertical = None
             if tlwh[2] * tlwh[3] > self.min_box_area and not vertical:
                 online_xyxys.append(utils.tlwh_to_xyxy(tlwh))
                 online_ids.append(track_id)
