@@ -307,10 +307,9 @@ detector = ASOne(detector=asone.CRAFT, use_cuda=True) # Set use_cuda to False fo
 img = cv2.imread(img_path)
 dets, img_info = detector.detect(img) 
 bbox_xyxy = dets[:, :4]
-scores = dets[:, 4]
 class_ids = dets[:, 5]
 img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids)
-cv2.imwrite("results.jpg", img)
+cv2.imwrite("data/results/results.jpg", img)
 
 
 # Detect and recognize text
@@ -322,21 +321,22 @@ from asone import utils
 
 
 img_path = 'data/sample_imgs/sample_text.jpeg'
-detector = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
+ocr = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
 img = cv2.imread(img_path)
-results = detector.detect_text(img) 
+results = ocr.detect_text(img) 
 img = utils.draw_text(img, results)
-cv2.imwrite("results.jpg", img)
+cv2.imwrite("data/results/results.jpg", img)
 ```
 </details>
+
 Run the `asone/demo_ocr.py` to test ocr.
 
 ```shell
 # run on gpu
- python -m asone.demo_ocr data/sample_imgs/sample_text2.jpg
+ python -m asone.demo_ocr data/sample_imgs/sample_text.jpg
 
 # run on cpu
- python -m asone.demo_ocr data/sample_imgs/sample_text2.jpg --cpu
+ python -m asone.demo_ocr data/sample_imgs/sample_text.jpg --cpu
 ```
 
 
