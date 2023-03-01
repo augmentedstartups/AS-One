@@ -348,7 +348,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] Simplify code even further
 - [x] Updated for YOLOv8
 - [ ] OCSORT, StrongSORT, MoTPy
-- [ ] Add support for other Trackers and Detectors
+- [ ] OCR and Counting
 - [ ] M1/2 Apple Silicon Compatibility
 
 |Offered By: |Maintained By:|
