@@ -3,7 +3,7 @@ loguru
 norfair
 numpy
 onnxruntime-gpu==1.12.1
-opencv-python==4.5.5.64
+opencv-python
 scipy
 pyyaml
 easydict
@@ -17,4 +17,4 @@ torchvision
 numpy==1.23.3
 Cython
 ultralytics
-easyocr==1.6.2
+asone-ocr
