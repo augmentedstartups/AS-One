@@ -20,7 +20,12 @@ class EasyOCRRecognizer:
         horizontal_list = np.array(horizontal_list)
         horizontal_list = horizontal_list.astype(int)
         horizontal_list = horizontal_list.tolist()
-        results = self.model.recognize(img, horizontal_list=horizontal_list[0], free_list=free_list[0])
+        reformated_input = []
+        for bbx in horizontal_list:
+            bbx[1], bbx[2] = bbx[2], bbx[1]
+            reformated_input.append(bbx[:4])
+            
+        results = self.model.recognize(img, horizontal_list=reformated_input, free_list=free_list)
 
         formated_output = []
         for data in results:
