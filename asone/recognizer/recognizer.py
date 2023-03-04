@@ -22,6 +22,6 @@ class TextRecognizer:
 
     def recognize(self,
                image: list,
-               horizontal_list, free_list):
+               horizontal_list=None, free_list=None):
         print(horizontal_list)
         return self.model.recognize(image, horizontal_list=horizontal_list, free_list=free_list)
