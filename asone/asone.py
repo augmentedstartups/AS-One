@@ -98,12 +98,11 @@ class ASOne:
             source = cv2.imread(source)
         return self.detector.detect(source, **kwargs)
     
-    def detect_text(self, image, languages=['en']):
+    def detect_text(self, image):
         horizontal_list, _ = self.detector.detect(image)
         if self.recognizer is None:
                 raise TypeError("Recognizer can not be None")
             
-        
         return self.recognizer.recognize(image, horizontal_list=horizontal_list,
                             free_list=[])
 
