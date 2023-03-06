@@ -17,18 +17,20 @@ class ASOne:
                  tracker: int = -1,
                  weights: str = None,
                  use_cuda: bool = True,
-                 recognizer: int = None
+                 recognizer: int = None,
+                 languages: list = ['en']
                  ) -> None:
 
         self.use_cuda = use_cuda
 
         # get detector object
         self.detector = self.get_detector(detector, weights, recognizer)
-        self.recognizer = recognizer
+        self.recognizer = self.get_recognizer(recognizer, languages=languages)
+    
         if tracker == -1:
             self.tracker = None
             return
-        
+            
         self.tracker = self.get_tracker(tracker)
 
     def get_detector(self, detector: int, weights: str, recognizer):
@@ -37,6 +39,8 @@ class ASOne:
         return detector
 
     def get_recognizer(self, recognizer: int, languages):
+        if recognizer == None:
+            return None
         recognizer = TextRecognizer(recognizer,
                             use_cuda=self.use_cuda, languages=languages).get_recognizer()
 
@@ -99,8 +103,8 @@ class ASOne:
         if self.recognizer is None:
                 raise TypeError("Recognizer can not be None")
             
-        recognizer = self.get_recognizer(self.recognizer, languages)
-        return recognizer.recognize(image, horizontal_list=horizontal_list,
+        
+        return self.recognizer.recognize(image, horizontal_list=horizontal_list,
                             free_list=[])
 
     def track_webcam(self,
