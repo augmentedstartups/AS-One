@@ -347,8 +347,8 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] Import trained models
 - [x] Simplify code even further
 - [x] Updated for YOLOv8
+- [x] OCR and Counting
 - [ ] OCSORT, StrongSORT, MoTPy
-- [ ] OCR and Counting
 - [ ] M1/2 Apple Silicon Compatibility
 
 |Offered By: |Maintained By:|
