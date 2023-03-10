@@ -291,6 +291,8 @@ python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
 <details>
 <summary>6.3. Text Detection</summary>
 
+Sample code to detect text on an image
+
 ```python
 
 # Detect Text 
@@ -326,6 +328,82 @@ img = cv2.imread(img_path)
 results = ocr.detect_text(img) 
 img = utils.draw_text(img, results)
 cv2.imwrite("data/results/results.jpg", img)
+```
+
+Sample code to detect text on video
+
+```python
+
+import asone
+from asone import ASOne
+from .utils import draw_boxes, draw_text
+import cv2
+import argparse
+import time
+import os
+
+
+video_path = "data/sample_videos/license_video.mp4"
+save = True # Save results
+display = True # Display results
+
+detector = ASOne(detector=asone.YOLOV7_PYTORCH, # Text detector that can detect text
+                recognizer=asone.EASYOCR,
+                weights=args.weights, # Weights of text detector
+                use_cuda=args.use_cuda)
+# Capture video
+cap = cv2.VideoCapture(video_path)
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+FPS = cap.get(cv2.CAP_PROP_FPS)
+
+if save:
+    video_writer = cv2.VideoWriter(
+        os.path.basename( video_path),
+        cv2.VideoWriter_fourcc(*"mp4v"),
+        FPS,
+        (int(width), int(height)),
+    )
+
+frame_no = 1
+tic = time.time()
+
+prevTime = 0
+
+while True:
+    start_time = time.time()
+
+    ret, img = cap.read()
+    if not ret:
+        break
+    frame = img.copy()
+    
+    results = detector.detect_text(img)
+
+    currTime = time.time()
+    fps = 1 / (currTime - prevTime)
+    prevTime = currTime
+
+    # Draw results
+    if results is not None: 
+        img = draw_text(img, results)
+
+    # Draw FPS
+    cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
+    cv2.putText(img, f'FPS: {int(fps)}', (11, 35), 0, 1, [
+                225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
+
+
+    frame_no+=1
+    if display:
+        cv2.imshow('Window', img)
+
+    if save:
+        video_writer.write(img)
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+
 ```
 </details>
 
