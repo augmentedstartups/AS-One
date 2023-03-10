@@ -349,8 +349,8 @@ display = True # Display results
 
 detector = ASOne(detector=asone.YOLOV7_PYTORCH, # Text detector that can detect text
                 recognizer=asone.EASYOCR,
-                weights=args.weights, # Weights of text detector
-                use_cuda=args.use_cuda)
+                weights="data/custom_weights/yolov7_custom.pt", # Weights of text detector
+                use_cuda=True) # use gpu
 # Capture video
 cap = cv2.VideoCapture(video_path)
 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
