@@ -9,7 +9,7 @@ MAINTAINER_EMAIL = 'umair.imran@axcelerate.ai'
 URL = 'https://github.com/axcelerateai/asone'
 DOWNLOAD_URL = URL
 
-VERSION = '0.1.2.dev17'
+VERSION = '0.1.3'
 
 with open('README.md') as f:
     long_description = f.read()
