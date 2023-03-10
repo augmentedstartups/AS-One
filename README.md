@@ -291,6 +291,8 @@ python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
 <details>
 <summary>6.3. Text Detection</summary>
 
+Sample code to detect text on an image
+
 ```python
 # Detect and recognize text
 import asone
