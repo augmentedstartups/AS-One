@@ -1,11 +1,13 @@
 from .asone import ASOne
 import asone.detectors
 import asone.trackers
+import asone.recognizers
 
 
 BYTETRACK = 0
 DEEPSORT = 1
 NORFAIR = 2
+MOTPY = 3
 
 
 YOLOV5X6_PYTORCH = 0
@@ -120,4 +122,4 @@ EASYOCR = 200
 
 
 
-__all__ = ['ASOne', 'detectors', 'trackers'] 
+__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers'] 
