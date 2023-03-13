@@ -6,7 +6,7 @@ import time
 import asone.utils as utils
 from asone.trackers import Tracker
 from asone.detectors import Detector
-from asone.recognizer.recognizer import TextRecognizer
+from asone.recognizers import TextRecognizer
 from asone.utils.default_cfg import config
 import numpy as np
 
