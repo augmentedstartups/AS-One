@@ -106,6 +106,18 @@ class ASOne:
         return self.recognizer.recognize(image, horizontal_list=horizontal_list,
                             free_list=[])
 
+    def track_text(self,
+                    video_path,
+                    **kwargs
+                    ):            
+        output_filename = os.path.basename(video_path)
+        kwargs['filename'] = output_filename
+        config = self._update_args(kwargs)
+
+        for (bbox_details, frame_details) in self._start_tracking(video_path, config, track_text=True):
+            # yeild bbox_details, frame_details to main script
+            yield bbox_details, frame_details
+
     def track_webcam(self,
                      cam_id=0,
                      **kwargs):
@@ -119,10 +131,12 @@ class ASOne:
         for (bbox_details, frame_details) in self._start_tracking(cam_id, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
-
+        
     def _start_tracking(self,
                         stream_path: str,
-                        config: dict) -> tuple:
+                        config: dict,
+                        track_text=False) -> tuple:
+
         if not self.tracker:
             print(f'No tracker is selected. use detect() function perform detcetion or pass a tracker.')
             exit()
@@ -176,12 +190,17 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000))
 
-            im0 = utils.draw_boxes(im0,
-                                   bboxes_xyxy,
-                                   class_ids,
-                                   identities=ids,
-                                   draw_trails=draw_trails,
-                                   class_names=class_names)
+            if track_text:
+                res = self.recognizer.recognize(im0, horizontal_list=bboxes_xyxy,
+                            free_list=[])
+                im0 = utils.draw_text(im0, res)
+            else:
+                im0 = utils.draw_boxes(im0,
+                                    bboxes_xyxy,
+                                    class_ids,
+                                    identities=ids,
+                                    draw_trails=draw_trails,
+                                    class_names=class_names)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
@@ -205,6 +224,7 @@ class ASOne:
 
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
+
 
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
