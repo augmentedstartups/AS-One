@@ -18,7 +18,7 @@ def main(args):
         cv2.imshow('Window', img)
 
     if args.save:
-        cv2.imwrite("data/resutls/ocr_results.jpeg", img)
+        cv2.imwrite("data/results/ocr_results.jpeg", img)
 
     if cv2.waitKey(0) & 0xFF == ord('q'):
         return
