@@ -1,6 +1,7 @@
 from asone.trackers import ByteTrack
 from asone.trackers import NorFair
 from asone.trackers import DeepSort
+from asone.trackers import Motpy
 
 class Tracker:
     def __init__(self, tracker: int, detector: object, use_cuda=True) -> None:
@@ -8,7 +9,8 @@ class Tracker:
         self.trackers = {
             '0': ByteTrack,
             '1': DeepSort,
-            '2': NorFair
+            '2': NorFair,
+            '3': Motpy
         }
 
         self.tracker = self._select_tracker(tracker, detector, use_cuda=use_cuda)
