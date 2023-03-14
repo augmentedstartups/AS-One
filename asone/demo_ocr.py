@@ -6,7 +6,8 @@ def main(args):
 
     dt_obj = ASOne(
         tracker=asone.BYTETRACK,
-        detector=asone.CRAFT,
+        detector=asone.YOLOV7_PYTORCH,
+        weights=args.weights,
         recognizer=asone.EASYOCR,
         use_cuda=args.use_cuda
         )
@@ -16,8 +17,7 @@ def main(args):
                                 conf_thres=args.conf_thres,
                                 iou_thres=args.iou_thres,
                                 display=args.display,
-                                draw_trails=args.draw_trails,
-                                class_names=None) # class_names=['License Plate'] for custom weights
+                                draw_trails=args.draw_trails) # class_names=['License Plate'] for custom weights
     
     # Loop over track_fn to retrieve outputs of each frame 
     for bbox_details, frame_details in track_fn:
