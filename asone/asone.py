@@ -106,18 +106,6 @@ class ASOne:
         return self.recognizer.recognize(image, horizontal_list=horizontal_list,
                             free_list=[])
 
-    def track_text(self,
-                    video_path,
-                    **kwargs
-                    ):            
-        output_filename = os.path.basename(video_path)
-        kwargs['filename'] = output_filename
-        config = self._update_args(kwargs)
-
-        for (bbox_details, frame_details) in self._start_tracking(video_path, config, track_text=True):
-            # yeild bbox_details, frame_details to main script
-            yield bbox_details, frame_details
-
     def track_webcam(self,
                      cam_id=0,
                      **kwargs):
@@ -134,8 +122,7 @@ class ASOne:
         
     def _start_tracking(self,
                         stream_path: str,
-                        config: dict,
-                        track_text=False) -> tuple:
+                        config: dict) -> tuple:
 
         if not self.tracker:
             print(f'No tracker is selected. use detect() function perform detcetion or pass a tracker.')
@@ -190,7 +177,7 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_id, int(frame_count),
                                                  elapsed_time * 1000))
 
-            if track_text:
+            if self.recognizer:
                 res = self.recognizer.recognize(im0, horizontal_list=bboxes_xyxy,
                             free_list=[])
                 im0 = utils.draw_text(im0, res)
