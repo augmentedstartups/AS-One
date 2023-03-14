@@ -1,7 +1,7 @@
 lap
 loguru
 norfair
-numpy
+numpy==1.23.3
 onnxruntime-gpu==1.12.1
 opencv-python
 scipy
@@ -18,3 +18,4 @@ numpy==1.23.3
 Cython
 ultralytics
 asone-ocr
+motpy
