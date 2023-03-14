@@ -308,16 +308,6 @@ img = utils.draw_text(img, results)
 cv2.imwrite("data/results/results.jpg", img)
 ```
 
-Run the `asone/demo_ocr.py` to test ocr.
-
-```shell
-# run on gpu
- python -m asone.demo_ocr data/sample_imgs/sample_text.jpeg
-
-# run on cpu
- python -m asone.demo_ocr data/sample_imgs/sample_text.jpeg --cpu
-```
-
 Use Tracker on Text
 ```python
 import asone
@@ -337,6 +327,16 @@ for bbox_details, frame_details in track_fn:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
+```
+
+Run the `asone/demo_ocr.py` to test ocr.
+
+```shell
+# run on gpu
+ python -m asone.demo_ocr data/sample_videos/license_video.mp4
+
+# run on cpu
+ python -m asone.demo_ocr data/sample_videos/license_video.mp4 --cpu
 ```
 
 </details>
