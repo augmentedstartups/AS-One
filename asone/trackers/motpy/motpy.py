@@ -58,5 +58,4 @@ class Motpy:
             class_ids.append(obj[3])
             scores.append(obj[2])
             ids.append(obj_id)
-        print(self.uuids)
         return np.array(bboxes_xyxy), ids,  scores, class_ids
