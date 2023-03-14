@@ -308,7 +308,6 @@ img = utils.draw_text(img, results)
 cv2.imwrite("data/results/results.jpg", img)
 ```
 
-
 Run the `asone/demo_ocr.py` to test ocr.
 
 ```shell
@@ -318,6 +317,28 @@ Run the `asone/demo_ocr.py` to test ocr.
 # run on cpu
  python -m asone.demo_ocr data/sample_imgs/sample_text.jpeg --cpu
 ```
+
+Use Tracker on Text
+```python
+import asone
+from asone import ASOne
+
+# Instantiate Asone object
+dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+
+# ##############################################
+#           To track using video file
+# ##############################################
+# Get tracking function
+track_fn = dt_obj.track_video('data/sample_videos/license_video.mp4', output_dir='data/results', save_result=True, display=True)
+
+# Loop over track_fn to retrieve outputs of each frame 
+for bbox_details, frame_details in track_fn:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
+```
+
 </details>
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
