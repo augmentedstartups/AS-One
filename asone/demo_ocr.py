@@ -1,34 +1,48 @@
+import argparse
 import asone
 from asone import ASOne
-from .utils import draw_boxes, draw_text
-import cv2
-import argparse
-import time
-import os
-
 
 def main(args):
+
+    dt_obj = ASOne(
+        tracker=asone.BYTETRACK,
+        detector=asone.CRAFT,
+        recognizer=asone.EASYOCR,
+        use_cuda=args.use_cuda
+        )
+    # Get tracking function
+    track_fn = dt_obj.track_video(args.video_path,
+                                output_dir=args.output_dir,
+                                conf_thres=args.conf_thres,
+                                iou_thres=args.iou_thres,
+                                display=args.display,
+                                draw_trails=args.draw_trails,
+                                class_names=None) # class_names=['License Plate'] for custom weights
     
-    image_path = args.image
-    detector = ASOne(asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=args.use_cuda)
-    img = cv2.imread(image_path)      
-    results = detector.detect_text(img)
-    img = draw_text(img, results)
-    if args.display:
-        cv2.imshow('Window', img)
+    # Loop over track_fn to retrieve outputs of each frame 
+    for bbox_details, frame_details in track_fn:
+        bbox_xyxy, ids, scores, class_ids = bbox_details
+        frame, frame_num, fps = frame_details
+        print(frame_num)
+        
 
-    if args.save:
-        cv2.imwrite("data/results/ocr_results.jpeg", img)
-
-    if cv2.waitKey(0) & 0xFF == ord('q'):
-        return
-
-if __name__=='__main__':
-    
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("image", help="Path of image")
-    parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda', help='If provided the model will run on cpu otherwise it will run on gpu')
-    parser.add_argument('--no_display', action='store_false', default=True, dest='display', help='if provided video will not be displayed')
-    parser.add_argument('--no_save', action='store_false', default=True, dest='save', help='if provided video will not be saved')
+
+    parser.add_argument('video_path', help='Path to input video')
+    parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda',
+                        help='run on cpu if not provided the program will run on gpu.')
+    parser.add_argument('--no_save', default=True, action='store_false',
+                        dest='save_result', help='whether or not save results')
+    parser.add_argument('--no_display', default=True, action='store_false',
+                        dest='display', help='whether or not display results on screen')
+    parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
+    parser.add_argument('--draw_trails', action='store_true', default=False,
+                        help='if provided object motion trails will be drawn.')
+    parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
+    parser.add_argument('-ct', '--conf_thres', default=0.25, type=float, help='confidence score threshold')
+    parser.add_argument('-it', '--iou_thres', default=0.45, type=float, help='iou score threshold')
+
     args = parser.parse_args()
+
     main(args)
