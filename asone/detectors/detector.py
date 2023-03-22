@@ -40,7 +40,6 @@ class Detector:
         if model_flag in range(0, 20):
             _detector = YOLOv5Detector(weights=weight,
                                        use_onnx=onnx,
-                                       mlmodel=mlmodel,
                                        use_cuda=cuda)
         elif model_flag in range(20, 34):
             _detector = YOLOv6Detector(weights=weight,
@@ -80,6 +79,13 @@ class Detector:
         # Get TextDetector model
         elif model_flag  in range(82, 85):
             _detector = TextDetector(detect_network=weight, use_cuda=cuda)
+        
+        elif model_flag in range(120, 131):
+            # Get exp file and corresponding model for coreml only
+            _detector = YOLOv5Detector(weights=weight,
+                                       use_onnx=onnx,
+                                       mlmodel=mlmodel,
+                                       use_cuda=cuda)
         return _detector
 
     def get_detector(self):
