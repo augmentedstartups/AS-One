@@ -112,6 +112,12 @@ YOLOV8L_ONNX = 79
 YOLOV8X_PYTORCH = 80
 YOLOV8X_ONNX = 81
 
+# coreml
+
+YOLOV5N_MLMODEL = 120
+
+
+
 # Text Detectors
 # easyocr
 CRAFT = 82
