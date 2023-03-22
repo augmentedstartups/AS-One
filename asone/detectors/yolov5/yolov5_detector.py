@@ -11,6 +11,8 @@ from asone.detectors.yolov5.yolov5.utils.yolov5_utils import (non_max_suppressio
                                                               letterbox)
 from asone.detectors.yolov5.yolov5.models.experimental import attempt_load
 from asone import utils
+from asone.detectors.utils.coreml_utils import yolo_to_xyxy, generalize_output_format, scale_bboxes
+
 
 class YOLOv5Detector:
     def __init__(self,
@@ -39,9 +41,10 @@ class YOLOv5Detector:
             else:
                 providers = ['CPUExecutionProvider']
             model = onnxruntime.InferenceSession(weights, providers=providers)
-        #Load Pytorch
+        #Load coreml 
         elif self.mlmodel:
             model = ct.models.MLModel(weights)
+        #Load Pytorch
         else: 
             model = attempt_load(weights, device=self.device, inplace=True, fuse=True)
             model.half() if self.fp16 else model.float()
@@ -78,12 +81,30 @@ class YOLOv5Detector:
             input_name = self.model.get_inputs()[0].name
             # Run onnx model 
             pred = self.model.run([self.model.get_outputs()[0].name], {input_name: processed_image})[0]
-            # Run Pytorch model        
+            # Run mlmodel   
+        
         elif self.mlmodel:
-            pred = self.model.predict({"image":Image.fromarray(image).resize((640, 640))})
-            # w, h = image.shape[:2]
-            # return pred['coordinates'], {'width':w, 'height':h}
-            print(pred)
+            h ,w = image.shape[:2]
+            pred = self.model.predict({"image":Image.fromarray(image).resize(input_shape)})
+            xyxy = yolo_to_xyxy(pred['coordinates'], input_shape)
+            out = generalize_output_format(xyxy, pred['confidence'], conf_thres)
+            detections = scale_bboxes(out, image.shape[:2], input_shape)
+            
+            if filter_classes:
+                class_names = get_names()
+
+                filter_class_idx = []
+                if filter_classes:
+                    for _class in filter_classes:
+                        if _class.lower() in class_names:
+                            filter_class_idx.append(class_names.index(_class.lower()))
+                        else:
+                            warnings.warn(f"class {_class} not found in model classes list.")
+
+                detections = detections[np.in1d(detections[:,5].astype(int), filter_class_idx)]
+            
+            return detections, {'width':w, 'height':h}
+            # Run Pytorch model  
         else:
             processed_image = torch.from_numpy(processed_image).to(self.device)
             # Change image floating point precision if fp16 set to true
