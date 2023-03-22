@@ -23,9 +23,14 @@ class Detector:
         self.model = self._select_detector(model_flag, weights, use_cuda, recognizer)
     def _select_detector(self, model_flag, weights, cuda, recognizer):
         # Get required weight using model_flag
+        mlmodel = False
         if weights and weights.split('.')[-1] == 'onnx':
             onnx = True
             weight = weights
+        elif weights and weights.split('.')[-1] == 'mlmodel':
+            onnx = False
+            weight = weights
+            mlmodel = True    
         elif weights:
             onnx = False
             weight = weights
@@ -35,6 +40,7 @@ class Detector:
         if model_flag in range(0, 20):
             _detector = YOLOv5Detector(weights=weight,
                                        use_onnx=onnx,
+                                       mlmodel=mlmodel,
                                        use_cuda=cuda)
         elif model_flag in range(20, 34):
             _detector = YOLOv6Detector(weights=weight,

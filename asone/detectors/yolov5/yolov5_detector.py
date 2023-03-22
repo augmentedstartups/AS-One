@@ -3,8 +3,9 @@ from asone.utils import get_names
 import numpy as np
 import warnings
 import torch
+from PIL import Image
 import onnxruntime
-
+import coremltools as ct
 from asone.detectors.yolov5.yolov5.utils.yolov5_utils import (non_max_suppression,
                                                               scale_coords,
                                                               letterbox)
@@ -15,9 +16,11 @@ class YOLOv5Detector:
     def __init__(self,
                  weights=None,
                  use_onnx=False,
+                 mlmodel=False,
                  use_cuda=True):
 
         self.use_onnx = use_onnx
+        self.mlmodel = mlmodel
         self.device = 'cuda' if use_cuda else 'cpu'
 
         if not os.path.exists(weights):
@@ -37,6 +40,8 @@ class YOLOv5Detector:
                 providers = ['CPUExecutionProvider']
             model = onnxruntime.InferenceSession(weights, providers=providers)
         #Load Pytorch
+        elif self.mlmodel:
+            model = ct.models.MLModel(weights)
         else: 
             model = attempt_load(weights, device=self.device, inplace=True, fuse=True)
             model.half() if self.fp16 else model.float()
@@ -74,15 +79,21 @@ class YOLOv5Detector:
             # Run onnx model 
             pred = self.model.run([self.model.get_outputs()[0].name], {input_name: processed_image})[0]
             # Run Pytorch model        
+        elif self.mlmodel:
+            pred = self.model.predict({"image":Image.fromarray(image).resize((640, 640))})
+            # w, h = image.shape[:2]
+            # return pred['coordinates'], {'width':w, 'height':h}
+            print(pred)
         else:
             processed_image = torch.from_numpy(processed_image).to(self.device)
             # Change image floating point precision if fp16 set to true
             processed_image = processed_image.half() if self.fp16 else processed_image.float() 
             pred = self.model(processed_image, augment=False, visualize=False)[0]
-       
+            
         # Post Processing
         if isinstance(pred, np.ndarray):
             pred = torch.tensor(pred, device=self.device)
+        # print(pred)
         predictions = non_max_suppression(pred, conf_thres, 
                                           iou_thres, 
                                           agnostic=agnostic_nms, 

@@ -16,7 +16,7 @@ def main(args):
         filter_classes = filter_classes.split(',')
 
     
-    detector = ASOne(asone.YOLOV7_PYTORCH, weights=args.weights, use_cuda=args.use_cuda)
+    detector = ASOne(asone.YOLOV5N_PYTORCH, use_cuda=args.use_cuda)
 
     cap = cv2.VideoCapture(video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
