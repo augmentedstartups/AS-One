@@ -2,7 +2,7 @@ lap
 loguru
 norfair
 numpy==1.23.3
-onnxruntime-gpu==1.12.1
+#onnxruntime-gpu==1.12.1
 opencv-python
 scipy
 pyyaml
@@ -19,3 +19,7 @@ Cython
 ultralytics
 asone-ocr
 motpy
+
+# requirements for coreml
+onnxruntime
+coremltools
