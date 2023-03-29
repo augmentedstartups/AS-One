@@ -16,7 +16,7 @@ class TextDetector:
             list: numpy array of extracted text and img info(heigh, width)
         """
         
-        w, h = image.shape[0:2]
+        h, w = image.shape[0:2]
         reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
         horizontal_list, free_list = reader.detect(image) 
 
