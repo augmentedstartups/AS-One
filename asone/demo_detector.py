@@ -16,7 +16,7 @@ def main(args):
         filter_classes = filter_classes.split(',')
 
     
-    detector = ASOne(asone.YOLOV5N_MLMODEL,weights='yolov5n.mlmodel' ,use_cuda=args.use_cuda)
+    detector = ASOne(asone.YOLOV7_PYTORCH, weights=args.weights, use_cuda=args.use_cuda)
 
     cap = cv2.VideoCapture(video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -78,7 +78,7 @@ if __name__=='__main__':
     parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
     parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
     parser.add_argument('-o', '--output_path', default='data/results', help='path of output file')
-    parser.add_argument('--no_display', action='store_false', default=False, dest='display', help='if provided video will not be displayed')
+    parser.add_argument('--no_display', action='store_false', default=True, dest='display', help='if provided video will not be displayed')
     parser.add_argument('--no_save', action='store_false', default=True, dest='save', help='if provided video will not be saved')
 
     args = parser.parse_args()
