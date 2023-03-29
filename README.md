@@ -211,7 +211,7 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
 
 filter_classes = ['person'] # set to None to track all classes
 
@@ -219,10 +219,10 @@ filter_classes = ['person'] # set to None to track all classes
 #           To track using video file
 # ##############################################
 # Get tracking function
-track_fn = dt_obj.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+track = detect.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
-# Loop over track_fn to retrieve outputs of each frame 
-for bbox_details, frame_details in track_fn:
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
@@ -231,10 +231,10 @@ for bbox_details, frame_details in track_fn:
 #           To track using webcam
 # ##############################################
 # Get tracking function
-track_fn = dt_obj.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+track = detect.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
-# Loop over track_fn to retrieve outputs of each frame 
-for bbox_details, frame_details in track_fn:
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
@@ -244,10 +244,10 @@ for bbox_details, frame_details in track_fn:
 # ##############################################
 # Get tracking function
 stream_url = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
-track_fn = dt_obj.track_stream(stream_url, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+track = detect.track_stream(stream_url, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
 
-# Loop over track_fn to retrieve outputs of each frame 
-for bbox_details, frame_details in track_fn:
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
@@ -266,14 +266,14 @@ Change Tracker by simply changing the tracker flag.
 The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```python
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
 # Change tracker
-dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
+detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
 ```
 
 ```python
 # Change Detector
-dt_obj = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
+detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 </details>
 
@@ -301,9 +301,9 @@ from asone import utils
 
 
 img_path = 'data/sample_imgs/sample_text.jpeg'
-ocr = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
+text = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
 img = cv2.imread(img_path)
-results = ocr.detect_text(img) 
+results = text.detect_text(img) 
 img = utils.draw_text(img, results)
 cv2.imwrite("data/results/results.jpg", img)
 ```
@@ -314,16 +314,16 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-dt_obj = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
 
 # ##############################################
 #           To track using video file
 # ##############################################
 # Get tracking function
-track_fn = dt_obj.track_video('data/sample_videos/license_video.mp4', output_dir='data/results', save_result=True, display=True)
+track = detect.track_video('data/sample_videos/license_video.mp4', output_dir='data/results', save_result=True, display=True)
 
-# Loop over track_fn to retrieve outputs of each frame 
-for bbox_details, frame_details in track_fn:
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
     # Do anything with bboxes here
