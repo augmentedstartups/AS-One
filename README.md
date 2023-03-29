@@ -301,9 +301,9 @@ from asone import utils
 
 
 img_path = 'data/sample_imgs/sample_text.jpeg'
-text = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
+ocr = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
 img = cv2.imread(img_path)
-results = text.detect_text(img) 
+results = ocr.detect_text(img) 
 img = utils.draw_text(img, results)
 cv2.imwrite("data/results/results.jpg", img)
 ```
