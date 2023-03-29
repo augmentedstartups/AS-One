@@ -24,8 +24,16 @@ class EasyOCRRecognizer:
         for bbx in horizontal_list:
             bbx[1], bbx[2] = bbx[2], bbx[1]
             reformated_input.append(bbx[:4])
-            
-        results = self.model.recognize(img, horizontal_list=reformated_input, free_list=free_list)
+        horizontal_list = reformated_input
+        
+        free_list_format = []
+        if horizontal_list!=[]:
+           for text in horizontal_list:
+                xmin, xmax, ymin, ymax = text
+                free_list_format.append([[xmin,ymin], [xmax,ymin], [xmax,ymax] , [xmin,ymax]])
+        
+        free_list.extend(free_list_format)
+        results = self.model.recognize(img, horizontal_list=[], free_list=free_list)
 
         formated_output = []
         for data in results:
