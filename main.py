@@ -6,10 +6,10 @@ def main(args):
     filter_classes = args.filter_classes
 
     if filter_classes:
-        filter_classes = [filter_classes]
+        filter_classes = ['cars']
 
     detect = ASOne(
-        tracker=asone.BYTETRACK,
+        tracker=asone.OCSORT,
         detector=asone.YOLOV7_PYTORCH,
         weights=args.weights,
         use_cuda=args.use_cuda

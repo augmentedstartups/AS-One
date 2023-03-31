@@ -3,8 +3,13 @@ import numpy as np
 
 
 class Motpy:
-    def __init__(self, detector, max_distance_between_points=30) -> None:
-
+    
+    def __init__(self, detector, dt=0.6) -> None:
+        
+        model_spec = {'order_pos': 1, 'dim_pos': 2,
+                  'order_size': 0, 'dim_size': 2,
+                  'q_var_pos': 5000., 'r_var_pos': 0.1}
+        dt = 1 / 4 # assume 6 fps
         self.tracker = MultiObjectTracker(dt=0.1)
         self.detector = detector
         try:
@@ -13,6 +18,7 @@ class Motpy:
             self.input_shape = (640, 640)
         self.obj_count = 0
         self.uuids = {}
+        
     def detect_and_track(self, image: np.ndarray, config: dict) -> tuple:
                        
         _dets_xyxy, image_info = self.detector.detect(
@@ -43,7 +49,7 @@ class Motpy:
         scores = []
         ids = []
 
-        tracked_objects = self.tracker.active_tracks()
+        tracked_objects = self.tracker.active_tracks(min_steps_alive=0.1)
         
         for obj in tracked_objects:
             
