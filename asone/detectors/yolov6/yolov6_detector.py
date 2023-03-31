@@ -77,7 +77,8 @@ class YOLOv6Detector:
                max_det: int = 1000,
                filter_classes: bool = None,
                agnostic_nms: bool = True,
-               with_p6: bool = False) -> list:
+               with_p6: bool = False,
+               return_image=False) -> list:
         
         # Prepare Input
         img_height, img_width = image.shape[:2]
@@ -136,4 +137,7 @@ class YOLOv6Detector:
             'height': image.shape[0],
         }
 
-        return detection, image_info
+        if return_image:
+            return detection, image
+        else: 
+            return detection, image_info

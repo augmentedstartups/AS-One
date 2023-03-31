@@ -93,8 +93,9 @@ class Detector:
 
     def detect(self,
                image: list,
+               return_image=False,
                **kwargs: dict):
-        return self.model.detect(image, **kwargs)
+        return self.model.detect(image,return_image,**kwargs)
 
 
 if __name__ == '__main__':

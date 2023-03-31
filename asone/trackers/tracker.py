@@ -3,6 +3,8 @@ from asone.trackers import NorFair
 from asone.trackers import DeepSort
 from asone.trackers import Motpy
 from asone.trackers import OcSort
+from asone.trackers import StrongSort
+
 
 class Tracker:
     def __init__(self, tracker: int, detector: object, use_cuda=True) -> None:
@@ -12,7 +14,8 @@ class Tracker:
             '1': DeepSort,
             '2': NorFair,
             '3': Motpy,
-            '4': OcSort
+            '4': OcSort,
+            '5': StrongSort
         }
 
         self.tracker = self._select_tracker(tracker, detector, use_cuda=use_cuda)

@@ -4,13 +4,8 @@ import numpy as np
 
 class Motpy:
     
-    def __init__(self, detector, dt=0.6) -> None:
-        
-        model_spec = {'order_pos': 1, 'dim_pos': 2,
-                  'order_size': 0, 'dim_size': 2,
-                  'q_var_pos': 5000., 'r_var_pos': 0.1}
-        dt = 1 / 4 # assume 6 fps
-        self.tracker = MultiObjectTracker(dt=0.1)
+    def __init__(self, detector, dt=0.1) -> None:
+        self.tracker = MultiObjectTracker(dt=dt)
         self.detector = detector
         try:
             self.input_shape = tuple(detector.model.get_inputs()[0].shape[2:])
@@ -20,7 +15,6 @@ class Motpy:
         self.uuids = {}
         
     def detect_and_track(self, image: np.ndarray, config: dict) -> tuple:
-                       
         _dets_xyxy, image_info = self.detector.detect(
             image, **config
             )
@@ -28,7 +22,6 @@ class Motpy:
         ids = []
         bboxes_xyxy = []
         scores = []
-        
         if isinstance(_dets_xyxy, np.ndarray) and len(_dets_xyxy) > 0:
             self.tracker.step(detections=[
                 Detection(
@@ -39,7 +32,6 @@ class Motpy:
                 for box in _dets_xyxy
                 ])
             bboxes_xyxy, ids,  scores, class_ids = self._tracker_update()
-        
         return bboxes_xyxy, ids, scores, class_ids
 
     def _tracker_update(self):
@@ -49,8 +41,7 @@ class Motpy:
         scores = []
         ids = []
 
-        tracked_objects = self.tracker.active_tracks(min_steps_alive=0.1)
-        
+        tracked_objects = self.tracker.active_tracks()
         for obj in tracked_objects:
             
             if obj[0] in self.uuids:

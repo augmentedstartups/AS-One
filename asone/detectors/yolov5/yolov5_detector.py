@@ -70,7 +70,8 @@ class YOLOv5Detector:
                max_det: int = 1000,
                filter_classes: bool = None,
                agnostic_nms: bool = True,
-               with_p6: bool = False) -> list:
+               with_p6: bool = False, 
+               return_image=False) -> list:
      
         # Image Preprocessing
         original_image, processed_image = self.image_preprocessing(image, input_shape)
@@ -148,6 +149,9 @@ class YOLOv5Detector:
 
             detections = detections[np.in1d(detections[:,5].astype(int), filter_class_idx)]
 
-        return detections, image_info
+        if return_image:
+            return detections, original_image
+        else: 
+            return detections, image_info
 
  

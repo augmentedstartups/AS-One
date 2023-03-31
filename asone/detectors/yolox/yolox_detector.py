@@ -85,7 +85,8 @@ class YOLOxDetector:
                max_det: int = 1000,
                filter_classes: bool = None,
                agnostic_nms: bool = True,
-               with_p6: bool = False
+               with_p6: bool = False,
+               return_image=False
                ) -> list:
 
         if self.weights_name in ['yolox_tiny.onnx', 'yolox_nano.onnx']:
@@ -171,5 +172,9 @@ class YOLOxDetector:
             'width': image.shape[1],
             'height': image.shape[0],
         }
-
-        return detection, image_info
+       
+        if return_image:
+            return detection, image
+        else: 
+            return detection, image_info
+        
