@@ -316,7 +316,7 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
 
 # ##############################################
 #           To track using video file
@@ -335,10 +335,10 @@ Run the `asone/demo_ocr.py` to test ocr.
 
 ```shell
 # run on gpu
- python -m asone.demo_ocr data/sample_videos/license_video.mp4 -w data/custom_weights/yolov7_custom.pt
+ python -m asone.demo_ocr data/sample_videos/license_video.mp4
 
 # run on cpu
- python -m asone.demo_ocr data/sample_videos/license_video.mp4 -w data/custom_weights/yolov7_custom.pt --cpu
+ python -m asone.demo_ocr data/sample_videos/license_video.mp4 --cpu
 ```
 
 </details>
