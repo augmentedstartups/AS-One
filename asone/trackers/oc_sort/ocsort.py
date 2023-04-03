@@ -26,4 +26,5 @@ class OcSort:
             class_ids = dets[:, 5]
             scores = dets[:, 6]
 
-        return bbox_xyxy, ids, scores, class_ids
+            return bbox_xyxy, ids, scores, class_ids
+        return [],[],[],[]
