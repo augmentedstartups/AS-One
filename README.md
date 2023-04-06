@@ -335,10 +335,10 @@ Run the `asone/demo_ocr.py` to test ocr.
 
 ```shell
 # run on gpu
- python -m asone.demo_ocr data/sample_videos/license_video.mp4
+ python -m asone.demo_ocr data/sample_videos/license_plates.mp4
 
 # run on cpu
- python -m asone.demo_ocr data/sample_videos/license_video.mp4 --cpu
+ python -m asone.demo_ocr data/sample_videos/license_plates.mp4 --cpu
 ```
 
 </details>
