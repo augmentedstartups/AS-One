@@ -19,6 +19,7 @@ def process_output(detections,
                    conf_threshold, 
                    iou_threshold,
                    classes=None,
+                   mlmodel=False,
                    agnostic=False,
                    max_det=300,
                    ):
@@ -29,6 +30,10 @@ def process_output(detections,
                                           agnostic=agnostic,
                                           max_det=max_det,
                                           )
+
+    if mlmodel:
+        detection = detections[0].cpu().numpy()
+        return detection
 
     for i in range(len(detections)): 
         # Extract boxes from predictions
