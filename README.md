@@ -322,7 +322,7 @@ detect = ASOne(tracker=asone.BYTETRACK, detector=asone.CRAFT, recognizer=asone.E
 #           To track using video file
 # ##############################################
 # Get tracking function
-track = detect.track_video('data/sample_videos/license_plates.mp4', output_dir='data/results', save_result=True, display=True)
+track = detect.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4', output_dir='data/results', save_result=True, display=True)
 
 # Loop over track to retrieve outputs of each frame 
 for bbox_details, frame_details in track:
