@@ -35,8 +35,8 @@ class Detector:
             onnx = False
             weight = weights
         else:
-            onnx, weight = get_weight_path(model_flag)
-
+            mlmodel, onnx, weight = get_weight_path(model_flag)
+        
         if model_flag in range(0, 20):
             _detector = YOLOv5Detector(weights=weight,
                                        use_onnx=onnx,
@@ -83,6 +83,18 @@ class Detector:
         elif model_flag in range(120, 131):
             # Get exp file and corresponding model for coreml only
             _detector = YOLOv5Detector(weights=weight,
+                                       use_onnx=onnx,
+                                       mlmodel=mlmodel,
+                                       use_cuda=cuda)
+        elif model_flag in range(131, 139):
+            # Get exp file and corresponding model for coreml only
+            _detector = YOLOv7Detector(weights=weight,
+                                       use_onnx=onnx,
+                                       mlmodel=mlmodel,
+                                       use_cuda=cuda)
+        elif model_flag in range(139, 144):
+            # Get exp file and corresponding model for coreml only
+            _detector = YOLOv8Detector(weights=weight,
                                        use_onnx=onnx,
                                        mlmodel=mlmodel,
                                        use_cuda=cuda)
