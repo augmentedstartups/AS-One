@@ -5,7 +5,7 @@ from asone import ASOne
 def main(args):
 
     detect = ASOne(
-        tracker=asone.BYTETRACK,
+        tracker=asone.DEEPSORT,
         detector=asone.CRAFT,
         weights=args.weights,
         recognizer=asone.EASYOCR,
