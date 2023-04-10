@@ -13,27 +13,36 @@ def download_weights(weights):
     outputpath = os.path.dirname(weights)
     model = os.path.splitext(os.path.basename(weights))[0]
     filename = f'{model}.zip'
-
     if model == 'yolov5s':
-        model_key = '1H7G8ryDXs6bKlK2Qot7-2uIkjEYoYook'
+        # model_key = '1H7G8ryDXs6bKlK2Qot7-2uIkjEYoYook'
+        model_key = '1A1IjE8UBov8GOY8SE0-cCGcU3oy6VnkA'
     elif model == 'yolov5x6':
-        model_key = '161bThpOB4HDqrh2FXvbFZJmiSKFwS_Wb'
+        # model_key = '161bThpOB4HDqrh2FXvbFZJmiSKFwS_Wb'
+        model_key = '1HbcpT9WphK8f1F06YaO-zV7RjW0yDbuI'
     elif model == 'yolov5n':
-        model_key = '1zI4f0AUHAz-fTE_fP7UyiFSRGBYYXd7x'
+        # model_key = '1zI4f0AUHAz-fTE_fP7UyiFSRGBYYXd7x'
+        model_key = '1oBIxpRbtOnSIJ95P8eYi4PRV4RecOmlY'
     elif model == 'yolov5m':
-        model_key = '1vy8S68wbUzKSHMhsTuLN-VA7lMzKchAa'
+        # model_key = '1vy8S68wbUzKSHMhsTuLN-VA7lMzKchAa'
+        model_key = '1cackvhul4PcKPWrfIwWCqUtONxn95zNw'
     elif model == 'yolov5l':
-        model_key = '1pQL9s0o3v6CycAgAX8SkxCfordUl5IxZ'
+        # model_key = '1pQL9s0o3v6CycAgAX8SkxCfordUl5IxZ'
+        model_key = '1MWxst9otehvQqf3PV2HsaQxnxWsNGlwi'
     elif model == 'yolov5x':
-        model_key = '1iB7MQ1IP3MVKLMF8TIJ44vtv9cjWC2qH'
+        # model_key = '1iB7MQ1IP3MVKLMF8TIJ44vtv9cjWC2qH'
+        model_key = '1dXb0JsqPBPXil97AQOp2ayABKB66hF6E'
     elif model == 'yolov5n6':
-        model_key = '1YxnRYlPcCqXGbX20kPlfSimNfROKwoJH'
+        # model_key = '1YxnRYlPcCqXGbX20kPlfSimNfROKwoJH'
+        model_key = '15_z39PSn5TWqf1BwLPsSZaWmZHubsKUd'
     elif model == 'yolov5s6':
-        model_key = '1mm5zY6IpPtM7IZh_X5x0kAxuO7INKyte'
+        # model_key = '1mm5zY6IpPtM7IZh_X5x0kAxuO7INKyte'
+        model_key = '1lPw70jiMU6NAiz6E-Vazjsk628QjdjYB'
     elif model == 'yolov5m6':
-        model_key = '1qv_uan5oNq9skcg1UThfaFs0xMs2mSE2'
+        # model_key = '1qv_uan5oNq9skcg1UThfaFs0xMs2mSE2'
+        model_key = '1K3N06o6fs9LQKcrsdW99-ShbeXoPj4cD'
     elif model == 'yolov5l6':
-        model_key = '1eaM51cIh8i_EXmg6Nf0Sx2uW53pT7wZR'
+        # model_key = '1eaM51cIh8i_EXmg6Nf0Sx2uW53pT7wZR'
+        model_key = '1B__MWodCdijf1zzYQekuUxFY_laVl6IQ'
     elif model == 'yolov6n':
         model_key = '1NA_u4BkPE_N8HcPmZrd7HyLmvFHOk8qd'
     elif model == 'yolov6t':
@@ -90,15 +99,20 @@ def download_weights(weights):
         model_key = '1VZ05gzg249Q1m8BJVQxl3iHoNIbjzJf8'
 
     elif model == 'yolov8s':
-        model_key = '1rokjGeiLlLSNugd6LuGQj6Yr_i5_XH3Y'
+        # model_key = '1rokjGeiLlLSNugd6LuGQj6Yr_i5_XH3Y'
+        model_key = '1hUhjQWw1cJL7TtBG0zD3MO52iCYh0DEn'
     elif model == 'yolov8n':
-        model_key = '1JslnzKzY7bHRQWiLfvcINteIOgyOv_oU'
+        # model_key = '1JslnzKzY7bHRQWiLfvcINteIOgyOv_oU'
+        model_key = '1x6zHzsEcyhuyWy2xY3swAQ4vIQvBYrsr'
     elif model == 'yolov8l':
-        model_key = '1Zlp3e9gBQtgt76SHWpRNdEw4rXeT4GxE'
+        # model_key = '1Zlp3e9gBQtgt76SHWpRNdEw4rXeT4GxE'
+         model_key = '1xQxHTEIpoiP4d73F6dtedU7hIZpFTqY2'
     elif model == 'yolov8m':
-        model_key = '1ijE_fou-U-UJb4xRspFK0OnPfsLcuw3U'
+        # model_key = '1ijE_fou-U-UJb4xRspFK0OnPfsLcuw3U'
+        model_key = '1_FoKnqkaoWchVy4B24Hn2PanEKfh-eSp'
     elif model == 'yolov8x':
-        model_key = '1vtkXtgSLG49l-mh8zzgF9xZdM1ZuRldI'
+        # model_key = '1vtkXtgSLG49l-mh8zzgF9xZdM1ZuRldI'
+        model_key = '1s60fsjiyDlPQ1L5H_GAoWahHONLbvz7T'
         
     else:
         raise ValueError(f'No model named {model} found.')
