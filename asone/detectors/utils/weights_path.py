@@ -20,6 +20,18 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '17': os.path.join('yolov5','weights','yolov5m6.onnx'),
             '18': os.path.join('yolov5','weights','yolov5l6.pt'),
             '19': os.path.join('yolov5','weights','yolov5l6.onnx'),
+            
+            '120': os.path.join('yolov5','weights','yolov5n.mlmodel'),
+            '121': os.path.join('yolov5','weights','yolov5s.mlmodel'),
+            '122': os.path.join('yolov5','weights','yolov5x6.mlmodel'),
+            '123': os.path.join('yolov5','weights','yolov5m.mlmodel'),
+            '124': os.path.join('yolov5','weights','yolov5l.mlmodel'),
+            '125': os.path.join('yolov5','weights','yolov5x.mlmodel'),
+            '126': os.path.join('yolov5','weights','yolov5n6.mlmodel'),
+            '127': os.path.join('yolov5','weights','yolov5s6.mlmodel'),
+            '128': os.path.join('yolov5','weights','yolov5m6.mlmodel'),
+            '129': os.path.join('yolov5','weights','yolov5l6.mlmodel'),
+            
             # YOLOv6
             '20': os.path.join('yolov6','weights','yolov6n.pt'),
             '21': os.path.join('yolov6','weights','yolov6n.onnx'),
@@ -87,12 +99,20 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '79': os.path.join('yolov8','weights','yolov8l.onnx'),
             '80': os.path.join('yolov8','weights','yolov8x.pt'),
             '81': os.path.join('yolov8','weights','yolov8x.onnx'),
+            '139': os.path.join('yolov8','weights','yolov8n.mlmodel'),
+            '140': os.path.join('yolov8','weights','yolov8s.mlmodel'),
+            '141': os.path.join('yolov8','weights','yolov8m.mlmodel'),
+            '142': os.path.join('yolov8','weights','yolov8l.mlmodel'),
+            '143': os.path.join('yolov8','weights','yolov8x.mlmodel'),
+            
             # Text Detectors
             '82': 'craft',
-            '83': 'dbnet18'
+            '83': 'dbnet18',
+             
 }
 
 def get_weight_path(model_flag):
+    coreml= False
     if model_flag in range(0, 20):
         onnx = False if (model_flag % 2 == 0) else True
         weight = weights[str(model_flag)]
@@ -114,5 +134,15 @@ def get_weight_path(model_flag):
     elif model_flag in range(82, 85):
         onnx = False
         weight = weights[str(model_flag)]
-    return onnx, weight
+        
+    elif model_flag in range(120, 130):
+        weight = weights[str(model_flag)]
+        onnx=False
+        coreml = True
+        
+    elif model_flag in range(139, 145):
+        weight = weights[str(model_flag)]
+        onnx=False
+        coreml = True
+    return coreml, onnx, weight
         
