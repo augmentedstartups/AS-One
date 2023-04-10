@@ -27,6 +27,27 @@
 |tryolab-ONNX-YOLOv5s|NORFAIR|25.8|12|
 |tryolab-Pytorch-YOLOv5s|NORFAIR|25.8|12|
 
+### MOTPY
+
+| Model           |  Model Flag  |  FPS-GPU   | FPS-CPU
+|---------------- |-----------| -----------| --------
+|MOTPY-ONNX-YOLOv7|MOTPY|27.5|4.2|
+|MOTPY-Pytorch-YOLOv7|MOTPY|32.4|3.5|
+
+### StrongSort
+
+| Model           |  Model Flag  |  FPS-GPU   | FPS-CPU
+|---------------- |-----------| -----------| --------
+|StrongSort-ONNX-YOLOv7|StrongSort|7.6|3.1|
+|StrongSort-Pytorch-YOLOv7|StrongSort|7.9|3.1|
+
+### OCSORT
+
+| Model           |  Model Flag  |  FPS-GPU   | FPS-CPU
+|---------------- |-----------| -----------| --------
+|OCSORT-ONNX-YOLOv7|OCSORT|25.7|3.4|
+|OCSORT-Pytorch-YOLOv7|OCSORT|31.4|3.2|
+
 ## Detectors
 ### YOLOv5
 |    Pytorch                      |ONNX                         |
