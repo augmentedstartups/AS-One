@@ -8,14 +8,19 @@ import numpy as np
 import warnings
 from ultralytics.nn.autobackend import AutoBackend
 from ultralytics.nn.tasks import DetectionModel, attempt_load_one_weight
+import coremltools as ct
+from PIL import Image
+from asone.detectors.utils.coreml_utils import yolo_to_xyxy, generalize_output_format, scale_bboxes
 
 
 class YOLOv8Detector:
     def __init__(self,
                  weights=None,
                  use_onnx=False,
+                 mlmodel=False,
                  use_cuda=True):
 
+        self.mlmodel = mlmodel
         self.use_onnx = use_onnx
         self.device = 'cuda' if use_cuda else 'cpu'
 
@@ -42,6 +47,10 @@ class YOLOv8Detector:
                 providers = ['CPUExecutionProvider']
 
             model = onnxruntime.InferenceSession(weights, providers=providers)
+        # Load coreml
+        elif self.mlmodel:
+            model = ct.models.MLModel(weights)
+            
         # Load Pytorch
         else:
             model, ckpt = attempt_load_one_weight(weights)
@@ -71,6 +80,20 @@ class YOLOv8Detector:
             prediction = self.model.run([self.model.get_outputs()[0].name], {
                 input_name: processed_image})[0]
             prediction = torch.from_numpy(prediction)
+        # Run Coreml model
+        elif self.mlmodel:
+            im = Image.fromarray(image).resize(input_shape)
+            y = self.model.predict({"image":im})
+            
+            if 'confidence' in y:
+                box = xywh2xyxy(y['coordinates'] * [[w, h, w, h]])  # xyxy pixels
+                conf, cls = y['confidence'].max(1), y['confidence'].argmax(1).astype(np.float)
+                y = np.concatenate((box, conf.reshape(-1, 1), cls.reshape(-1, 1)), 1)
+            else:
+                k = 'var_' + str(sorted(int(k.replace('var_', '')) for k in y)[-1])  # output key
+                y = y[k]  # output
+            width, height = im.size
+            prediction = torch.from_numpy(y)
         # Run Pytorch model
         else:
             processed_image = torch.from_numpy(processed_image).to(self.device)
@@ -79,16 +102,29 @@ class YOLOv8Detector:
 
             with torch.no_grad():
                 prediction = self.model(processed_image, augment=False)
-
+                
         detection = []
         # Postprocess prediction
-        detection = process_output(prediction,
+        
+        if self.mlmodel:
+            detection = process_output(prediction,
                                    original_image.shape[:2],
-                                   processed_image.shape[2:],
+                                   [640, 640],
                                    conf_thres,
                                    iou_thres,
+                                   mlmodel=True,
                                    agnostic=agnostic_nms,
                                    max_det=max_det)
+        
+            detection = scale_bboxes(detection, original_image.shape[:2], input_shape)
+        else:
+            detection = process_output(prediction,
+                                    original_image.shape[:2],
+                                    processed_image.shape[2:],
+                                    conf_thres,
+                                    iou_thres,
+                                    agnostic=agnostic_nms,
+                                    max_det=max_det)
 
         image_info = {
             'width': original_image.shape[1],
