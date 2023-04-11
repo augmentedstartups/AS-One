@@ -4,23 +4,23 @@ from asone import ASOne
 
 def main(args):
 
-    dt_obj = ASOne(
-        tracker=asone.BYTETRACK,
-        detector=asone.YOLOV7_PYTORCH,
+    detect = ASOne(
+        tracker=asone.DEEPSORT,
+        detector=asone.CRAFT,
         weights=args.weights,
         recognizer=asone.EASYOCR,
         use_cuda=args.use_cuda
         )
     # Get tracking function
-    track_fn = dt_obj.track_video(args.video_path,
+    track = detect.track_video(args.video_path,
                                 output_dir=args.output_dir,
                                 conf_thres=args.conf_thres,
                                 iou_thres=args.iou_thres,
                                 display=args.display,
                                 draw_trails=args.draw_trails) # class_names=['License Plate'] for custom weights
     
-    # Loop over track_fn to retrieve outputs of each frame 
-    for bbox_details, frame_details in track_fn:
+    # Loop over track to retrieve outputs of each frame 
+    for bbox_details, frame_details in track:
         bbox_xyxy, ids, scores, class_ids = bbox_details
         frame, frame_num, fps = frame_details
         print(frame_num)

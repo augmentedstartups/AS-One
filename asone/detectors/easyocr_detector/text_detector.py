@@ -3,11 +3,12 @@ import numpy as np
 
 
 class TextDetector:
-    def __init__(self, detect_network, use_cuda=True):
+    def __init__(self, detect_network, languages: list = ['en'], use_cuda=True):
         self.use_cuda = use_cuda
         self.detect_network = detect_network
-
-    def detect(self, image: list, languages: list = ['en'], freelist: bool = False, **config) -> list:
+        self.reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
+        
+    def detect(self, image: list,  freelist: bool = False, **config) -> list:
         """_summary_
         Args:
             image : Image 
@@ -16,9 +17,8 @@ class TextDetector:
             list: numpy array of extracted text and img info(heigh, width)
         """
         
-        w, h = image.shape[0:2]
-        reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
-        horizontal_list, free_list = reader.detect(image) 
+        h, w = image.shape[0:2]
+        horizontal_list, free_list = self.reader.detect(image) 
 
         if horizontal_list[0] == [] and free_list[0] == []:
             return np.empty((0, 6)), {'width': w, 'height': h}

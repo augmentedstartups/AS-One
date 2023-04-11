@@ -74,7 +74,8 @@ class YOLOrDetector:
                max_det: int = 1000,
                filter_classes: bool = None,
                agnostic_nms: bool = True,
-               with_p6: bool = False) -> list:
+               with_p6: bool = False,
+               return_image=False) -> list:
 
         # Image Preprocessing
         original_image, processed_image = self.image_preprocessing(
@@ -135,4 +136,8 @@ class YOLOrDetector:
             # detection = detection[np.in1d(
             #     detection[:, 5].astype(int), filter_class_idx)]
 
-        return predictions, image_info
+        if return_image:
+            return predictions, original_image
+        else: 
+            return predictions, image_info
+        

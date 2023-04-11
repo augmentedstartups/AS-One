@@ -6,16 +6,16 @@ def main(args):
     filter_classes = args.filter_classes
 
     if filter_classes:
-        filter_classes = [filter_classes]
+        filter_classes = ['person']
 
-    dt_obj = ASOne(
+    detect = ASOne(
         tracker=asone.BYTETRACK,
         detector=asone.YOLOV7_PYTORCH,
         weights=args.weights,
         use_cuda=args.use_cuda
         )
     # Get tracking function
-    track_fn = dt_obj.track_video(args.video_path,
+    track = detect.track_video(args.video_path,
                                 output_dir=args.output_dir,
                                 conf_thres=args.conf_thres,
                                 iou_thres=args.iou_thres,
@@ -25,7 +25,7 @@ def main(args):
                                 class_names=None) # class_names=['License Plate'] for custom weights
     
     # Loop over track_fn to retrieve outputs of each frame 
-    for bbox_details, frame_details in track_fn:
+    for bbox_details, frame_details in track:
         bbox_xyxy, ids, scores, class_ids = bbox_details
         frame, frame_num, fps = frame_details
         print(frame_num)

@@ -19,3 +19,11 @@ Cython
 ultralytics
 asone-ocr
 motpy
+
+torchreid==0.2.5
+tensorboard
+
+
+# requirements for coreml
+# onnxruntime
+coremltools
