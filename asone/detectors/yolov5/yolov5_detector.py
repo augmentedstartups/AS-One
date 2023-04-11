@@ -89,7 +89,10 @@ class YOLOv5Detector:
             pred = self.model.predict({"image":Image.fromarray(image).resize(input_shape)})
             xyxy = yolo_to_xyxy(pred['coordinates'], input_shape)
             out = generalize_output_format(xyxy, pred['confidence'], conf_thres)
-            detections = scale_bboxes(out, image.shape[:2], input_shape)
+            if out != []:
+                detections = scale_bboxes(out, image.shape[:2], input_shape)
+            else:
+                detections = np.empty((0, 6))
             
             if filter_classes:
                 class_names = get_names()

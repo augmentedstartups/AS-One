@@ -3,6 +3,7 @@
 *.onnx
 *.pt
 *.pth
+*.mlmodel
 **byte_track_results**
 **deep_sort_results**
 **nor_fair_results**

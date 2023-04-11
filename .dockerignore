@@ -3,6 +3,7 @@ results/
 **__pycache__**
 *.onnx
 *.pt
+*.mlmodel
 **byte_track_results**
 **deep_sort_results**
 **nor_fair_results**
