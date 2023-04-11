@@ -316,7 +316,7 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
 
 # ##############################################
 #           To track using video file
