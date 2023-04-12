@@ -38,8 +38,8 @@
 
 | Model           |  Model Flag  |  FPS-GPU   | FPS-CPU
 |---------------- |-----------| -----------| --------
-|StrongSort-ONNX-YOLOv7|StrongSort|7.6|3.1|
-|StrongSort-Pytorch-YOLOv7|StrongSort|7.9|3.1|
+|StrongSort-ONNX-YOLOv7|STRONGSORT|7.6|3.1|
+|StrongSort-Pytorch-YOLOv7|STRONGSORT|7.9|3.1|
 
 ### OCSORT
 
@@ -55,7 +55,7 @@
 |<table>  <thead>  <tr><th>Model Name / Model Flag</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV5X6_PYTORCH</td>  <td>20.8</td>  <td>3.69</td> </tr>  <tr> <td>YOLOV5S_PYTORCH</td> <td>57.25</td>  <td>25.4</td>    </tr>  <tr> <td>YOLOV5N_PYTORCH</td> <td>68</td>  <td>45</td>    </tr> <tr> <td>YOLOV5M_PYTORCH</td> <td>54</td>  <td>14</td>    </tr><tr> <td>YOLOV5L_PYTORCH</td> <td>40.06</td>  <td>8.28</td> </tr><tr> <td>YOLOV5X_PYTORCH</td> <td>28.8</td>  <td>4.32</td>    </tr><tr> <td>YOLOV5N6_PYTORCH</td> <td>63.5</td>  <td>39</td>    </tr><tr> <td>YOLOV5S6_PYTORCH</td> <td>58</td>  <td>23</td>    </tr><tr> <td>YOLOV5M6_PYTORCH</td> <td>49</td>  <td>10</td>    </tr><tr> <td>YOLOV5L6_PYTORCH </td> <td>33</td>  <td>6.5</td>    </tr> </tbody>  </table>| <table>  <thead>  <tr><th>Model Name / Model Flag</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV5X6_ONNX</td>  <td>2.58</td>  <td>2.46</td> </tr>  <tr> <td>YOLOV5S_ONNX</td> <td>17</td>  <td>16.35</td>    </tr>  <tr> <td>YOLOV5N_ONNX</td> <td>57.25</td>  <td>35.23</td>    </tr> <tr> <td>YOLOV5M_ONNX</td> <td>45.8</td>  <td>11.17</td>    </tr><tr> <td>YOLOV5L_ONNX</td> <td>4.07</td>  <td>4.36</td> </tr><tr> <td>YOLOV5X_ONNX</td> <td>2.32</td>  <td>2.6</td>    </tr><tr> <td>YOLOV5N6_ONNX</td> <td>28.6</td>  <td>32.7</td>    </tr><tr> <td>YOLOV5S6_ONNX</td> <td>17</td>  <td>16.35</td>    </tr><tr> <td>YOLOV5M6_ONNX</td> <td>7.5</td>  <td>7.6</td>    </tr><tr> <td>YOLOV5L6_ONNX   </td> <td>3.7</td>  <td>3.98</td>    </tr> </tbody>  </table>|<table>  <thead>  <tr><th>Model Name / Model Flag</th> </tr>  </thead>  <tbody>  <tr><td>YOLOV5X6_MLMODEL</td></tr>  <tr> <td>YOLOV5S_MLMODEL</td> </tr>  <tr> <td>YOLOV5N_MLMODEL</td> </tr> <tr> <td>YOLOV5M_MLMODEL</td> </tr><tr> <td>YOLOV5L_MLMODEL</td></tr><tr> <td>YOLOV5X_MLMODEL</td></tr><tr> <td>YOLOV5N6_MLMODEL</td></tr><tr> <td>YOLOV5S6_MLMODEL</td></tr><tr> <td>YOLOV5M6_MLMODEL</td></tr><tr> <td>YOLOV5L6_MLMODEL   </td></tr> </tbody>  </table>|
 
 ### YOLOv6
-|    Pytorch                      |ONNX                         |
+|    PyTorch                      |ONNX                         |
 |:-------------------------------:|:-----------------------------:|
 |<table>  <thead>  <tr><th>Model Name / Model Flag</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV6N_PYTORCH</td>  <td>65.4</td>  <td>35.32</td> </tr>  <tr> <td>YOLOV6T_PYTORCH</td> <td>63</td>  <td>15.21</td>    </tr>  <tr> <td>YOLOV6S_PYTORCH</td> <td>49.24</td>  <td>20</td>    </tr> <tr> <td>YOLOV6M_PYTORCH</td> <td>35</td>  <td>9.96</td>    </tr><tr> <td>YOLOV6L_PYTORCH</td> <td>31</td>  <td>6.2</td> </tr><tr> <td>YOLOV6L_RELU_PYTORCH</td> <td>27</td>  <td>6.3</td>    </tr><tr> <td>YOLOV6S_REPOPT_PYTORCH</td> <td>63.5</td>  <td>39</td>    </tr> </tbody>  </table>| <table>  <thead>  <tr><th>Model Name / Model Flag</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV6N_ONNX</td>  <td>50</td>  <td>30</td> </tr>  <tr> <td>YOLOV6T_ONNX</td> <td>45.8</td>  <td>16</td>    </tr>  <tr> <td>YOLOV6S_ONNX</td> <td>41</td>  <td>13.8</td>    </tr> <tr> <td>YOLOV6M_ONNX</td> <td>25</td>  <td>6.07</td>    </tr><tr> <td>YOLOV6L_ONNNX</td> <td>17.7</td>  <td>3.32</td> </tr><tr> <td>YOLOV6L_RELU_ONNX</td> <td>19.15</td>  <td>4.36</td>    </tr><tr> <td>YOLOV6S_REPOPT_ONNX</td> <td>63.5</td>  <td>39</td>    </tr> </tbody>  </table>|
 
