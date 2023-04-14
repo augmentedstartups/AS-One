@@ -55,7 +55,7 @@ pip install numpy Cython
 pip install cython-bbox
 
 pip install asone
-
+pip install onnxruntime-gpu==1.12.1
 
 # for CPU
 pip install torch torchvision
@@ -84,6 +84,26 @@ pip install torch torchvision
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+```
+</details>
+<details>
+<summary>For Mac</summary>
+
+```shell
+python3 -m venv .env
+source .env/bin/activate
+
+pip install numpy Cython
+pip install cython-bbox
+
+pip install asone
+
+# for CPU
+pip install torch torchvision
+
+# for GPU
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
+
 ```
 </details>
 
