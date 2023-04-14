@@ -87,7 +87,7 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 ```
 </details>
 <details>
-<summary>For Mac</summary>
+<summary>For macOS</summary>
 
 ```shell
 python3 -m venv .env
@@ -155,42 +155,6 @@ while True:
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
 ```
-<details>
-<summary>6.1.0 Object Detection for mac</summary>
-
-```python
-import asone
-from asone import utils
-from asone import ASOne
-import cv2
-
-video_path = 'data/sample_videos/test.mp4'
-detector = ASOne(detector=asone.YOLOV7_MLMODEL, use_cuda=True) # Set use_cuda to False for cpu
-
-filter_classes = ['car'] # Set to None to detect all classes
-
-cap = cv2.VideoCapture(video_path)
-
-while True:
-    _, frame = cap.read()
-    if not _:
-        break
-
-    dets, img_info = detector.detect(frame, filter_classes=filter_classes)
-
-    bbox_xyxy = dets[:, :4]
-    scores = dets[:, 4]
-    class_ids = dets[:, 5]
-
-    frame = utils.draw_boxes(frame, bbox_xyxy, class_ids=class_ids)
-
-    cv2.imshow('result', frame)
-
-    if cv2.waitKey(25) & 0xFF == ord('q'):
-        break
-```
-
-</details>
 
 Run the `asone/demo_detector.py` to test detector.
 
@@ -246,10 +210,18 @@ while True:
 <summary>6.1.2. Changing Detector Models </summary>
 
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
-
+* Our library now supports YOLOv5, YOLOv7, and YOLOv8 on macOS.
 ```python
 # Change detector
 detector = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
+
+# For macOs
+# YOLO5
+detector = ASOne(detector=asone.YOLOV5X_MLMODEL, use_cuda=True)
+# YOLO7
+detector = ASOne(detector=asone.YOLO7_MLMODEL, use_cuda=True)
+# YOLO8
+detector = ASOne(detector=asone.YOLOV8L_MLMODEL, use_cuda=True)
 ```
 
 </details>
@@ -309,60 +281,6 @@ for bbox_details, frame_details in track:
 ```
 
 [Note] Use can use custom weights for a detector model by simply providing path of the weights file. in `ASOne` class.
-<details>
-
-<summary>6.2.0 Object Tracking for mac</summary>
-
-Use tracker on sample video. 
-
-```python
-import asone
-from asone import ASOne
-
-# Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_MLMODEL, use_cuda=True) #set use_cuda=False to use cpu
-
-filter_classes = ['person'] # set to None to track all classes
-
-# ##############################################
-#           To track using video file
-# ##############################################
-# Get tracking function
-track = detect.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
-
-# Loop over track to retrieve outputs of each frame 
-for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
-    # Do anything with bboxes here
-
-# ##############################################
-#           To track using webcam
-# ##############################################
-# Get tracking function
-track = detect.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
-
-# Loop over track to retrieve outputs of each frame 
-for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
-    # Do anything with bboxes here
-
-# ##############################################
-#           To track using web stream
-# ##############################################
-# Get tracking function
-stream_url = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
-track = detect.track_stream(stream_url, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
-
-# Loop over track to retrieve outputs of each frame 
-for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
-    # Do anything with bboxes here
-```
-</details>
-
 
 <details>
 <summary>6.2.1 Changing Detector and Tracking Models</summary>
