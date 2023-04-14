@@ -90,68 +90,29 @@ class YOLOv7Detector:
                                  input_name: processed_image})
         # Run Coreml model 
         elif self.mlmodel:
-            
-            # h ,w = image.shape[:2]
-            # print(pred.keys())
-            # y = self.model.predict({'image': image})  # coordinates are xywh normalized
-            y = self.model.predict({"image":Image.fromarray(image).resize(input_shape)})
-            # print(y)
-            print(y.keys())
-            print(y['var_1019'].shape)
-            print(y['var_1034'].shape)
-            print(y['var_1049'].shape)
-            exit()
-            if 'confidence' in y:
-                box = xywh2xyxy(y['coordinates'] * [[w, h, w, h]])  # xyxy pixels
-                conf, cls = y['confidence'].max(1), y['confidence'].argmax(1).astype(np.float)
-                y = np.concatenate((box, conf.reshape(-1, 1), cls.reshape(-1, 1)), 1)
+            h ,w = image.shape[:2]
+            pred = self.model.predict({"image":Image.fromarray(image).resize(input_shape)})
+            xyxy = yolo_to_xyxy(pred['coordinates'], input_shape)
+            out = generalize_output_format(xyxy, pred['confidence'], conf_thres)
+            if out != []:
+                detections = scale_bboxes(out, image.shape[:2], input_shape)
             else:
-                k = 'var_' + str(sorted(int(k.replace('var_', '')) for k in y)[-1])  # output key
-                y = y[k]  # output
-                print(y)
-                print(y.shape)
-                exit()
-                        # Reshape the output to a 2D array with 85 columns
-            y = y.reshape((1, -1, 85))
-            prediction = torch.from_numpy(y)
-            # Extract the bounding boxes and convert them to [x1, y1, x2, y2] format
-            # boxes = y[:, :, :4]
-            # boxes = np.concatenate((boxes[:, :, :2] - boxes[:, :, 2:] / 2, boxes[:, :, :2] + boxes[:, :, 2:] / 2), axis=2)
-
-            # # Extract the objectness scores and class probabilities
-            # objectness_scores = y[:, :, 4]
-            # class_probs = y[:, :, 5:]
-
-            # # Compute the maximum class probability for each location
-            # class_scores = np.max(class_probs, axis=2)
-            # class_ids = np.argmax(class_probs, axis=2)
-            # print(boxes)
-            # print(class_scores)
-            # print(len(class_ids[0]))
-            # # print(detection)
-            # exit()
-            # print(y)
-            # print(y.shape)
-            # exit()
-            # xyxy = yolo_to_xyxy(pred['coordinates'], input_shape)
-            # out = generalize_output_format(xyxy, pred['confidence'], conf_thres)
-            # detections = scale_bboxes(out, image.shape[:2], input_shape)
+                detections = np.empty((0, 6))
             
-            # if filter_classes:
-            #     class_names = get_names()
+            if filter_classes:
+                class_names = get_names()
 
-            #     filter_class_idx = []
-            #     if filter_classes:
-            #         for _class in filter_classes:
-            #             if _class.lower() in class_names:
-            #                 filter_class_idx.append(class_names.index(_class.lower()))
-            #             else:
-            #                 warnings.warn(f"class {_class} not found in model classes list.")
+                filter_class_idx = []
+                if filter_classes:
+                    for _class in filter_classes:
+                        if _class.lower() in class_names:
+                            filter_class_idx.append(class_names.index(_class.lower()))
+                        else:
+                            warnings.warn(f"class {_class} not found in model classes list.")
 
-            #     detections = detections[np.in1d(detections[:,5].astype(int), filter_class_idx)]
+                detections = detections[np.in1d(detections[:,5].astype(int), filter_class_idx)]
             
-            # return detections, {'width':w, 'height':h}
-            
+            return detections, {'width':w, 'height':h}
         # Run Pytorch model
         else:
             processed_image = torch.from_numpy(processed_image).to(self.device)
@@ -160,6 +121,7 @@ class YOLOv7Detector:
 
             with torch.no_grad():
                 prediction = self.model(processed_image, augment=False)[0]
+
                 
         detection = []
         # Postprocess prediction
@@ -177,6 +139,9 @@ class YOLOv7Detector:
                                             agnostic=agnostic_nms)[0]
             
             detection = detection.detach().cpu().numpy()
+            # detection = yolo_to_xyxy(detection, input_shape)
+            # print(detection)
+            
             # Rescaling Bounding Boxes
             detection[:, :4] /= np.array([input_shape[1], input_shape[0], input_shape[1], input_shape[0]])
             detection[:, :4] *= np.array([img_width, img_height, img_width, img_height])
