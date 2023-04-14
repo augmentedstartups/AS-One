@@ -76,7 +76,7 @@ pip install numpy Cython
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
 pip install asone
-
+pip install onnxruntime-gpu==1.12.1
 # for CPU
 pip install torch torchvision
 
@@ -155,7 +155,42 @@ while True:
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
 ```
+<details>
+<summary>6.1.0 Object Detection for mac</summary>
 
+```python
+import asone
+from asone import utils
+from asone import ASOne
+import cv2
+
+video_path = 'data/sample_videos/test.mp4'
+detector = ASOne(detector=asone.YOLOV7_MLMODEL, use_cuda=True) # Set use_cuda to False for cpu
+
+filter_classes = ['car'] # Set to None to detect all classes
+
+cap = cv2.VideoCapture(video_path)
+
+while True:
+    _, frame = cap.read()
+    if not _:
+        break
+
+    dets, img_info = detector.detect(frame, filter_classes=filter_classes)
+
+    bbox_xyxy = dets[:, :4]
+    scores = dets[:, 4]
+    class_ids = dets[:, 5]
+
+    frame = utils.draw_boxes(frame, bbox_xyxy, class_ids=class_ids)
+
+    cv2.imshow('result', frame)
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+```
+
+</details>
 
 Run the `asone/demo_detector.py` to test detector.
 
@@ -274,6 +309,59 @@ for bbox_details, frame_details in track:
 ```
 
 [Note] Use can use custom weights for a detector model by simply providing path of the weights file. in `ASOne` class.
+<details>
+
+<summary>6.2.0 Object Tracking for mac</summary>
+
+Use tracker on sample video. 
+
+```python
+import asone
+from asone import ASOne
+
+# Instantiate Asone object
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_MLMODEL, use_cuda=True) #set use_cuda=False to use cpu
+
+filter_classes = ['person'] # set to None to track all classes
+
+# ##############################################
+#           To track using video file
+# ##############################################
+# Get tracking function
+track = detect.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
+
+# ##############################################
+#           To track using webcam
+# ##############################################
+# Get tracking function
+track = detect.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
+
+# ##############################################
+#           To track using web stream
+# ##############################################
+# Get tracking function
+stream_url = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
+track = detect.track_stream(stream_url, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+
+# Loop over track to retrieve outputs of each frame 
+for bbox_details, frame_details in track:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
+```
+</details>
 
 
 <details>
@@ -372,7 +460,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] Updated for YOLOv8
 - [x] OCR and Counting
 - [x] OCSORT, StrongSORT, MoTPy
-- [ ] M1/2 Apple Silicon Compatibility
+- [x] M1/2 Apple Silicon Compatibility
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
