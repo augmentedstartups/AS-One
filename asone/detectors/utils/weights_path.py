@@ -62,6 +62,14 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '45': os.path.join('yolov7','weights','yolov7-d6.onnx'),
             '46': os.path.join('yolov7','weights','yolov7-e6e.pt'),
             '47': os.path.join('yolov7','weights','yolov7-e6e.onnx'),
+            
+            '130': os.path.join('yolov7','weights','yolov7-tiny.mlmodel'),
+            '131': os.path.join('yolov7','weights','yolov7.mlmodel'),
+            '132': os.path.join('yolov7','weights','yolov7x.mlmodel'),
+            '133': os.path.join('yolov7','weights','yolov7-w6.mlmodel'),
+            '134': os.path.join('yolov7','weights','yolov7-e6.mlmodel'),
+            '135': os.path.join('yolov7','weights','yolov7-d6.mlmodel'),
+            '136': os.path.join('yolov7','weights','yolov7-e6e.mlmodel'),
             # YOLOR
             '48': os.path.join('yolor','weights','yolor_csp_x.pt'),
             '49': os.path.join('yolor','weights','yolor_csp_x.onnx'),
@@ -139,7 +147,10 @@ def get_weight_path(model_flag):
         weight = weights[str(model_flag)]
         onnx=False
         coreml = True
-        
+    elif model_flag in range(130, 137):
+        weight = weights[str(model_flag)]
+        onnx=False
+        coreml = True    
     elif model_flag in range(139, 145):
         weight = weights[str(model_flag)]
         onnx=False
