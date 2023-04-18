@@ -8,7 +8,7 @@ class TextDetector:
         self.detect_network = detect_network
         self.reader = easyocr.Reader(languages, detect_network=self.detect_network ,gpu=self.use_cuda)
         
-    def detect(self, image: list,  freelist: bool = False, **config) -> list:
+    def detect(self, image: list,  freelist: bool=False, return_image=False, **config) -> list:
         """_summary_
         Args:
             image : Image 
@@ -21,6 +21,8 @@ class TextDetector:
         horizontal_list, free_list = self.reader.detect(image) 
 
         if horizontal_list[0] == [] and free_list[0] == []:
+            if return_image:
+                return horizontal_list, image
             return np.empty((0, 6)), {'width': w, 'height': h}
         
         if freelist:
@@ -46,4 +48,7 @@ class TextDetector:
         horizontal_list[:, [1, 2]] = horizontal_list[:, [2, 1]]
         horizontal_list = np.hstack((horizontal_list, np.array([[0.7, 80]]*len(horizontal_list))))
         
+        if return_image:
+            return horizontal_list, image
+            
         return  horizontal_list, {'width': w, 'height': h}

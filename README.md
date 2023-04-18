@@ -55,7 +55,7 @@ pip install numpy Cython
 pip install cython-bbox
 
 pip install asone
-
+pip install onnxruntime-gpu==1.12.1
 
 # for CPU
 pip install torch torchvision
@@ -76,7 +76,7 @@ pip install numpy Cython
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
 pip install asone
-
+pip install onnxruntime-gpu==1.12.1
 # for CPU
 pip install torch torchvision
 
@@ -84,6 +84,26 @@ pip install torch torchvision
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+```
+</details>
+<details>
+<summary>For macOS</summary>
+
+```shell
+python3 -m venv .env
+source .env/bin/activate
+
+pip install numpy Cython
+pip install cython-bbox
+
+pip install asone
+
+# for CPU
+pip install torch torchvision
+
+# for GPU
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
+
 ```
 </details>
 
@@ -135,7 +155,6 @@ while True:
     if cv2.waitKey(25) & 0xFF == ord('q'):
         break
 ```
-
 
 Run the `asone/demo_detector.py` to test detector.
 
@@ -191,10 +210,18 @@ while True:
 <summary>6.1.2. Changing Detector Models </summary>
 
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
-
+* Our library now supports YOLOv5, YOLOv7, and YOLOv8 on macOS.
 ```python
 # Change detector
 detector = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
+
+# For macOs
+# YOLO5
+detector = ASOne(detector=asone.YOLOV5X_MLMODEL, use_cuda=True)
+# YOLO7
+detector = ASOne(detector=asone.YOLO7_MLMODEL, use_cuda=True)
+# YOLO8
+detector = ASOne(detector=asone.YOLOV8L_MLMODEL, use_cuda=True)
 ```
 
 </details>
@@ -254,7 +281,6 @@ for bbox_details, frame_details in track:
 ```
 
 [Note] Use can use custom weights for a detector model by simply providing path of the weights file. in `ASOne` class.
-
 
 <details>
 <summary>6.2.1 Changing Detector and Tracking Models</summary>
@@ -316,7 +342,7 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
 
 # ##############################################
 #           To track using video file
@@ -352,7 +378,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] Updated for YOLOv8
 - [x] OCR and Counting
 - [x] OCSORT, StrongSORT, MoTPy
-- [ ] M1/2 Apple Silicon Compatibility
+- [x] M1/2 Apple Silicon Compatibility
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
