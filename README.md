@@ -379,6 +379,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] OCR and Counting
 - [x] OCSORT, StrongSORT, MoTPy
 - [x] M1/2 Apple Silicon Compatibility
+- [] Pose Estimation YOLOv7/v8
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
