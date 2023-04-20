@@ -2,7 +2,7 @@ from .asone import ASOne
 import asone.detectors
 import asone.trackers
 import asone.recognizers
-
+from .pose_estimator import PoseEstimator
 
 BYTETRACK = 0
 DEEPSORT = 1
@@ -153,4 +153,4 @@ EASYOCR = 200
 
 
 
-__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers'] 
+__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers', 'PoseEstimator'] 
