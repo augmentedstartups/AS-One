@@ -4,9 +4,6 @@ from asone.segmentors.yolov5 import YOLOv5Segmentor
 from asone.detectors.utils.weights_path import get_weight_path
 
 
-
-
-
 class Segmentor:
     def __init__(self,
                  model_flag: int,
@@ -28,22 +25,23 @@ class Segmentor:
             weight = weights
             mlmodel = True
         elif weights:
+            print("-1")
             onnx = False
             weight = weights
         else:
             mlmodel, onnx, weight = get_weight_path(model_flag)
-
-        if model_flag in range(143, 144):
+        print(model_flag)
+        if model_flag in range(143, 145):
             print('000')
             _segmentor = YOLOv5Segmentor(weights=weight,
                                        use_onnx=onnx,
                                        use_cuda=cuda)
         return _segmentor
 
-    def get_detector(self):
+    def get_segmentor(self):
         return self.model
 
-    def detect(self,
+    def segment(self,
                image: list,
                return_image=False,
                **kwargs: dict):
@@ -51,9 +49,16 @@ class Segmentor:
 
 
 if __name__ == '__main__':
-    # Initialize YOLOv6 object detector
+    # Initialize YOLOv5 instance segmentor
+    from asone.utils.draw import draw_detections_and_masks
     model_type = 144
-    result = Segmentor(model_flag=model_type, use_cuda=True)
-    img = cv2.imread('/home/hd/PycharmProjects/AS-One/data/sample_imgs/test2.jpg')
-    pred = result.get_detector(img)
-    print(pred)
+    weights = "AS-One/data/custom_weights/yolov5s-seg.pt"
+    result = Segmentor(model_flag=model_type, weights=weights, use_cuda=False)
+    model = result.get_segmentor()
+    img = cv2.imread('AS-One/data/sample_imgs/test2.jpg')
+    dets, masks, image_info = model.segment(image=img, return_image=False)
+
+    img = draw_detections_and_masks(img, dets[:, :4], dets[:, 5:6], dets[:, 4:5], mask_alpha=0.8, mask_maps=masks)
+
+    cv2.imshow("Result", img)
+    cv2.waitKey(0)

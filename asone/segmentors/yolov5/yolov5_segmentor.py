@@ -59,7 +59,7 @@ class YOLOv5Segmentor:
             image = image[None]  # expand for batch dim  
         return original_image, image
     
-    def detect(self, image: list,
+    def segment(self, image: list,
                input_shape: tuple = (640, 640),
                conf_thres: float = 0.25,
                iou_thres: float = 0.45,
@@ -139,13 +139,12 @@ if __name__ == '__main__':
     from asone.utils.draw import draw_detections_and_masks
     import cv2
     model_type = 144
-    weights = "/home/hd/PycharmProjects/AS-One/data/custom_weights/yolov5s-seg.pt"
-
+    weights = "AS-One/data/custom_weights/yolov5s-seg.pt"
 
     result = YOLOv5Segmentor(weights=weights, use_cuda=False, use_onnx=False)
-    img = cv2.imread('/home/hd/PycharmProjects/AS-One/data/sample_imgs/test2.jpg')
+    img = cv2.imread('AS-One/data/sample_imgs/test2.jpg')
 
-    dets, masks, image_info = result.detect(image=img, return_image=False)
+    dets, masks, image_info = result.segment(image=img, return_image=False)
 
     img = draw_detections_and_masks(img, dets[:, :4], dets[:, 5:6], dets[:, 4:5], mask_alpha=0.8, mask_maps=masks)
 
