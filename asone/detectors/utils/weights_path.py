@@ -112,7 +112,9 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '141': os.path.join('yolov8','weights','yolov8m.mlmodel'),
             '142': os.path.join('yolov8','weights','yolov8l.mlmodel'),
             '143': os.path.join('yolov8','weights','yolov8x.mlmodel'),
-            
+            # YOLOv5-Seg
+            '144': os.path.join('yolov5-seg', 'weights', 'yolov5n-seg.pt'),
+            '145': os.path.join('yolov5-seg', 'weights', 'yolov5s-seg.pt'),
             # Text Detectors
             '82': 'craft',
             '83': 'dbnet18',
