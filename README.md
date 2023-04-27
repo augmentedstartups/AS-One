@@ -87,7 +87,7 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 ```
 </details>
 <details>
-<summary>For macOS</summary>
+<summary>For MacOS</summary>
 
 ```shell
 python3 -m venv .env
@@ -379,7 +379,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] OCR and Counting
 - [x] OCSORT, StrongSORT, MoTPy
 - [x] M1/2 Apple Silicon Compatibility
-- [] Pose Estimation YOLOv7/v8
+- [ ] Pose Estimation YOLOv7/v8
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
