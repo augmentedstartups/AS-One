@@ -21,7 +21,7 @@ class Yolov7PoseEstimator:
         _ = self.model.eval()
 
     @torch.no_grad()
-    def estimate(self, frame='pose.mp4'):
+    def estimate(self, frame):
 
         frame_height, frame_width = frame.shape[:2]
         
@@ -42,10 +42,21 @@ class Yolov7PoseEstimator:
                                          nkpt=self.model.yaml['nkpt'], kpt_label=True)
         output = output_to_keypoint(output)
         
-        # out = torch.from_numpy(output)
-        # print(output)
-        # print(type(output))
-        # print(output.shape)
-        # exit()
+        # ............................................
+        # converting output to the format as yolov8
+        reformated_output = []
+        steps = 3
+        kpts = output
+        for idx in range(output.shape[0]):
+            single_person_kpts = kpts[idx, 7:].T
+            num_kpts = len(single_person_kpts) // steps
+            xyc = []
+            for kid in range(num_kpts):
+                x_coord, y_coord = single_person_kpts[steps * kid], single_person_kpts[steps * kid + 1]
+                xyc.append([x_coord, y_coord, single_person_kpts[steps * kid + 2]])
+            reformated_output.append(xyc)
+        out = np.array(reformated_output)
+        output = torch.from_numpy(out)
+        
         return output
         
