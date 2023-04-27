@@ -9,6 +9,7 @@
 4. Installation
     - [Linux](#4-installation)
     - [Windows 10/11](#4-installation) 
+    - [MacOS](#4-installation) 
 5. Running AS-One
 6. [Sample Code Snippets](#6-sample-code-snippets)
 7. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
