@@ -73,12 +73,10 @@ class PoseEstimator:
             fps = 1 / (currTime - prevTime)
             prevTime = currTime
 
-            if kpts is not None: 
-                if self.model_flag == 'yolov7':
-                    for idx in range(kpts.shape[0]):
-                        plot_skeleton_kpts(img, kpts[idx, 7:].T, 3)
-                else:
-                    img = draw_kpts(img, kpts)
+            if kpts is not None:
+                img = draw_kpts(img, kpts) 
+                # for i in kpts:
+                #     img = plot_skeleton_kpts(im=img, kpts=i, steps=1)
             cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
             cv2.putText(img, f'FPS: {int(fps)}', (11, 35), 0, 1, [
                         225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
