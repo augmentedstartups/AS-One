@@ -11,8 +11,7 @@ from asone.utils import get_weight_path, download_weights
 
 class PoseEstimator:
     def __init__(self, estimator_flag, weights: str=None, use_cuda=True):
-        self.model_flag = 'yolov8'
-        
+
         if weights:
             weights = weights
         else:
@@ -24,15 +23,15 @@ class PoseEstimator:
     def get_estimator(self, estimator_flag: int, weights: str, use_cuda: bool):
         
         if estimator_flag in range(149, 155):
-            estimator = Yolov7PoseEstimator(weights=weights)
-            self.model_flag = 'yolov7'
+            estimator = Yolov7PoseEstimator(weights=weights, use_cuda=use_cuda)
+
         elif estimator_flag in range(144, 149):
             estimator = Yolov8PoseEstimator(weights=weights,
                                        use_cuda=use_cuda)
-            self.model_flag = 'yolov8'
         return estimator
     
-    def estimate_image(self, frame, conf_thresh):
+    def estimate_image(self, frame):
+    
         keypoints = self.estimator.estimate(frame)
         return keypoints
     
@@ -58,7 +57,7 @@ class PoseEstimator:
         
         frame_no = 1
         tic = time.time()
-
+        frame_id = 1
         prevTime = 0
         fframe_num = 0
         while True:
@@ -75,12 +74,11 @@ class PoseEstimator:
 
             if kpts is not None:
                 img = draw_kpts(img, kpts) 
-                # for i in kpts:
-                #     img = plot_skeleton_kpts(im=img, kpts=i, steps=1)
+                
             cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
             cv2.putText(img, f'FPS: {int(fps)}', (11, 35), 0, 1, [
                         225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
-
+            frame_id += 1
             frame_no+=1
             if display:
                 cv2.imshow('Window', img)
@@ -90,3 +88,5 @@ class PoseEstimator:
     
             if cv2.waitKey(25) & 0xFF == ord('q'):
                 break
+
+            yield (kpts), (img if display else frame, frame_id-1, fps)
