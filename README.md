@@ -52,10 +52,7 @@ python3 -m venv .env
 source .env/bin/activate
 
 pip install numpy Cython
-pip install cython-bbox
-
-pip install asone
-pip install onnxruntime-gpu==1.12.1
+pip install cython-bbox asone onnxruntime-gpu==1.12.1
 
 # for CPU
 pip install torch torchvision
@@ -75,8 +72,7 @@ python -m venv .env
 pip install numpy Cython
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
-pip install asone
-pip install onnxruntime-gpu==1.12.1
+pip install asone onnxruntime-gpu==1.12.1
 # for CPU
 pip install torch torchvision
 
@@ -94,9 +90,7 @@ python3 -m venv .env
 source .env/bin/activate
 
 pip install numpy Cython
-pip install cython-bbox
-
-pip install asone
+pip install cython-bbox asone
 
 # for CPU
 pip install torch torchvision
