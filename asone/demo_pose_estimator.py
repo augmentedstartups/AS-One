@@ -11,7 +11,7 @@ def main(args):
     
     video_path = args.video
     os.makedirs(args.output_path, exist_ok=True)
-    estimator = PoseEstimator(asone.YOLOV8X_POSE, weights=args.weights, use_cuda=args.use_cuda)
+    estimator = PoseEstimator(asone.YOLOV7_W6_POSE, weights=args.weights, use_cuda=args.use_cuda)
 
     cap = cv2.VideoCapture(video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -20,7 +20,7 @@ def main(args):
 
     if args.save:
         video_writer = cv2.VideoWriter(
-            os.path.basename(video_path),
+            os.path.join(args.output_path,os.path.basename(video_path)),
             cv2.VideoWriter_fourcc(*"mp4v"),
             FPS,
             (int(width), int(height)),
@@ -39,7 +39,7 @@ def main(args):
             break
         frame = img.copy()
         
-        kpts = estimator.estimate_image(img, conf_thresh=0.5)
+        kpts = estimator.estimate_image(img)
         currTime = time.time()
         fps = 1 / (currTime - prevTime)
         prevTime = currTime
