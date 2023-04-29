@@ -1,4 +1,4 @@
-# AS-One : A Modular Libary for YOLO Object Detection and Object Tracking `BETA`
+# AS-One : A Modular Library for YOLO Object Detection and Object Tracking `BETA`
 
 ![croped](https://user-images.githubusercontent.com/107035454/195083948-4873d60a-3ac7-4279-8770-535488f4a097.png)
 
