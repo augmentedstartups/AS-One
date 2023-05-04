@@ -12,7 +12,7 @@
     - [MacOS](#4-installation) 
 5. Running AS-One
 6. [Sample Code Snippets](#6-sample-code-snippets)
-7. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
+7. [Model Zoo](asone/linux/Instructions/Benchmarking.md)
 
 ## 1. Introduction
 ==UPDATE: YOLO-NAS coming soon==
