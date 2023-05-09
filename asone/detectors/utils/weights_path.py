@@ -116,7 +116,11 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             # Text Detectors
             '82': 'craft',
             '83': 'dbnet18',
-             
+            # YOLONAS_S_PYTORCH
+            # YOLO NAS
+            '160':os.path.join('yolonas','weights','yolo_nas_s.pth'),
+            '161':os.path.join('yolonas','weights','yolo_nas_m.pth'),
+            '162':os.path.join('yolonas','weights','yolo_nas_l.pth') 
 }
 
 def get_weight_path(model_flag):
@@ -152,6 +156,10 @@ def get_weight_path(model_flag):
         onnx=False
         coreml = True    
     elif model_flag in range(139, 145):
+        weight = weights[str(model_flag)]
+        onnx=False
+        coreml = True
+    elif model_flag in range(160, 163):
         weight = weights[str(model_flag)]
         onnx=False
         coreml = True

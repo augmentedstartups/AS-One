@@ -12,4 +12,5 @@ __all__ = ['Detector'
            'YOLOv7Detector',
            'YOLOrDetector',
            'YOLOxDetector',
-           'TextDetector']
+           'TextDetector',
+           'YOLOnasDetector']

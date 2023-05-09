@@ -5,6 +5,7 @@ from asone.detectors.yolov6 import YOLOv6Detector
 from asone.detectors.yolov7 import YOLOv7Detector
 from asone.detectors.yolor import YOLOrDetector
 from asone.detectors.yolox import YOLOxDetector
+from asone.detectors.yolonas import YOLOnasDetector
 from asone.detectors.easyocr_detector import TextDetector
 
 from asone.detectors.utils.weights_path import get_weight_path
@@ -98,6 +99,12 @@ class Detector:
                                        use_onnx=onnx,
                                        mlmodel=mlmodel,
                                        use_cuda=cuda)
+        elif model_flag in range(160, 163):
+            # Get exp file and corresponding model for coreml only
+            _detector = YOLOnasDetector(weights=weight,
+                                       use_onnx=onnx,
+                                       use_cuda=cuda)
+            
         return _detector
 
     def get_detector(self):
