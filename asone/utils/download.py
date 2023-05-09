@@ -13,7 +13,6 @@ def download_weights(weights):
     outputpath = os.path.dirname(weights)
     model = os.path.splitext(os.path.basename(weights))[0]
     filename = f'{model}.zip'
-
     if model == 'yolov5s':
         model_key = '1W5ypZmrYE4_Aqu3Jqsl-IDvLK6SOtJCK'
     elif model == 'yolov5x6':
@@ -112,7 +111,12 @@ def download_weights(weights):
         model_key = '1Z0tZg1OYStkbzFNa5DJS_5qegNM_YtWH'
     elif model == 'yolov7-w6-pose':
         model_key = '1R_7QH-Y9TJ0jnDn3STfZvZzbx1fqs1mZ'
-    
+    elif model == 'yolo_nas_l':
+        model_key = '1FYDcp-LNxlVfxvKU2kG8FmkqZNIOSAnN'
+    elif model == 'yolo_nas_m':
+        model_key = '1wHf3q5Jl5Uk1iGgRjm6TYChInAoYGNhf'
+    elif model == 'yolo_nas_s':
+        model_key = '1jtI-L9J8G7sRBa-sziqryMp11vlFKWyh'
     else:
         raise ValueError(f'No model named {model} found.')
 
