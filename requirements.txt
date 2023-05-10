@@ -22,7 +22,6 @@ motpy
 
 torchreid==0.2.5
 tensorboard
-
 protobuf==3.20
 # requirements for coreml
 onnxruntime
