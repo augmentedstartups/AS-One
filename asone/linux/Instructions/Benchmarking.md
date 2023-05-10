@@ -81,6 +81,13 @@
 |:-------------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|
 |<table>  <thead>  <tr><th>Model Name / Model Flag</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV8N_PYTORCH</td>  <td>26.7</td>  <td>17.0</td> </tr>  <tr> <td>YOLOV8S_PYTORCH</td> <td>26.4</td>  <td>12.3</td>    </tr>  <tr> <td>YOLOV8M_PYTORCH</td> <td>25.1</td>  <td>6.8</td>    </tr> <tr> <td>YOLOV8L_PYTORCH</td> <td>23.6</td>  <td>4.0</td>    </tr><tr> <td>YOLOV8X_PYTORCH</td> <td>20.7</td>  <td>2.8</td> </tr><tr></tbody>  </table>| <table>  <thead>  <tr><th>Model Name / Model Flag</th>  <th>FPS-GPU</th>  <th>FPS-CPU</th>    </tr>  </thead>  <tbody>  <tr><td>YOLOV8N_ONNX</td>  <td>25.1</td>  <td>10.5</td> </tr>  <tr> <td>YOLOV8S_ONNX</td> <td>24.5</td>  <td>7.5</td>    </tr>  <tr> <td>YOLOV8M_ONNX</td> <td>22.9</td>  <td>4.7</td>    </tr> <tr> <td>YOLOV8l_ONNX</td> <td>20.4</td>  <td>2.9</td>    </tr><tr> <td>YOLOV8X_ONNX</td> <td>19.0</td>  <td>2.0</td> </tr> </tbody>  </table>|<table>  <thead>  <tr><th>Model Name / Model Flag</th> </tr>  </thead>  <tbody>  <tr><td>YOLOV8N_MLMODEL</td>  </tr>  <tr> <td>YOLOV8S_MLMODEL</td> </tr>  <tr> <td>YOLOV8M_MLMODEL</td>  </tr> <tr> <td>YOLOV8L_MLMODEL</td></tr><tr> <td>YOLOV8X_MLMODEL</td></td> </tr> </tbody>  </table>|<table>  <thead>  <tr><th>Model Name / Model Flag</th> </tr>  </thead>  <tbody>  <tr><td>YOLOV8N_POSE</td>  </tr>  <tr> <td>YOLOV8S_POSE</td> </tr>  <tr> <td>YOLOV8M_POSE</td>  </tr> <tr> <td>YOLOV8L_POSE</td></tr><tr> <td>YOLOV8X_POSE</td></td> </tr> </tbody>  </table>|
 
+### YOLONAS
+| Model Name/Model Flag 	|
+|-----------------------	|
+| YOLONAS_S_PYTORCH     	|
+| YOLONAS_M_PYTORCH     	|
+| YOLONAS_L_PYTORCH     	|
+
 ## OCR
 
 | Model           |  Model Flag 
