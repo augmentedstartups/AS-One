@@ -1,6 +1,10 @@
-# AS-One : A Modular Libary for YOLO Object Detection and Object Tracking `BETA`
+# AS-One : A Modular Library for YOLO Object Detection and Object Tracking
 
-![croped](https://user-images.githubusercontent.com/107035454/195083948-4873d60a-3ac7-4279-8770-535488f4a097.png)
+[<img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151476941/settings_images/1af75ea-6618-bd7d-a56e-eaccfddbc0e_Black.jpg" width="100%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
+
+
+
+
 
 #### Table of Contents
 1. Introduction
@@ -9,12 +13,13 @@
 4. Installation
     - [Linux](#4-installation)
     - [Windows 10/11](#4-installation) 
+    - [MacOS](#4-installation) 
 5. Running AS-One
 6. [Sample Code Snippets](#6-sample-code-snippets)
-7. [Benchmarks](asone/linux/Instructions/Benchmarking.md)
+7. [Model Zoo](asone/linux/Instructions/Benchmarking.md)
 
 ## 1. Introduction
-==UPDATE: YOLOv8 Now Supported==
+==UPDATE: YOLO-NAS coming soon==
 
 AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions. We plan to offer support for future versions of YOLO when they get released.
@@ -80,7 +85,7 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 ```
 </details>
 <details>
-<summary>For macOS</summary>
+<summary>For MacOS</summary>
 
 ```shell
 python3 -m venv .env
@@ -418,6 +423,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] M1/2 Apple Silicon Compatibility
 - [x] Pose Estimation YOLOv7/v8
 - [x] YoloNAS
+
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
