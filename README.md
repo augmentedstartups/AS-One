@@ -56,10 +56,6 @@ pip install cython-bbox asone onnxruntime-gpu==1.12.1
 pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
-
-# for GPU
-pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
-
 ```
 </details>
 
@@ -73,6 +69,7 @@ pip install numpy Cython
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
 pip install asone onnxruntime-gpu==1.12.1
+pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
 
@@ -91,7 +88,7 @@ source .env/bin/activate
 
 pip install numpy Cython
 pip install cython-bbox asone
-
+pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
 
