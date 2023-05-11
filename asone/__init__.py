@@ -2,7 +2,7 @@ from .asone import ASOne
 import asone.detectors
 import asone.trackers
 import asone.recognizers
-
+from .pose_estimator import PoseEstimator
 
 BYTETRACK = 0
 DEEPSORT = 1
@@ -113,12 +113,6 @@ YOLOV8L_PYTORCH = 78
 YOLOV8L_ONNX = 79
 YOLOV8X_PYTORCH = 80
 YOLOV8X_ONNX = 81
-YOLOV8N_MLMODEL = 139
-YOLOV8S_MLMODEL = 140
-YOLOV8M_MLMODEL = 141
-YOLOV8L_MLMODEL = 142
-YOLOV8X_MLMODEL = 143
-
 
 # coreml
 
@@ -142,7 +136,23 @@ YOLOV7_E6_MLMODEL = 134
 YOLOV7_D6_MLMODEL = 135
 YOLOV7_E6E_MLMODEL = 136
 
+YOLOV8N_MLMODEL = 139
+YOLOV8S_MLMODEL = 140
+YOLOV8M_MLMODEL = 141
+YOLOV8L_MLMODEL = 142
+YOLOV8X_MLMODEL = 143
 
+YOLOV8N_POSE = 144
+YOLOV8S_POSE = 145
+YOLOV8M_POSE = 146
+YOLOV8L_POSE = 147
+YOLOV8X_POSE = 148
+
+YOLOV7_W6_POSE = 149
+
+YOLONAS_S_PYTORCH = 160
+YOLONAS_M_PYTORCH = 161
+YOLONAS_L_PYTORCH = 162
 # Text Detectors
 # easyocr
 CRAFT = 82
@@ -153,4 +163,4 @@ EASYOCR = 200
 
 
 
-__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers'] 
+__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers', 'PoseEstimator'] 

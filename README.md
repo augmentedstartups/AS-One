@@ -57,17 +57,10 @@ python3 -m venv .env
 source .env/bin/activate
 
 pip install numpy Cython
-pip install cython-bbox
-
-pip install asone
-pip install onnxruntime-gpu==1.12.1
-
+pip install cython-bbox asone onnxruntime-gpu==1.12.1
+pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
-
-# for GPU
-pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
-
 ```
 </details>
 
@@ -80,8 +73,8 @@ python -m venv .env
 pip install numpy Cython
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
-pip install asone
-pip install onnxruntime-gpu==1.12.1
+pip install asone onnxruntime-gpu==1.12.1
+pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
 
@@ -99,10 +92,8 @@ python3 -m venv .env
 source .env/bin/activate
 
 pip install numpy Cython
-pip install cython-bbox
-
-pip install asone
-
+pip install cython-bbox asone
+pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
 
@@ -330,7 +321,6 @@ import asone
 from asone import utils
 from asone import ASOne
 import cv2
-from asone import utils
 
 
 img_path = 'data/sample_imgs/sample_text.jpeg'
@@ -374,6 +364,53 @@ Run the `asone/demo_ocr.py` to test ocr.
 
 </details>
 
+<details>
+<summary>6.4. Pose Estimation</summary>
+
+Sample code to estimate pose on an image
+
+```python
+# Pose Estimation
+import asone
+from asone import utils
+from asone import PoseEstimator
+import cv2
+
+img_path = 'data/sample_imgs/test2.jpg'
+pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
+img = cv2.imread(img_path)
+kpts = pose_estimator.estimate_image(img) 
+img = utils.draw_kpts(img, kpts)
+cv2.imwrite("data/results/results.jpg", img)
+```
+* Now you can use Yolov8 and Yolov7-w6 for pose estimation. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
+
+```python
+# Pose Estimation on video
+import asone
+from asone import PoseEstimator
+
+video_path = 'data/sample_videos/football1.mp4'
+pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
+estimator = pose_estimator.estimate_video(video_path, save=True, display=True)
+for kpts, frame_details in estimator:
+    frame, frame_num, fps = frame_details
+    print(frame_num)
+    # Do anything with kpts here
+```
+
+Run the `asone/demo_pose_estimator.py` to test Pose estimation.
+
+```shell
+# run on gpu
+ python -m asone.demo_pose_estimator data/sample_videos/football1.mp4
+
+# run on cpu
+ python -m asone.demo_pose_estimator data/sample_videos/football1.mp4 --cpu
+```
+
+</details>
+
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md) 
 
 # ToDo
@@ -384,8 +421,9 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] OCR and Counting
 - [x] OCSORT, StrongSORT, MoTPy
 - [x] M1/2 Apple Silicon Compatibility
-- [ ] Pose Estimation YOLOv7/v8
-- [ ] YOLO-NAS support coming soon
+- [x] Pose Estimation YOLOv7/v8
+- [x] YoloNAS
+
 
 |Offered By: |Maintained By:|
 |-------------|-------------|
