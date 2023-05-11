@@ -422,7 +422,8 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] OCSORT, StrongSORT, MoTPy
 - [x] M1/2 Apple Silicon Compatibility
 - [x] Pose Estimation YOLOv7/v8
-- [x] YoloNAS
+- [x] YOLO-NAS
+- [ ] SAM Integration
 
 
 |Offered By: |Maintained By:|
