@@ -21,8 +21,8 @@
 ## 1. Introduction
 ==UPDATE: YOLO-NAS coming soon==
 
-AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSort` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
-This python wrapper provides YOLO models in both `ONNX` and `PyTorch` versions. We plan to offer support for future versions of YOLO when they get released.
+AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSORT` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
+This python wrapper provides YOLO models in `ONNX`, `PyTorch` & `CoreML`  flavors. We plan to offer support for future versions of YOLO when they get released.
 
 This is One Library for most of your computer vision needs.
 
