@@ -1,4 +1,4 @@
-# Benchmarking
+# Model Zoo
 
 ## Hardware Used:
 - CPU: Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
