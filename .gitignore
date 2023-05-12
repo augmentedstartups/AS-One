@@ -14,3 +14,5 @@ test_custom_tracker.py
 custom_weights.py
 data/results/
 temp/
+test*
+yolo*
