@@ -56,11 +56,8 @@ Change Directory to AS-One
 python3 -m venv .env
 source .env/bin/activate
 
-pip install numpy Cython
-pip install cython-bbox asone onnxruntime-gpu==1.12.1
-pip install super-gradients==3.1.1
-# for CPU
-pip install torch torchvision
+pip install -r requirements.txt
+
 ```
 </details>
 

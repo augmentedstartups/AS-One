@@ -1,4 +1,5 @@
 .env/
+.venv/
 **__pycache__**
 *.onnx
 *.pt
@@ -14,3 +15,6 @@ test_custom_tracker.py
 custom_weights.py
 data/results/
 temp/
+test*
+yolo*
+*.mp4

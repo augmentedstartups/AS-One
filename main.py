@@ -10,7 +10,7 @@ def main(args):
 
     detect = ASOne(
         tracker=asone.BYTETRACK,
-        detector=asone.YOLOV7_PYTORCH,
+        detector=asone.YOLONAS_S_PYTORCH,       
         weights=args.weights,
         use_cuda=args.use_cuda
         )
