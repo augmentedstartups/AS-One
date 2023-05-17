@@ -70,7 +70,8 @@ pip install torch torchvision
 ```shell
 python -m venv .env
 .env\Scripts\activate
-pip install numpy Cython lap
+pip install numpy Cython 
+pip install lap
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
 pip install asone onnxruntime-gpu==1.12.1
