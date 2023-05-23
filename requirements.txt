@@ -12,7 +12,7 @@ pandas
 tabulate
 typing-extensions==3.10.0.2
 wheel
-torch==1.12.1
+torch
 torchvision
 numpy==1.23.3
 Cython
