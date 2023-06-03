@@ -12,14 +12,10 @@ pandas
 tabulate
 typing-extensions==3.10.0.2
 wheel
-torch
-torchvision
 numpy==1.23.3
-Cython
-ultralytics
 asone-ocr
 motpy
-
+ultralytics==8.0.109
 torchreid==0.2.5
 tensorboard
 protobuf==3.20
