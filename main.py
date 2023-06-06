@@ -16,20 +16,19 @@ def main(args):
         )
     # Get tracking function
     track = detect.track_video(args.video_path,
-                                output_dir=args.output_dir,
-                                conf_thres=args.conf_thres,
-                                iou_thres=args.iou_thres,
-                                display=args.display,
-                                draw_trails=args.draw_trails,
-                                filter_classes=filter_classes,
-                                class_names=None) # class_names=['License Plate'] for custom weights
+                               output_dir=args.output_dir,
+                               conf_thres=args.conf_thres,
+                               iou_thres=args.iou_thres,
+                               display=False,  # Disable display
+                               draw_trails=args.draw_trails,
+                               filter_classes=filter_classes,
+                               class_names=None) # class_names=['License Plate'] for custom weights
     
     # Loop over track_fn to retrieve outputs of each frame 
     for bbox_details, frame_details in track:
         bbox_xyxy, ids, scores, class_ids = bbox_details
         frame, frame_num, fps = frame_details
         print(frame_num)
-        
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
