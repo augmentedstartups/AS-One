@@ -18,13 +18,14 @@ class ASOne:
                  weights: str = None,
                  use_cuda: bool = True,
                  recognizer: int = None,
-                 languages: list = ['en']
+                 languages: list = ['en'],
+                 num_classes=80
                  ) -> None:
 
         self.use_cuda = use_cuda
 
         # get detector object
-        self.detector = self.get_detector(detector, weights, recognizer)
+        self.detector = self.get_detector(detector, weights, recognizer, num_classes)
         self.recognizer = self.get_recognizer(recognizer, languages=languages)
     
         if tracker == -1:
@@ -33,9 +34,9 @@ class ASOne:
             
         self.tracker = self.get_tracker(tracker)
 
-    def get_detector(self, detector: int, weights: str, recognizer):
+    def get_detector(self, detector: int, weights: str, recognizer, num_classes):
         detector = Detector(detector, weights=weights,
-                            use_cuda=self.use_cuda, recognizer=recognizer).get_detector()
+                            use_cuda=self.use_cuda, recognizer=recognizer, num_classes=num_classes).get_detector()
         return detector
 
     def get_recognizer(self, recognizer: int, languages):
