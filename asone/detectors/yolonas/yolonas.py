@@ -8,26 +8,31 @@ from asone import utils
 import super_gradients
 import numpy as np
 from super_gradients.training.processing import DetectionCenterPadding, StandardizeImage, NormalizeImage, ImagePermute, ComposeProcessing, DetectionLongestMaxSizeRescale
+from super_gradients.training import models
+from super_gradients.common.object_names import Models
 
 
-class_names = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-               "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34",
-               "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51",
-               "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63","64", "65", "66", "67", "68",
-               "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79"]
+class_names = [""]
 
 
 class YOLOnasDetector:
     def __init__(self,
+                 model_flag,
                  weights=None,
                  cfg=None,
                  use_onnx=True,
                  use_cuda=True,
+                #  checkpoint_num_classes=80,
+                 num_classes=80
                  ):
         
+        
+        self.model_flag = model_flag
+        # self.checkpoint_num_classes = checkpoint_num_classes
         if not os.path.exists(weights):
             utils.download_weights(weights)
-            
+        
+        self.num_classes = num_classes
         self.device = 'cuda' if use_cuda and torch.cuda.is_available() else 'cpu'
         self.use_onnx = use_onnx
 
@@ -35,12 +40,26 @@ class YOLOnasDetector:
         self.model = self.load_model(weights=weights)
 
     def load_model(self, weights):
-        model_name = os.path.basename(weights)
-        name, file_extension = os.path.splitext(model_name)
         
-        model = super_gradients.training.models.get(name, checkpoint_path=weights, checkpoint_num_classes=80, num_classes=80).to(self.device)
+            # model = super_gradients.training.models.get(name, 
+            #             checkpoint_path=weights, 
+            #             checkpoint_num_classes=self.checkpoint_num_classes,
+            #             num_classes=self.num_classes).to(self.device)
         
+        if self.model_flag == 160: 
+            model = models.get(Models.YOLO_NAS_S,
+                    checkpoint_path=weights,
+                    num_classes=self.num_classes).to(self.device)
+        elif self.model_flag == 161:
+            model = models.get(Models.YOLO_NAS_M,
+                    checkpoint_path=weights,
+                    num_classes=self.num_classes).to(self.device)
+        elif self.model_flag == 162:
+            model = models.get(Models.YOLO_NAS_L,
+                    checkpoint_path=weights,
+                    num_classes=self.num_classes).to(self.device)
         return model
+    
     def detect(self, image: list,
                input_shape: tuple = (640, 640),
                conf_thres: float = 0.25,
@@ -51,8 +70,8 @@ class YOLOnasDetector:
                with_p6: bool = False,
                return_image=False) -> list:
 
-        
-        self.model.set_dataset_processing_params( class_names=class_names,
+    
+        self.model.set_dataset_processing_params(class_names=class_names,
         image_processor=ComposeProcessing(
                 [
                     DetectionLongestMaxSizeRescale(output_shape=(636, 636)),
@@ -67,12 +86,7 @@ class YOLOnasDetector:
         # Inference
         if self.use_onnx:
             pass
-            # Input names of ONNX model on which it is exported
-            # input_name = self.model.get_inputs()[0].name
-            # # Run onnx model
-            # pred = self.model.run([self.model.get_outputs()[0].name], {
-            #                       input_name: processed_image})[0]
-            # Run Pytorch model
+            
         else:
 
             detections = self.model.predict(image)
