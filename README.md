@@ -61,6 +61,8 @@ pip install cython-bbox asone onnxruntime-gpu==1.12.1
 pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
+# for GPU
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 </details>
 
@@ -70,7 +72,8 @@ pip install torch torchvision
 ```shell
 python -m venv .env
 .env\Scripts\activate
-pip install numpy Cython
+pip install numpy Cython 
+pip install lap
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
 pip install asone onnxruntime-gpu==1.12.1
@@ -96,10 +99,6 @@ pip install cython-bbox asone
 pip install super-gradients==3.1.1
 # for CPU
 pip install torch torchvision
-
-# for GPU
-pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
-
 ```
 </details>
 
@@ -213,11 +212,11 @@ detector = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 
 # For macOs
 # YOLO5
-detector = ASOne(detector=asone.YOLOV5X_MLMODEL, use_cuda=True)
+detector = ASOne(detector=asone.YOLOV5X_MLMODEL)
 # YOLO7
-detector = ASOne(detector=asone.YOLO7_MLMODEL, use_cuda=True)
+detector = ASOne(detector=asone.YOLOV7_MLMODEL)
 # YOLO8
-detector = ASOne(detector=asone.YOLOV8L_MLMODEL, use_cuda=True)
+detector = ASOne(detector=asone.YOLOV8L_MLMODEL)
 ```
 
 </details>
@@ -424,7 +423,6 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] Pose Estimation YOLOv7/v8
 - [x] YOLO-NAS
 - [ ] SAM Integration
-
 
 |Offered By: |Maintained By:|
 |-------------|-------------|

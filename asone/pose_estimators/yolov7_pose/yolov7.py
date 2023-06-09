@@ -5,19 +5,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torchvision import transforms
 from .utils.datasets import letterbox
-from utils.torch_utils import select_device
-from models.experimental import attempt_load
+from .utils.torch_utils import select_device
+from .models.experimental import attempt_load
 from .utils.general import non_max_suppression_kpt,strip_optimizer,xyxy2xywh
 from .utils.plots import output_to_keypoint, plot_skeleton_kpts,colors,plot_one_box_kpt
+import os
+import sys
 
-def scale_bboxes(bboxes, org_img_shape, resized_img_shape):
-    # Rescaling Bounding Boxes 
-    # print(bboxes[:, :2])
-    # exit()
-    bboxes[:, :2] /= np.array([resized_img_shape[1], resized_img_shape[0]])
-    bboxes[:, :2] *= np.array([org_img_shape[1], org_img_shape[0]])  
-
-    return bboxes
 
 class Yolov7PoseEstimator:
     def __init__(self, weights="yolov7-w6-pose.pt", use_cuda=True): 

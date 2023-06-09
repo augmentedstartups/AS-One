@@ -18,7 +18,7 @@ def main(args):
 
 
     detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, 
-                   use_cuda=True)
+                   use_cuda=args.use_cuda)
 
     track = detect.track_video(video_path, output_dir=args.output_path, 
                                save_result=args.save, display=args.display,

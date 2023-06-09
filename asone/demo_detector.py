@@ -5,6 +5,9 @@ import cv2
 import argparse
 import time
 import os
+import sys
+import torch
+
 
 def main(args):
     filter_classes = args.filter_classes
@@ -15,8 +18,17 @@ def main(args):
     if filter_classes:
         filter_classes = filter_classes.split(',')
 
+    if args.use_cuda and torch.cuda.is_available():
+        args.use_cuda = True
+    else:
+        args.use_cuda = False
     
-    detector = ASOne(asone.YOLOV7_PYTORCH, weights=args.weights, use_cuda=args.use_cuda)
+    if sys.platform.startswith('darwin'):
+        detector = asone.YOLOV7_MLMODEL 
+    else:
+        detector = asone.YOLOV7_PYTORCH
+        
+    detector = ASOne(detector, weights=args.weights, use_cuda=args.use_cuda)
 
     cap = cv2.VideoCapture(video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
