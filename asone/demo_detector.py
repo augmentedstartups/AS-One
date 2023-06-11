@@ -1,97 +1,67 @@
+import sys
+import argparse
 import asone
 from asone import ASOne
-from .utils import draw_boxes
-import cv2
-import argparse
-import time
-import os
-import sys
 import torch
 
 
 def main(args):
     filter_classes = args.filter_classes
-    video_path = args.video
-
-    os.makedirs(args.output_path, exist_ok=True)
 
     if filter_classes:
-        filter_classes = filter_classes.split(',')
-
+        filter_classes = ['person']
+    # Check if cuda available
     if args.use_cuda and torch.cuda.is_available():
         args.use_cuda = True
     else:
         args.use_cuda = False
-    
+     
     if sys.platform.startswith('darwin'):
         detector = asone.YOLOV7_MLMODEL 
     else:
         detector = asone.YOLOV7_PYTORCH
-        
-    detector = ASOne(detector, weights=args.weights, use_cuda=args.use_cuda)
-
-    cap = cv2.VideoCapture(video_path)
-    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    FPS = cap.get(cv2.CAP_PROP_FPS)
-
-    if args.save:
-        video_writer = cv2.VideoWriter(
-            os.path.basename(video_path),
-            cv2.VideoWriter_fourcc(*"mp4v"),
-            FPS,
-            (int(width), int(height)),
+    
+    detect = ASOne(
+        tracker=asone.BYTETRACK,
+        detector=detector,
+        weights=args.weights,
+        use_cuda=args.use_cuda
         )
+    # Get tracking function
+    track = detect.detect_video(args.video_path,
+                                output_dir=args.output_dir,
+                                conf_thres=args.conf_thres,
+                                iou_thres=args.iou_thres,
+                                display=args.display,
+                                draw_trails=args.draw_trails,
+                                filter_classes=filter_classes,
+                                class_names=None) # class_names=['License Plate'] for custom weights
     
-    frame_no = 1
-    tic = time.time()
-
-    prevTime = 0
-
-    while True:
-        start_time = time.time()
-
-        ret, img = cap.read()
-        if not ret:
-            break
-        frame = img.copy()
+    # Loop over track_fn to retrieve outputs of each frame 
+    for bbox_details, frame_details in track:
+        bbox_xyxy, scores, class_ids = bbox_details
+        frame, frame_num, fps = frame_details
+        print(frame_num)
         
-        dets, img_info = detector.detect(img, conf_thres=0.25, iou_thres=0.45)
-        currTime = time.time()
-        fps = 1 / (currTime - prevTime)
-        prevTime = currTime
 
-        if dets is not None: 
-            bbox_xyxy = dets[:, :4]
-            scores = dets[:, 4]
-            class_ids = dets[:, 5]
-            img = draw_boxes(img, bbox_xyxy, class_ids=class_ids)
-
-        cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
-        cv2.putText(img, f'FPS: {int(fps)}', (11, 35), 0, 1, [
-                    225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
-
-
-        frame_no+=1
-        if args.display:
-            cv2.imshow('Window', img)
-
-        if args.save:
-            video_writer.write(img)
-
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
-
-if __name__=='__main__':
-    
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("video", help="Path of video")
-    parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda', help='If provided the model will run on cpu otherwise it will run on gpu')
-    parser.add_argument('--filter_classes', default=None, help='Class names seperated by comma (,). e.g. person,car ')
+
+    parser.add_argument('video_path', help='Path to input video')
+    parser.add_argument('--cpu', default=True, action='store_false', dest='use_cuda',
+                        help='run on cpu if not provided the program will run on gpu.')
+    parser.add_argument('--no_save', default=True, action='store_false',
+                        dest='save_result', help='whether or not save results')
+    parser.add_argument('--no_display', default=True, action='store_false',
+                        dest='display', help='whether or not display results on screen')
+    parser.add_argument('--output_dir', default='data/results',  help='Path to output directory')
+    parser.add_argument('--draw_trails', action='store_true', default=False,
+                        help='if provided object motion trails will be drawn.')
+    parser.add_argument('--filter_classes', default=None, help='Filter class name')
     parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
-    parser.add_argument('-o', '--output_path', default='data/results', help='path of output file')
-    parser.add_argument('--no_display', action='store_false', default=True, dest='display', help='if provided video will not be displayed')
-    parser.add_argument('--no_save', action='store_false', default=True, dest='save', help='if provided video will not be saved')
+    parser.add_argument('-ct', '--conf_thres', default=0.25, type=float, help='confidence score threshold')
+    parser.add_argument('-it', '--iou_thres', default=0.45, type=float, help='iou score threshold')
 
     args = parser.parse_args()
+
     main(args)
