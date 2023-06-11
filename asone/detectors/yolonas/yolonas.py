@@ -45,7 +45,7 @@ class YOLOnasDetector:
             #             checkpoint_path=weights, 
             #             checkpoint_num_classes=self.checkpoint_num_classes,
             #             num_classes=self.num_classes).to(self.device)
-        
+    
         if self.model_flag == 160: 
             model = models.get(Models.YOLO_NAS_S,
                     checkpoint_path=weights,
@@ -70,18 +70,18 @@ class YOLOnasDetector:
                with_p6: bool = False,
                return_image=False) -> list:
 
-    
-        self.model.set_dataset_processing_params(class_names=class_names,
-        image_processor=ComposeProcessing(
-                [
-                    DetectionLongestMaxSizeRescale(output_shape=(636, 636)),
-                    DetectionCenterPadding(output_shape=(640, 640), pad_value=114),
-                    StandardizeImage(max_value=255.0),
-                    ImagePermute(permutation=(2, 0, 1)),
-                ]
-            ),
-        iou=iou_thres,conf=conf_thres,
-        )
+        if self.num_classes==80:
+            self.model.set_dataset_processing_params(class_names=class_names,
+            image_processor=ComposeProcessing(
+                    [
+                        DetectionLongestMaxSizeRescale(output_shape=(636, 636)),
+                        DetectionCenterPadding(output_shape=(640, 640), pad_value=114),
+                        StandardizeImage(max_value=255.0),
+                        ImagePermute(permutation=(2, 0, 1)),
+                    ]
+                ),
+            iou=iou_thres,conf=conf_thres,
+            )
         original_image = image
         # Inference
         if self.use_onnx:
