@@ -22,7 +22,6 @@ def main(args):
         detector = asone.YOLOV7_PYTORCH
     
     detect = ASOne(
-        tracker=asone.BYTETRACK,
         detector=detector,
         weights=args.weights,
         use_cuda=args.use_cuda
@@ -33,7 +32,6 @@ def main(args):
                                 conf_thres=args.conf_thres,
                                 iou_thres=args.iou_thres,
                                 display=args.display,
-                                draw_trails=args.draw_trails,
                                 filter_classes=filter_classes,
                                 class_names=None) # class_names=['License Plate'] for custom weights
     
