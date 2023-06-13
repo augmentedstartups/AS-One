@@ -19,10 +19,11 @@ class Detector:
                  model_flag: int,
                  weights: str = None,
                  use_cuda: bool = True,
-                 recognizer:int = None):
+                 recognizer:int = None,
+                 num_classes=80):
         
-        self.model = self._select_detector(model_flag, weights, use_cuda, recognizer)
-    def _select_detector(self, model_flag, weights, cuda, recognizer):
+        self.model = self._select_detector(model_flag, weights, use_cuda, recognizer, num_classes)
+    def _select_detector(self, model_flag, weights, cuda, recognizer, num_classes):
         # Get required weight using model_flag
         mlmodel = False
         if weights and weights.split('.')[-1] == 'onnx':
@@ -101,9 +102,12 @@ class Detector:
                                        use_cuda=cuda)
         elif model_flag in range(160, 163):
             # Get exp file and corresponding model for coreml only
-            _detector = YOLOnasDetector(weights=weight,
-                                       use_onnx=onnx,
-                                       use_cuda=cuda)
+            _detector = YOLOnasDetector(
+                                    model_flag,
+                                    weights=weight,
+                                    use_onnx=onnx,
+                                    use_cuda=cuda,
+                                    num_classes=num_classes)
             
         return _detector
 
