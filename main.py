@@ -1,16 +1,29 @@
+import sys
 import argparse
 import asone
 from asone import ASOne
+import torch
+
 
 def main(args):
     filter_classes = args.filter_classes
 
     if filter_classes:
         filter_classes = ['person']
-
+    # Check if cuda available
+    if args.use_cuda and torch.cuda.is_available():
+        args.use_cuda = True
+    else:
+        args.use_cuda = False
+     
+    if sys.platform.startswith('darwin'):
+        detector = asone.YOLOV7_MLMODEL 
+    else:
+        detector = asone.YOLOV7_PYTORCH
+    
     detect = ASOne(
         tracker=asone.BYTETRACK,
-        detector=asone.YOLOV7_PYTORCH,
+        detector=detector,
         weights=args.weights,
         use_cuda=args.use_cuda
         )
