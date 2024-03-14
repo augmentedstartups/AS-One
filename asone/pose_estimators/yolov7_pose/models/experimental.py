@@ -3,9 +3,9 @@ import random
 import torch
 import torch.nn as nn
 
-from models.common import Conv, DWConv
-from utils.google_utils import attempt_download
-
+from asone.pose_estimators.yolov7_pose.models.common import Conv, DWConv
+from asone.pose_estimators.yolov7_pose.utils.google_utils import attempt_download
+from asone.pose_estimators.yolov7_pose.utils.yolov7_pose_utils import yolov7_in_syspath
 
 class CrossConv(nn.Module):
     # Cross Convolution Downsample
@@ -239,7 +239,8 @@ def attempt_load(weights, map_location=None):
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
         attempt_download(w)
-        ckpt = torch.load(w, map_location=map_location)  # load
+        with yolov7_in_syspath():
+            ckpt = torch.load(w, map_location=map_location)  # load
         model.append(ckpt['ema' if ckpt.get('ema') else 'model'].float().fuse().eval())  # FP32 model
     
     # Compatibility updates

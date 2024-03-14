@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from . import general
+from asone.pose_estimators.yolov7_pose.utils import general
 
 
 def fitness(x):
