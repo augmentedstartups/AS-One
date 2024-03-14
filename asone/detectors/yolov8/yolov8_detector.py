@@ -3,7 +3,7 @@ from asone import utils
 from asone.utils import get_names
 import onnxruntime
 import torch
-from .utils.yolov8_utils import prepare_input, process_output
+from asone.detectors.yolov8.utils.yolov8_utils import prepare_input, process_output
 import numpy as np
 import warnings
 from ultralytics.nn.autobackend import AutoBackend

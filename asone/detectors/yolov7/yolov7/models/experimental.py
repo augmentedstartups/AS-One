@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from .common import Conv
+from asone.detectors.yolov7.yolov7.models.common import Conv
 
 class Ensemble(nn.ModuleList):
     # Ensemble of models

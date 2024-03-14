@@ -527,7 +527,7 @@ def check_dataset(data, autodownload=True):
 
 def check_amp(model):
     # Check PyTorch Automatic Mixed Precision (AMP) functionality. Return True on correct operation
-    from asone.detectors.yolov5.utils.common import AutoShape, DetectMultiBackend
+    from asone.detectors.yolov5.yolov5.models.common import AutoShape, DetectMultiBackend
 
     def amp_allclose(model, im):
         # All close FP32 vs AMP results
