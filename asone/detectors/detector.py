@@ -11,7 +11,8 @@ from asone.detectors.easyocr_detector import TextDetector
 from asone.detectors.utils.weights_path import get_weight_path
 from asone.detectors.utils.cfg_path import get_cfg_path
 from asone.detectors.utils.exp_name import get_exp__name
-from .yolov8 import YOLOv8Detector
+from asone.detectors.yolov8 import YOLOv8Detector
+from asone.detectors.yolov9 import YOLOv9Detector
 
 
 class Detector:
@@ -108,6 +109,13 @@ class Detector:
                                     use_onnx=onnx,
                                     use_cuda=cuda,
                                     num_classes=num_classes)
+        
+        elif model_flag in range(164, 170):
+            # Get exp file and corresponding model for pytorch only
+            _detector = YOLOv9Detector(
+                                    weights=weight,
+                                    use_onnx=onnx,
+                                    use_cuda=cuda,)
             
         return _detector
 
