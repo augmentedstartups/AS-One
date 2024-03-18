@@ -12,6 +12,8 @@ import coremltools as ct
 from PIL import Image
 from asone.detectors.utils.coreml_utils import yolo_to_xyxy, generalize_output_format, scale_bboxes
 
+from asone.utils.utils import PathResolver
+
 
 class YOLOv8Detector:
     def __init__(self,
@@ -30,8 +32,9 @@ class YOLOv8Detector:
         if not os.path.exists(weights):
             utils.download_weights(weights)
 
-        # Load Model
-        self.model = self.load_model(use_cuda, weights)
+        with PathResolver():
+            # Load Model
+            self.model = self.load_model(use_cuda, weights)
 
     def load_model(self, use_cuda, weights, fp16=False):
 

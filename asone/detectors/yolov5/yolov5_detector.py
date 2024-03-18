@@ -13,6 +13,8 @@ from asone.detectors.yolov5.yolov5.models.experimental import attempt_load
 from asone import utils
 from asone.detectors.utils.coreml_utils import yolo_to_xyxy, generalize_output_format, scale_bboxes
 
+from asone.utils.utils import PathResolver
+
 
 class YOLOv5Detector:
     def __init__(self,
@@ -28,8 +30,9 @@ class YOLOv5Detector:
         if not os.path.exists(weights):
             utils.download_weights(weights)
         
-        # Load Model
-        self.model = self.load_model(use_cuda, weights)
+        with PathResolver():
+            # Load Model
+            self.model = self.load_model(use_cuda, weights)
         
     def load_model(self, use_cuda, weights, fp16=False):
         # Device: CUDA and if fp16=True only then half precision floating point works  
