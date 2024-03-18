@@ -9,7 +9,7 @@ import torch
 from torch import distributed as dist
 from torch import nn
 
-from .dist import _get_global_gloo_group, get_world_size
+from asone.detectors.yolox.yolox.utils.dist import _get_global_gloo_group, get_world_size
 
 ASYNC_NORM = (
     nn.BatchNorm1d,

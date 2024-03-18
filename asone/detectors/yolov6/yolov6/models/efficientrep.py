@@ -1,5 +1,5 @@
 from torch import nn
-from yolov6.layers.common import BottleRep, RepVGGBlock, RepBlock, BepC3, SimSPPF, SPPF, ConvWrapper
+from asone.detectors.yolov6.yolov6.layers.common import BottleRep, RepVGGBlock, RepBlock, BepC3, SimSPPF, SPPF, ConvWrapper
 
 
 class EfficientRep(nn.Module):

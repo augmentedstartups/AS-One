@@ -47,7 +47,7 @@ def create_yolox_model(name: str, pretrained: bool = True, num_classes: int = 80
     Returns:
         YOLOX model (nn.Module)
     """
-    from yolox.exp import get_exp, Exp
+    from asone.detectors.yolox.yolox.exp import get_exp, Exp
 
     if device is None:
         device = "cuda:0" if torch.cuda.is_available() else "cpu"

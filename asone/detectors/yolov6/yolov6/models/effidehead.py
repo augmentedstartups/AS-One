@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from yolov6.layers.common import *
-from yolov6.assigners.anchor_generator import generate_anchors
-from yolov6.utils.general import dist2bbox
+from asone.detectors.yolov6.yolov6.layers.common import *
+from asone.detectors.yolov6.yolov6.assigners.anchor_generator import generate_anchors
+from asone.detectors.yolov6.yolov6.utils.general import dist2bbox
 
 
 class Detect(nn.Module):

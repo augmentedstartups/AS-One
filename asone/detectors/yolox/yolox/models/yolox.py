@@ -4,8 +4,8 @@
 
 import torch.nn as nn
 
-from .yolo_head import YOLOXHead
-from .yolo_pafpn import YOLOPAFPN
+from asone.detectors.yolox.yolox.models.yolo_head import YOLOXHead
+from asone.detectors.yolox.yolox.models.yolo_pafpn import YOLOPAFPN
 
 
 class YOLOX(nn.Module):

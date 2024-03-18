@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from yolov6.layers.common import RepBlock, RepVGGBlock, BottleRep, BepC3, SimConv, Transpose
+from asone.detectors.yolov6.yolov6.layers.common import RepBlock, RepVGGBlock, BottleRep, BepC3, SimConv, Transpose
 
 _QUANT=False
 class RepPANNeck(nn.Module):

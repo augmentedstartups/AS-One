@@ -4,11 +4,11 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from yolov6.layers.common import *
-from yolov6.utils.torch_utils import initialize_weights
-from yolov6.models.efficientrep import *
-from yolov6.models.reppan import *
-from yolov6.models.effidehead import Detect, build_effidehead_layer
+from asone.detectors.yolov6.yolov6.layers.common import *
+from asone.detectors.yolov6.yolov6.utils.torch_utils import initialize_weights
+from asone.detectors.yolov6.yolov6.models.efficientrep import *
+from asone.detectors.yolov6.yolov6.models.reppan import *
+from asone.detectors.yolov6.yolov6.models.effidehead import Detect, build_effidehead_layer
 
 
 class Model(nn.Module):

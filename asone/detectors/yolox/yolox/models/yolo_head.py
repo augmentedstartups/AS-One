@@ -11,8 +11,8 @@ import torch.nn.functional as F
 
 from asone.detectors.yolox.yolox.utils import bboxes_iou, meshgrid
 
-from .losses import IOUloss
-from .network_blocks import BaseConv, DWConv
+from asone.detectors.yolox.yolox.models.losses import IOUloss
+from asone.detectors.yolox.yolox.models.network_blocks import BaseConv, DWConv
 
 
 class YOLOXHead(nn.Module):

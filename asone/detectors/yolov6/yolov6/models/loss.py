@@ -5,11 +5,11 @@ import torch
 import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
-from yolov6.assigners.anchor_generator import generate_anchors
-from yolov6.utils.general import dist2bbox, bbox2dist, xywh2xyxy
-from yolov6.utils.figure_iou import IOUloss
-from yolov6.assigners.atss_assigner import ATSSAssigner
-from yolov6.assigners.tal_assigner import TaskAlignedAssigner
+from asone.detectors.yolov6.yolov6.assigners.anchor_generator import generate_anchors
+from asone.detectors.yolov6.yolov6.utils.general import dist2bbox, bbox2dist, xywh2xyxy
+from asone.detectors.yolov6.yolov6.utils.figure_iou import IOUloss
+from asone.detectors.yolov6.yolov6.assigners.atss_assigner import ATSSAssigner
+from asone.detectors.yolov6.yolov6.assigners.tal_assigner import TaskAlignedAssigner
 
 
 class ComputeLoss:
