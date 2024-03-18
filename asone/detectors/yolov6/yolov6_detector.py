@@ -9,7 +9,7 @@ import onnxruntime
 from asone import utils
 from asone.detectors.yolov6.yolov6.utils.yolov6_utils import (prepare_input, load_pytorch,
                                                               non_max_suppression, process_and_scale_boxes) 
-sys.path.append(os.path.dirname(__file__))  
+# sys.path.append(os.path.dirname(__file__))  
 
 class YOLOv6Detector:
     def __init__(self,

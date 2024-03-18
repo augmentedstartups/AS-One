@@ -14,6 +14,8 @@ from asone import utils
 from PIL import Image
 from asone.detectors.utils.coreml_utils import yolo_to_xyxy, generalize_output_format, scale_bboxes
 
+from asone.utils.utils import PathResolver
+
 def xywh2xyxy(x):
     # Convert nx4 boxes from [x, y, w, h] to [x1, y1, x2, y2] where xy1=top-left, xy2=bottom-right
     y = x.clone() if isinstance(x, torch.Tensor) else np.copy(x)
@@ -24,7 +26,6 @@ def xywh2xyxy(x):
     return y
 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov7'))
 class YOLOv7Detector:
     def __init__(self,
                  weights=None,
@@ -42,9 +43,9 @@ class YOLOv7Detector:
         if not os.path.exists(weights):
             utils.download_weights(weights)
             
-
-        # Load Model
-        self.model = self.load_model(use_cuda, weights)
+        with PathResolver():
+            # Load Model
+            self.model = self.load_model(use_cuda, weights)
     
     def load_model(self, use_cuda, weights, fp16=False):
         # Device: CUDA and if fp16=True only then half precision floating point works  

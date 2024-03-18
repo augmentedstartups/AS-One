@@ -24,7 +24,7 @@ def xywh2xyxy(x):
     return y
 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov9'))
+# sys.path.append(os.path.join(os.path.dirname(__file__), 'yolov9'))
 class YOLOv9Detector:
     def __init__(self,
                  weights=None,
