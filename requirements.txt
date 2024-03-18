@@ -28,3 +28,4 @@ typing_extensions==4.4.0
 super_gradients==3.6.0
 cython_bbox==0.1.5
 thop
+IPython

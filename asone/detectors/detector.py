@@ -92,6 +92,14 @@ class Detector:
                                     use_onnx=onnx,
                                     use_cuda=cuda,
                                     num_classes=num_classes)
+        
+        elif model_flag in range(164, 170):
+            from asone.detectors.yolov9 import YOLOv9Detector
+            # Get exp file and corresponding model for pytorch only
+            _detector = YOLOv9Detector(
+                                    weights=weight,
+                                    use_onnx=onnx,
+                                    use_cuda=cuda)
             
         return _detector
 

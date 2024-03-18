@@ -6,7 +6,7 @@ import warnings
 import torch
 import onnxruntime
 
-from .models.models import *
+from asone.detectors.yolor.models.models import *
 from asone import utils
 from asone.detectors.yolor.utils.yolor_utils import (non_max_suppression,
                                                      scale_coords,

@@ -62,7 +62,7 @@ class YOLOv9Detector:
             model = ct.models.MLModel(weights)
         #Load Pytorch
         else: 
-            model = attempt_load(weights, map_location=self.device)
+            model = attempt_load(weights, device=self.device)
             model.half() if self.fp16 else model.float()
         return model
 
