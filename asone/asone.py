@@ -297,8 +297,8 @@ class ASOne:
 
             frame_id += 1
 
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                break
+            # if cv2.waitKey(25) & 0xFF == ord('q'):
+            #     break
 
             # yeild required values in form of (bbox_details, frames_details)
             yield (bboxes_xyxy, ids, scores, class_ids), (im0 if display else frame, frame_id-1, fps)
