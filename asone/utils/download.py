@@ -117,6 +117,19 @@ def download_weights(weights):
         model_key = '1wHf3q5Jl5Uk1iGgRjm6TYChInAoYGNhf'
     elif model == 'yolo_nas_s':
         model_key = '1jtI-L9J8G7sRBa-sziqryMp11vlFKWyh'
+        
+    elif model == 'yolov9-c-converted':
+        model_key = '1PCT4dCKosBB0B26sLdQ5xdjQ2vTPjWaH'
+    elif model == 'yolov9-e-converted':
+        model_key = '16rNqbrlmN3YgsaxOsYLad1IRK2eo_3AL'
+    elif model == 'yolov9-c':
+        model_key = '1FRnyftVwTYyH2Or8BkMWE7HB_08dsNkA'
+    elif model == 'yolov9-e':
+        model_key = '1ayY7dJH6r9hzl1MSOdVFx0UqmWixhEJu'
+    elif model == 'gelan-c':
+        model_key = '1AhGd8Ex0Kr1iXiSytu-OBpyvLykL9tMF'
+    elif model == 'gelan-e':
+        model_key = '1vc7nBJTMm3tt_gLD-zJSbmFAaWoP8ZbS'
     else:
         raise ValueError(f'No model named {model} found.')
 

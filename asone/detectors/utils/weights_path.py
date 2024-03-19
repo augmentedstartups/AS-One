@@ -120,7 +120,16 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             # YOLO NAS
             '160':os.path.join('yolonas','weights','yolo_nas_s.pth'),
             '161':os.path.join('yolonas','weights','yolo_nas_m.pth'),
-            '162':os.path.join('yolonas','weights','yolo_nas_l.pth') 
+            '162':os.path.join('yolonas','weights','yolo_nas_l.pth'),
+            
+            # YOLOv9
+            '164':os.path.join('yolov9','weights','yolov9-c-converted.pt'),
+            '165':os.path.join('yolov9','weights','yolov9-e-converted.pt'),
+            '166':os.path.join('yolov9','weights','yolov9-c.pt'),
+            '167':os.path.join('yolov9','weights','yolov9-e.pt'),
+            '168':os.path.join('yolov9','weights','gelan-c.pt'),
+            '169':os.path.join('yolov9','weights','gelan-e.pt'),
+            
 }
 
 def get_weight_path(model_flag):
@@ -163,5 +172,8 @@ def get_weight_path(model_flag):
         weight = weights[str(model_flag)]
         onnx=False
         coreml = True
+    elif model_flag in range(164, 170):
+        onnx = False
+        weight = weights[str(model_flag)]
     return coreml, onnx, weight
         
