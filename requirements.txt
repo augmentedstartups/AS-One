@@ -19,7 +19,7 @@ motpy
 ultralytics==8.0.109
 torchreid==0.2.5
 tensorboard
-protobuf==3.20
+protobuf==3.20.*
 # requirements for coreml
 onnxruntime
 coremltools
