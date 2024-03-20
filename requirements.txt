@@ -24,8 +24,8 @@ protobuf==3.20.*
 onnxruntime
 coremltools
 Cython==3.0.9
-typing_extensions==4.4.0
-super_gradients==3.6.0
-cython_bbox==0.1.5
+typing_extensions
+super_gradients
+cython_bbox
 thop
 IPython
