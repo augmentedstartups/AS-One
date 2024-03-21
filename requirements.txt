@@ -16,7 +16,7 @@ wheel
 numpy==1.23.3
 asone-ocr
 motpy
-ultralytics==8.0.109
+ultralytics==8.1.30
 torchreid==0.2.5
 tensorboard
 protobuf==3.20.*
