@@ -1,9 +1,12 @@
+import os
 import numpy as np
 import cv2
 import torch
 
+from asone import utils
 from asone.segmentors.utils.weights_path import get_weight_path
 from segment_anything import sam_model_registry, SamPredictor
+from asone.utils.utils import PathResolver
 
 
 class Segmentor:
@@ -11,15 +14,19 @@ class Segmentor:
                  model_flag,
                  weights: str=None):
         
-        if model_flag == 171:
-            self.load_models(model_flag, weights)
-
-    def load_models(self, model_flag, ckpt: str) -> None:
-        if ckpt is None:
+        if weights is None:
             weight = get_weight_path(model_flag)
+        
+        if not os.path.exists(weight):
+            utils.download_weights(weight)
             
+        with PathResolver():
+            if model_flag == 171:
+                self.load_models(weight)
+
+    def load_models(self, ckpt: str) -> None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        sam = sam_model_registry["vit_h"](checkpoint=weight).to(device=device)
+        sam = sam_model_registry["vit_h"](checkpoint=ckpt).to(device=device)
         self.model = SamPredictor(sam)
         
         return self.model
