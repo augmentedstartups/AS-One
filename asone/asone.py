@@ -7,6 +7,7 @@ import asone.utils as utils
 from asone.trackers import Tracker
 from asone.detectors import Detector
 from asone.recognizers import TextRecognizer
+from asone.segmentors import Segmentor
 from asone.utils.default_cfg import config
 import numpy as np
 
@@ -15,7 +16,9 @@ class ASOne:
     def __init__(self,
                  detector: int = 0,
                  tracker: int = -1,
+                 segmentor: int = -1,
                  weights: str = None,
+                 sam_weights: str = None,
                  use_cuda: bool = True,
                  recognizer: int = None,
                  languages: list = ['en'],
@@ -23,6 +26,14 @@ class ASOne:
                  ) -> None:
 
         self.use_cuda = use_cuda
+        self.use_segmentation = False
+        
+        # Check if user want to use segmentor
+        if segmentor != -1:
+            self.use_segmentation = True
+
+            # Load Segmentation model
+            self.segmentor = self.get_segmentor(segmentor, sam_weights)
 
         # get detector object
         self.detector = self.get_detector(detector, weights, recognizer, num_classes)
@@ -51,6 +62,10 @@ class ASOne:
         tracker = Tracker(tracker, self.detector,
                           use_cuda=self.use_cuda)
         return tracker
+    
+    def get_segmentor(self, segmentor, sam_weights):
+        segmentor = Segmentor(segmentor, sam_weights)
+        return segmentor
 
     def _update_args(self, kwargs):
         for key, value in kwargs.items():
@@ -159,16 +174,21 @@ class ASOne:
                 'frame {}/{} ({:.2f} ms)'.format(frame_no, int(frame_count),
                                                  elapsed_time * 1000))
             frame_no+=1
+            
+            if self.use_segmentation:
+                # Will generate mask using SAM
+                mask_img = self.segmentor.create_mask(bbox_xyxy, img)
+                
             if display:
-                cv2.imshow('Window', img)
+                cv2.imshow('Window', mask_img)
 
             if save_result:
-                video_writer.write(img)
+                video_writer.write(mask_img)
 
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                break
+            # if cv2.waitKey(25) & 0xFF == ord('q'):
+            #     break
             
-            yield (bbox_xyxy, scores, class_ids), (im0 if display else frame, frame_no-1, fps)
+            yield (bbox_xyxy, scores, class_ids), (img if display else frame, frame_no-1, fps)
 
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
