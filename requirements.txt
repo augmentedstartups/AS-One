@@ -29,3 +29,4 @@ super_gradients
 cython_bbox
 thop
 IPython
+segment-anything
