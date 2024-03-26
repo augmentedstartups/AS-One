@@ -25,6 +25,7 @@ def main(args):
         tracker=asone.BYTETRACK,
         detector=detector,
         weights=args.weights,
+        sam_weights=args.sam_weights,
         use_cuda=args.use_cuda
         )
     # Get tracking function
@@ -59,6 +60,7 @@ if __name__ == '__main__':
                         help='if provided object motion trails will be drawn.')
     parser.add_argument('--filter_classes', default=None, help='Filter class name')
     parser.add_argument('-w', '--weights', default=None, help='Path of trained weights')
+    parser.add_argument('--sam_weights', default=None, help='Path of sam weights')
     parser.add_argument('-ct', '--conf_thres', default=0.25, type=float, help='confidence score threshold')
     parser.add_argument('-it', '--iou_thres', default=0.45, type=float, help='iou score threshold')
 
