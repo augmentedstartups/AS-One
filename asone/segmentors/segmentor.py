@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import torch
 
-from asone.detectors.utils.weights_path import get_weight_path
+from asone.segmentors.utils.weights_path import get_weight_path
 from segment_anything import sam_model_registry, SamPredictor
 
 class Segmentor:
@@ -15,7 +15,7 @@ class Segmentor:
 
     def load_models(self, model_flag, ckpt: str) -> None:
         if ckpt is None:
-            mlmodel, onnx, weight = get_weight_path(model_flag)
+            weight = get_weight_path(model_flag)
             
         device = "cuda" if torch.cuda.is_available() else "cpu"
         sam = sam_model_registry["vit_h"](checkpoint=weight).to(device=device)
