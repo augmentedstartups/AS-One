@@ -5,6 +5,7 @@ import torch
 from asone.segmentors.utils.weights_path import get_weight_path
 from segment_anything import sam_model_registry, SamPredictor
 
+
 class Segmentor:
     def __init__(self, 
                  model_flag,
