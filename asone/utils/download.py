@@ -130,6 +130,9 @@ def download_weights(weights):
         model_key = '1AhGd8Ex0Kr1iXiSytu-OBpyvLykL9tMF'
     elif model == 'gelan-e':
         model_key = '1vc7nBJTMm3tt_gLD-zJSbmFAaWoP8ZbS'
+        
+    elif model == "sam_vit_h_4b8939":
+        model_key = '1-QSw_IqF4WczsC3pdbiIpmjTEaxPc5nO'
     else:
         raise ValueError(f'No model named {model} found.')
 
