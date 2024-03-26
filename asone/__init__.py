@@ -162,6 +162,9 @@ YOLOV9_E = 167
 GELAN_C = 168
 GELAN_E = 169
 
+# Segmentors
+SAM = 171
+
 # Text Detectors
 # easyocr
 CRAFT = 82
