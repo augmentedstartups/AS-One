@@ -178,8 +178,6 @@ def get_weight_path(model_flag):
     elif model_flag in range(164, 170):
         onnx = False
         weight = weights[str(model_flag)]
-    elif model_flag == 171:
-        onnx = False
-        weight = weights[str(model_flag)]
+
     return coreml, onnx, weight
         
