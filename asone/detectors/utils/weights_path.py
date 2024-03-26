@@ -130,6 +130,9 @@ weights = { '0': os.path.join('yolov5','weights','yolov5x6.pt'),
             '168':os.path.join('yolov9','weights','gelan-c.pt'),
             '169':os.path.join('yolov9','weights','gelan-e.pt'),
             
+            
+            # Segmentor
+            '171':os.path.join('sam','weights','sam_vit_h_4b8939.pth'),
 }
 
 def get_weight_path(model_flag):
@@ -173,6 +176,9 @@ def get_weight_path(model_flag):
         onnx=False
         coreml = True
     elif model_flag in range(164, 170):
+        onnx = False
+        weight = weights[str(model_flag)]
+    elif model_flag == 171:
         onnx = False
         weight = weights[str(model_flag)]
     return coreml, onnx, weight
