@@ -1,4 +1,5 @@
 import copy
+import warnings
 import cv2
 from loguru import logger
 import os
@@ -108,96 +109,10 @@ class ASOne:
         output_filename = os.path.basename(video_path)
         kwargs['filename'] = output_filename
         config = self._update_args(kwargs)
-        
-        # os.makedirs(output_path, exist_ok=True)
 
-        fps = config.pop('fps')
-        output_dir = config.pop('output_dir')
-        filename = config.pop('filename')
-        save_result = config.pop('save_result')
-        display = config.pop('display')
-        draw_trails = config.pop('draw_trails')
-        class_names = config.pop('class_names')
-
-        cap = cv2.VideoCapture(video_path)
-        width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-
-        if fps is None:
-            fps = cap.get(cv2.CAP_PROP_FPS)
-
-        if save_result:
-            os.makedirs(output_dir, exist_ok=True)
-            save_path = os.path.join(output_dir, filename)
-            logger.info(f"video save path is {save_path}")
-
-            video_writer = cv2.VideoWriter(
-                save_path,
-                cv2.VideoWriter_fourcc(*"mp4v"),
-                fps,
-                (int(width), int(height)),
-            )
-
-        frame_id = 1
-        tic = time.time()
-
-        prevTime = 0
-        frame_no = 0
-        while True:
-            start_time = time.time()
-
-            ret, img = cap.read()
-            if not ret:
-                break
-            frame = img.copy()
-            
-            dets, img_info = self.detector.detect(img, conf_thres=0.25, iou_thres=0.45)
-            currTime = time.time()
-            fps = 1 / (currTime - prevTime)
-            prevTime = currTime
-
-            if dets is not None: 
-                bbox_xyxy = dets[:, :4]
-                scores = dets[:, 4]
-                class_ids = dets[:, 5]
-                img = utils.draw_boxes(img, bbox_xyxy, class_ids=class_ids, class_names=class_names)
-
-            cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
-            cv2.putText(img, f'FPS: {int(fps)}', (11, 35), 0, 1, [
-                        225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
-
-
-            elapsed_time = time.time() - start_time
-
-            logger.info(
-                'frame {}/{} ({:.2f} ms)'.format(frame_no, int(frame_count),
-                                                 elapsed_time * 1000))
-            frame_no+=1
-            
-            if self.use_segmentation:
-                # Will generate mask using SAM
-                mask_img = self.segmentor.create_mask(bbox_xyxy, img)
-                
-            if display:
-                cv2.imshow('Window', mask_img)
-
-            if save_result:
-                video_writer.write(mask_img)
-
-            # if cv2.waitKey(25) & 0xFF == ord('q'):
-            #     break
-            
-            yield (bbox_xyxy, scores, class_ids), (img if display else frame, frame_no-1, fps)
-
-        tac = time.time()
-        print(f'Total Time Taken: {tac - tic:.2f}')
-        # kwargs['filename'] = output_filename
-        # config = self._update_args(kwargs)
-        
-        # for (bbox_details, frame_details) in self._start_tracking(video_path, config):
-        #     # yeild bbox_details, frame_details to main script
-        #     yield bbox_details, frame_details
+        for (bbox_details, frame_details) in self._start_tracking(video_path, config):
+            # yeild bbox_details, frame_details to main script
+            yield bbox_details, frame_details
     
     def detect(self, source, **kwargs)->np.ndarray:
         """ Function to perform detection on an img
@@ -239,8 +154,7 @@ class ASOne:
                         config: dict) -> tuple:
 
         if not self.tracker:
-            print(f'No tracker is selected. use detect() function perform detcetion or pass a tracker.')
-            exit()
+            warnings.warn(f'No tracker has been selected. Only the detector is operational.')
 
         fps = config.pop('fps')
         output_dir = config.pop('output_dir')
@@ -282,9 +196,19 @@ class ASOne:
             if not ret:
                 break
             im0 = copy.deepcopy(frame)
-
-            bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
-                frame, config)
+            
+            if self.tracker:
+                bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
+                    frame, config)
+                print(ids)
+            else:
+                dets, img_info = self.detector.detect(frame, conf_thres=0.25, iou_thres=0.45)
+                if dets is not None: 
+                    bboxes_xyxy = dets[:, :4]
+                    scores = dets[:, 4]
+                    class_ids = dets[:, 5]
+                    ids = None
+            
             elapsed_time = time.time() - start_time
 
             logger.info(
@@ -309,6 +233,11 @@ class ASOne:
             cv2.line(im0, (20, 25), (127, 25), [85, 45, 255], 30)
             cv2.putText(im0, f'FPS: {int(fps)}', (11, 35), 0, 1, [
                         225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
+            
+            if self.use_segmentation:
+                # Will generate mask using SAM
+                im0 = self.segmentor.create_mask(np.array(bboxes_xyxy), im0)
+        
 
             if display:
                 cv2.imshow(' Sample', im0)
@@ -317,15 +246,43 @@ class ASOne:
 
             frame_id += 1
 
-            # if cv2.waitKey(25) & 0xFF == ord('q'):
-            #     break
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                break
 
             # yeild required values in form of (bbox_details, frames_details)
             yield (bboxes_xyxy, ids, scores, class_ids), (im0 if display else frame, frame_id-1, fps)
 
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
+    
+    def read_video(self, video_path, output_dir):
+        output_filename = os.path.basename(video_path)
 
+        cap = cv2.VideoCapture(video_path)
+        width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+
+        fps = cap.get(cv2.CAP_PROP_FPS)
+
+        os.makedirs(output_dir, exist_ok=True)
+        save_path = os.path.join(output_dir, output_filename)
+        logger.info(f"video save path is {save_path}")
+
+        video_writer = cv2.VideoWriter(
+            save_path,
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            fps,
+            (int(width), int(height)),
+        )
+
+        while True:
+            ret, img = cap.read()
+            if not ret:
+                break
+            frame = img.copy()
+        
+            yield frame, video_writer
 
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
