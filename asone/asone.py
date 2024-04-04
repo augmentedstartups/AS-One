@@ -10,6 +10,7 @@ from asone.detectors import Detector
 from asone.recognizers import TextRecognizer
 from asone.segmentors import Segmentor
 from asone.utils.default_cfg import config
+from asone.utils.video_reader import VideoReader
 import numpy as np
 
 
@@ -19,7 +20,7 @@ class ASOne:
                  tracker: int = -1,
                  segmentor: int = -1,
                  weights: str = None,
-                 sam_weights: str = None,
+                 segmentor_weights: str = None,
                  use_cuda: bool = True,
                  recognizer: int = None,
                  languages: list = ['en'],
@@ -34,7 +35,7 @@ class ASOne:
             self.use_segmentation = True
 
             # Load Segmentation model
-            self.segmentor = self.get_segmentor(segmentor, sam_weights)
+            self.segmentor = self.get_segmentor(segmentor, segmentor_weights)
 
         # get detector object
         self.detector = self.get_detector(detector, weights, recognizer, num_classes)
@@ -64,8 +65,8 @@ class ASOne:
                           use_cuda=self.use_cuda)
         return tracker
     
-    def get_segmentor(self, segmentor, sam_weights):
-        segmentor = Segmentor(segmentor, sam_weights)
+    def get_segmentor(self, segmentor, segmentor_weights):
+        segmentor = Segmentor(segmentor, segmentor_weights)
         return segmentor
 
     def _update_args(self, kwargs):
@@ -126,7 +127,21 @@ class ASOne:
         if isinstance(source, str):
             source = cv2.imread(source)
         return self.detector.detect(source, **kwargs)
-    
+
+    def detect_and_track(self, frame, **kwargs):
+        if self.tracker:
+            bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
+                frame, kwargs)
+            info = None
+        else:
+            dets, info = self.detect(source=frame, **kwargs)
+            bboxes_xyxy = dets[:, :4]
+            scores = dets[:, 4]
+            class_ids = dets[:, 5]
+            ids = None
+
+        return (bboxes_xyxy, ids, scores, class_ids), info
+        
     def detect_text(self, image):
         horizontal_list, _ = self.detector.detect(image)
         if self.recognizer is None:
@@ -164,13 +179,12 @@ class ASOne:
         draw_trails = config.pop('draw_trails')
         class_names = config.pop('class_names')
 
-        cap = cv2.VideoCapture(stream_path)
-        width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+        cap = VideoReader(stream_path)
+        width, height = cap.frame_size
+        frame_count = cap.frame_counts
 
         if fps is None:
-            fps = cap.get(cv2.CAP_PROP_FPS)
+            fps = cap.fps
 
         if save_result:
             os.makedirs(output_dir, exist_ok=True)
@@ -186,29 +200,15 @@ class ASOne:
 
         frame_id = 1
         tic = time.time()
-
         prevTime = 0
 
-        while True:
+        for frame in cap:
             start_time = time.time()
 
-            ret, frame = cap.read()
-            if not ret:
-                break
             im0 = copy.deepcopy(frame)
             
-            if self.tracker:
-                bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
-                    frame, config)
-                print(ids)
-            else:
-                dets, img_info = self.detector.detect(frame, conf_thres=0.25, iou_thres=0.45)
-                if dets is not None: 
-                    bboxes_xyxy = dets[:, :4]
-                    scores = dets[:, 4]
-                    class_ids = dets[:, 5]
-                    ids = None
-            
+            (bboxes_xyxy, ids, scores, class_ids), _ = self.detect_and_track(frame, **config)
+
             elapsed_time = time.time() - start_time
 
             logger.info(
@@ -220,10 +220,8 @@ class ASOne:
                             free_list=[])
                 im0 = utils.draw_text(im0, res)
             else:
-                im0 = utils.draw_boxes(im0,
-                                    bboxes_xyxy,
-                                    class_ids,
-                                    identities=ids,
+                im0 = self.draw_bboxes(im0,
+                                    (bboxes_xyxy, ids, scores, class_ids),
                                     draw_trails=draw_trails,
                                     class_names=class_names)
 
@@ -254,36 +252,27 @@ class ASOne:
 
         tac = time.time()
         print(f'Total Time Taken: {tac - tic:.2f}')
-    
-    def read_video(self, video_path, output_dir):
-        output_filename = os.path.basename(video_path)
 
-        cap = cv2.VideoCapture(video_path)
-        width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-
-        fps = cap.get(cv2.CAP_PROP_FPS)
-
-        os.makedirs(output_dir, exist_ok=True)
-        save_path = os.path.join(output_dir, output_filename)
-        logger.info(f"video save path is {save_path}")
-
-        video_writer = cv2.VideoWriter(
-            save_path,
-            cv2.VideoWriter_fourcc(*"mp4v"),
-            fps,
-            (int(width), int(height)),
-        )
-
-        while True:
-            ret, img = cap.read()
-            if not ret:
-                break
-            frame = img.copy()
+    @staticmethod
+    def draw_bboxes(img, dets, **kwargs):
+        draw_trails = kwargs.get('draw_trails', False)
+        class_names = kwargs.get('class_names', None)
         
-            yield frame, video_writer
-
+        if isinstance(dets, tuple):
+            bboxes_xyxy, ids, scores, class_ids = dets
+        elif isinstance(dets, np.ndarray):    
+            bboxes_xyxy = dets[:, :4]
+            scores = dets[:, 4]
+            class_ids = dets[:, 5]
+            ids = None
+        return utils.draw_boxes(img,
+                                bbox_xyxy=bboxes_xyxy,
+                                class_ids=class_ids,
+                                identities=ids,
+                                draw_trails=draw_trails,
+                                class_names=class_names)
+            
+    
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
     asone = ASOne()

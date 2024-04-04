@@ -4,6 +4,7 @@ import asone.trackers
 import asone.recognizers
 import asone.segmentors
 from .pose_estimator import PoseEstimator
+from asone.utils.video_reader import VideoReader
 
 BYTETRACK = 0
 DEEPSORT = 1
