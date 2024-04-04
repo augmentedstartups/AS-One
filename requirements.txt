@@ -30,3 +30,4 @@ cython_bbox
 thop
 IPython
 segment-anything
+pillow==9.5.0
