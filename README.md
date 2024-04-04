@@ -403,6 +403,34 @@ Run the `asone/demo_pose_estimator.py` to test Pose estimation.
 
 </details>
 
+<details>
+<summary>6.5. Segmentation</summary>
+
+```python
+
+import asone
+from asone import ASOne
+
+# Instantiate Asone object
+detect = ASOne(detector=asone.YOLOV7_PYTORCH, detector=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
+
+filter_classes = ['person'] # set to None to track all classes
+
+# ##############################################
+#           To track using video file
+# ##############################################
+# Get tracking function
+track = detect.detect_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+
+# Loop over track to retrieve outputs of each frame
+for bbox_details, frame_details in track:
+    bbox_xyxy, ids, scores, class_ids = bbox_details
+    frame, frame_num, fps = frame_details
+    # Do anything with bboxes here
+
+```
+</details>
+
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md)
 
 # ToDo
