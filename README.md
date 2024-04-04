@@ -412,7 +412,7 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(detector=asone.YOLOV7_PYTORCH, detector=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(detector=asone.YOLOV7_PYTORCH, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
 
 filter_classes = ['person'] # set to None to track all classes
 
