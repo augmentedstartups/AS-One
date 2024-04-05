@@ -8,14 +8,14 @@ from asone.utils.utils import PathResolver
 
 class SamSegmentor:
     def __init__(self,
-                 weights: str=None):
-        
+                 weights: str=None,
+                 use_cuda: bool = True):
+        self.device = "cuda" if use_cuda and torch.cuda.is_available() else "cpu"
         with PathResolver():
             self.model = self.load_models(weights)
         
     def load_models(self, ckpt: str) -> None:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        sam = sam_model_registry["vit_h"](checkpoint=ckpt).to(device=device)
+        sam = sam_model_registry["vit_h"](checkpoint=ckpt).to(device=self.device)
         model = SamPredictor(sam)
         
         return model
@@ -37,7 +37,7 @@ class SamSegmentor:
     def create_mask(self, bbox_xyxy, image):
         self.model.set_image(image)
         
-        input_boxes = torch.from_numpy(bbox_xyxy).to(self.model.device)
+        input_boxes = torch.from_numpy(bbox_xyxy).to(self.device)
         transformed_boxes = self.model.transform.apply_boxes_torch(input_boxes, image.shape[:2])
         
         masks, _, _ = self.model.predict_torch(
@@ -47,6 +47,6 @@ class SamSegmentor:
             multimask_output=False,
         )
         
-        result_image = self.draw_masks_fromList(image, masks.cpu(), bbox_xyxy)
+        # result_image = self.draw_masks_fromList(image, masks.cpu(), bbox_xyxy)
         
-        return result_image
+        return masks.cpu()
