@@ -11,6 +11,8 @@ from asone.recognizers import TextRecognizer
 from asone.segmentors import Segmentor
 from asone.utils.default_cfg import config
 from asone.utils.video_reader import VideoReader
+from asone.utils import compute_color_for_labels
+
 import numpy as np
 
 
@@ -66,7 +68,7 @@ class ASOne:
         return tracker
     
     def get_segmentor(self, segmentor, segmentor_weights):
-        segmentor = Segmentor(segmentor, segmentor_weights)
+        segmentor = Segmentor(segmentor, segmentor_weights, self.use_cuda)
         return segmentor
 
     def _update_args(self, kwargs):
@@ -216,7 +218,7 @@ class ASOne:
                                                  elapsed_time * 1000))
 
             if self.recognizer:
-                res = self.recognizer.recognize(im0, horizontal_list=bboxes_xyxy,
+                res = self.recognizer.recognize(frame, horizontal_list=bboxes_xyxy,
                             free_list=[])
                 im0 = utils.draw_text(im0, res)
             else:
@@ -234,9 +236,9 @@ class ASOne:
             
             if self.use_segmentation:
                 # Will generate mask using SAM
-                im0 = self.segmentor.create_mask(np.array(bboxes_xyxy), im0)
-        
-
+                masks = self.segmentor.create_mask(np.array(bboxes_xyxy), frame)
+                im0 = self.draw_masks(im0, masks)
+                bboxes_xyxy = (bboxes_xyxy, masks) 
             if display:
                 cv2.imshow(' Sample', im0)
             if save_result:
@@ -257,10 +259,12 @@ class ASOne:
     def draw_bboxes(img, dets, **kwargs):
         draw_trails = kwargs.get('draw_trails', False)
         class_names = kwargs.get('class_names', None)
-        
         if isinstance(dets, tuple):
             bboxes_xyxy, ids, scores, class_ids = dets
-        elif isinstance(dets, np.ndarray):    
+            if isinstance(bboxes_xyxy, tuple):
+                bboxes_xyxy, _ = bboxes_xyxy    
+                
+        elif isinstance(dets, np.ndarray):
             bboxes_xyxy = dets[:, :4]
             scores = dets[:, 4]
             class_ids = dets[:, 5]
@@ -271,8 +275,29 @@ class ASOne:
                                 identities=ids,
                                 draw_trails=draw_trails,
                                 class_names=class_names)
-            
-    
+    @staticmethod      
+    def draw_masks(img, dets, **kwargs):
+        color = [0, 255, 0]
+        if isinstance(dets, tuple):
+            bboxes_xyxy, ids, scores, class_ids = dets
+            if isinstance(bboxes_xyxy, tuple):
+                bboxes_xyxy, masks = bboxes_xyxy
+        else:
+            masks = dets
+            class_ids = None    
+        masked_image = img.copy()
+        for idx in range(len(masks)):
+            mask = masks[idx].squeeze()  # Squeeze to remove singleton dimension
+            if class_ids is not None:
+                color = compute_color_for_labels(int(class_ids[idx]))
+            color = np.asarray(color, dtype='uint8')
+            mask_color = np.expand_dims(mask, axis=-1) * color  # Apply color to the mask
+            # Apply the mask to the image
+            masked_image = np.where(mask_color > 0, mask_color, masked_image)
+
+        masked_image = masked_image.astype(np.uint8)
+        return cv2.addWeighted(img, 0.5, masked_image, 0.5, 0)
+
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
     asone = ASOne()
