@@ -408,17 +408,15 @@ Run the `asone/demo_pose_estimator.py` to test Pose estimation.
 
 ```python
 
-import asone
 from asone import ASOne, YOLOV7_PYTORCH, SAM
 
 detect = ASOne(detector=YOLOV7_PYTORCH, segmentor=SAM, use_cuda=True) #set use_cuda=False to use cpu
-track = detect.detect_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=['person'])
+track = detect.detect_video('data/sample_videos/test.mp4', display=True, filter_classes=['person'])
 
 for bbox_details, frame_details in track:
     bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
+    print(frame_details)
     
-
 ```
 </details>
 
