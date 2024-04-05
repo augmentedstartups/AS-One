@@ -415,7 +415,9 @@ track = detect.detect_video('data/sample_videos/test.mp4', filter_classes=['car'
 
 for bbox_details, frame_details in track:
     frame, frame_num, fps = frame_details
-    frame = ASOne.draw_bboxes(frame, bbox_details)
+    frame = ASOne.draw_masks(frame, bbox_details) # Draw masks
+    # frame = ASOne.draw_bboxes(frame, bbox_details) # Draw bboxes
+
 
     
 ```
