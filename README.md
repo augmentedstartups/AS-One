@@ -409,24 +409,15 @@ Run the `asone/demo_pose_estimator.py` to test Pose estimation.
 ```python
 
 import asone
-from asone import ASOne
+from asone import ASOne, YOLOV7_PYTORCH, SAM
 
-# Instantiate Asone object
-detect = ASOne(detector=asone.YOLOV7_PYTORCH, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(detector=YOLOV7_PYTORCH, segmentor=SAM, use_cuda=True) #set use_cuda=False to use cpu
+track = detect.detect_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=['person'])
 
-filter_classes = ['person'] # set to None to track all classes
-
-# ##############################################
-#           To track using video file
-# ##############################################
-# Get tracking function
-track = detect.detect_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
-
-# Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     bbox_xyxy, ids, scores, class_ids = bbox_details
     frame, frame_num, fps = frame_details
-    # Do anything with bboxes here
+    
 
 ```
 </details>
@@ -444,7 +435,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] M1/2 Apple Silicon Compatibility
 - [x] Pose Estimation YOLOv7/v8
 - [x] YOLO-NAS
-- [ ] SAM Integration
+- [x] SAM Integration
 
 | Offered By:                                                                                                                                                  | Maintained By:                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
