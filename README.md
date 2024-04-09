@@ -1,5 +1,8 @@
 # AS-One : A Modular Library for YOLO Object Detection and Object Tracking
 
+[![start with why](https://img.shields.io/badge/version-1.1.0-green)](https://github.com/augmentedstartups/AS-One)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+
 [<img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151476941/settings_images/65d82-0d84-6171-a7e0-5aa180b657d5_Black_with_Logo.jpg" width="100%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
 
 #### Table of Contents
