@@ -59,6 +59,7 @@ python3 -m venv .env
 source .env/bin/activate
 
 pip install -r requirements.txt
+
 # for CPU
 pip install torch torchvision
 # for GPU
@@ -97,7 +98,9 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 python3 -m venv .env
 source .env/bin/activate
 
+
 pip install -r requirements.txt
+
 # for CPU
 pip install torch torchvision
 ```
