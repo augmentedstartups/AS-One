@@ -125,23 +125,14 @@ python main.py data/sample_videos/test.mp4
 <summary>6.1. Object Detection</summary>
 
 ```python
-import asone
-from asone import ASOne, VideoReader
-from tqdm import tqdm
+from asone import ASOne, VideoReader, YOLOV7_PYTORCH
 
-filter_classes = ['car'] # Set to None to detect all classes
-
-detector = ASOne(detector=asone.YOLOV7_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=YOLOV7_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
 cap = VideoReader('data/sample_videos/test.mp4')
 
-for frame in tqdm(cap):
-    dets, img_info = detector.detect(frame, filter_classes=filter_classes)
+for frame in cap:
+    dets, img_info = detector.detect(frame)
     frame = ASOne.draw_boxes(frame, dets)
-
-    # Show Video
-    cv2.imshow('result', frame)
-    if cv2.waitKey(25) & 0xFF == ord('q'):
-        break
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -162,35 +153,14 @@ python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
 Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
 
 ```python
-import asone
-from asone import utils
-from asone import ASOne
-import cv2
+from asone import ASOne, VideoReader, YOLOV7_PYTORCH
 
-video_path = 'data/sample_videos/license_video.webm'
-detector = ASOne(detector=asone.YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
+detector = ASOne(detector=YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
+cap = VideoReader('data/sample_videos/license_video.webm')
 
-class_names = ['license_plate'] # your custom classes list
-
-cap = cv2.VideoCapture(video_path)
-
-while True:
-    _, frame = cap.read()
-    if not _:
-        break
-
-    dets, img_info = detector.detect(frame)
-
-    bbox_xyxy = dets[:, :4]
-    scores = dets[:, 4]
-    class_ids = dets[:, 5]
-
-    frame = utils.draw_boxes(frame, bbox_xyxy, class_ids=class_ids, class_names=class_names) # simply pass custom classes list to write your classes on result video
-
-    cv2.imshow('result', frame)
-
-    if cv2.waitKey(25) & 0xFF == ord('q'):
-        break
+for frame in cap:
+    dets, img_info = detector.detect(frame, class_names=['license_plate'])
+    frame = ASOne.draw_boxes(frame, dets)
 ```
 
 </details>
@@ -225,49 +195,16 @@ detector = ASOne(detector=asone.YOLOV8L_MLMODEL)
 Use tracker on sample video.
 
 ```python
-import asone
-from asone import ASOne
+from asone import ASOne, BYTETRACK, YOLOV7_PYTORCH
 
 # Instantiate Asone object
 detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
-
-filter_classes = ['person'] # set to None to track all classes
-
-# ##############################################
-#           To track using video file
-# ##############################################
-# Get tracking function
-track = detect.track_video('data/sample_videos/test.mp4', output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
+track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['person'])
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
-    # Do anything with bboxes here
-
-# ##############################################
-#           To track using webcam
-# ##############################################
-# Get tracking function
-track = detect.track_webcam(cam_id=0, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
-
-# Loop over track to retrieve outputs of each frame
-for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
-    # Do anything with bboxes here
-
-# ##############################################
-#           To track using web stream
-# ##############################################
-# Get tracking function
-stream_url = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
-track = detect.track_stream(stream_url, output_dir='data/results', save_result=True, display=True, filter_classes=filter_classes)
-
-# Loop over track to retrieve outputs of each frame
-for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
+    frame, _ , _ = frame_details
+    frame = ASOne.draw_boxes(frame, bbox_details)
     # Do anything with bboxes here
 ```
 
@@ -295,14 +232,14 @@ detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=
 
 </details>
 
-Run the `asone/demo_detector.py` to test detector.
+Run the `asone/demo_tracker.py` to test detector.
 
 ```shell
 # run on gpu
-python -m asone.demo_detector data/sample_videos/test.mp4
+python -m asone.demo_tracker data/sample_videos/test.mp4
 
 # run on cpu
-python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
+python -m asone.demo_tracker data/sample_videos/test.mp4 --cpu
 ```
 
 </details>
@@ -313,39 +250,29 @@ Sample code to detect text on an image
 
 ```python
 # Detect and recognize text
-import asone
-from asone import utils
-from asone import ASOne
+from asone import ASOne, utils, CRAFT, EASYOCR
 import cv2
 
-
-img_path = 'data/sample_imgs/sample_text.jpeg'
-ocr = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
-img = cv2.imread(img_path)
+ocr = ASOne(detector=CRAFT, recognizer=EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
+img = cv2.imread('data/sample_imgs/sample_text.jpeg')
 results = ocr.detect_text(img)
 img = utils.draw_text(img, results)
-cv2.imwrite("data/results/results.jpg", img)
 ```
 
 Use Tracker on Text
 
 ```python
-import asone
-from asone import ASOne
+from asone import ASOne, DEEPSORT, CRAFT, EASYOCR
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
-
-# ##############################################
-#           To track using video file
-# ##############################################
-# Get tracking function
-track = detect.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4', output_dir='data/results', save_result=True, display=True)
+detect = ASOne(tracker=DEEPSORT, detector=CRAFT, recognizer=EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+track = detect.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
-    bbox_xyxy, ids, scores, class_ids = bbox_details
-    frame, frame_num, fps = frame_details
+    frame, _, _ = frame_details
+    frame = ASOne.draw_boxes(frame, bbox_details)
+
     # Do anything with bboxes here
 ```
 
@@ -368,32 +295,26 @@ Sample code to estimate pose on an image
 
 ```python
 # Pose Estimation
-import asone
-from asone import utils
-from asone import PoseEstimator
+from asone import PoseEstimator, YOLOV8M_POSE, utils
 import cv2
 
-img_path = 'data/sample_imgs/test2.jpg'
 pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
-img = cv2.imread(img_path)
+img = cv2.imread('data/sample_imgs/test2.jpg')
 kpts = pose_estimator.estimate_image(img)
 img = utils.draw_kpts(img, kpts)
-cv2.imwrite("data/results/results.jpg", img)
 ```
 
 - Now you can use Yolov8 and Yolov7-w6 for pose estimation. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```python
 # Pose Estimation on video
-import asone
-from asone import PoseEstimator
+from asone import PoseEstimator, YOLOV7_W6_POSE, utils
 
-video_path = 'data/sample_videos/football1.mp4'
-pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
-estimator = pose_estimator.estimate_video(video_path, save=True, display=True)
+pose_estimator = PoseEstimator(estimator_flag=YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
+estimator = pose_estimator.estimate_video('data/sample_videos/football1.mp4')
 for kpts, frame_details in estimator:
-    frame, frame_num, fps = frame_details
-    print(frame_num)
+    frame, _, __ = frame_details
+    img = utils.draw_kpts(frame, kpts)
     # Do anything with kpts here
 ```
 
