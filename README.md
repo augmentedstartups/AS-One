@@ -4,7 +4,7 @@
 
 <div align="center">
   <p>
-    <a align="center" href="" target="https://supervision.roboflow.com">
+    <a align="center" href="" target="https://badge.fury.io/py/asone">
       <img
         width="100%"
         src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151476941/settings_images/65d82-0d84-6171-a7e0-5aa180b657d5_Black_with_Logo.jpg" width="100%">
@@ -18,7 +18,7 @@
   <br>
 
 [![PyPI version](https://badge.fury.io/py/asone.svg)](https://badge.fury.io/py/asone)
-[![python-version](https://img.shields.io/pypi/pyversions/supervision)](https://badge.fury.io/py/supervision)
+[![python-version](https://img.shields.io/pypi/pyversions/supervision)](https://badge.fury.io/py/asone)
 [![colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing)
 [![start with why](https://img.shields.io/badge/version-1.1.0-green)](https://github.com/augmentedstartups/AS-One)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
