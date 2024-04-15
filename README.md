@@ -132,7 +132,7 @@ cap = VideoReader('data/sample_videos/test.mp4')
 
 for frame in cap:
     dets, img_info = detector.detect(frame)
-    frame = ASOne.draw_boxes(frame, dets)
+    frame = ASOne.draw_bboxes(frame, dets)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -156,11 +156,11 @@ Use your custom weights of a detector model trained on custom data by simply pro
 from asone import ASOne, VideoReader, YOLOV7_PYTORCH
 
 detector = ASOne(detector=YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
-cap = VideoReader('data/sample_videos/license_video.webm')
+cap = VideoReader('data/sample_videos/license_video.mp4')
 
 for frame in cap:
-    dets, img_info = detector.detect(frame, class_names=['license_plate'])
-    frame = ASOne.draw_boxes(frame, dets)
+    dets, img_info = detector.detect(frame)
+    frame = ASOne.draw_bboxes(frame, dets, class_names=['license_plate'])
 ```
 
 </details>
@@ -199,12 +199,12 @@ from asone import ASOne, BYTETRACK, YOLOV7_PYTORCH
 
 # Instantiate Asone object
 detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
-track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['person'])
+track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _ , _ = frame_details
-    frame = ASOne.draw_boxes(frame, bbox_details)
+    frame = ASOne.draw_bboxes(frame, bbox_details)
     # Do anything with bboxes here
 ```
 
@@ -271,7 +271,7 @@ track = detect.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _, _ = frame_details
-    frame = ASOne.draw_boxes(frame, bbox_details)
+    frame = ASOne.draw_bboxes(frame, bbox_details)
 
     # Do anything with bboxes here
 ```
@@ -298,7 +298,7 @@ Sample code to estimate pose on an image
 from asone import PoseEstimator, YOLOV8M_POSE, utils
 import cv2
 
-pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
+pose_estimator = PoseEstimator(estimator_flag=YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
 img = cv2.imread('data/sample_imgs/test2.jpg')
 kpts = pose_estimator.estimate_image(img)
 img = utils.draw_kpts(img, kpts)
