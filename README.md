@@ -1,24 +1,31 @@
 # AS-One : A Modular Library for YOLO Object Detection and Object Tracking
 
+
+
+<div align="center">
+  <p>
+    <a align="center" href="" target="https://supervision.roboflow.com">
+      <img
+        width="100%"
+        src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151476941/settings_images/65d82-0d84-6171-a7e0-5aa180b657d5_Black_with_Logo.jpg" width="100%">
+      <a href="https://www.youtube.com/watch?v=K-VcpPwcM8k" style="display:inline-block;padding:10px 20px;background-color:red;color:white;text-decoration:none;font-size:16px;font-weight:bold;border-radius:5px;transition:background-color 0.3s;" target="_blank">Watch Video</a>
+
+    
+  </p>
+
+  <br>
+
+  <br>
+
+[![PyPI version](https://badge.fury.io/py/asone.svg)](https://badge.fury.io/py/asone)
+[![python-version](https://img.shields.io/pypi/pyversions/supervision)](https://badge.fury.io/py/supervision)
+[![colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing)
 [![start with why](https://img.shields.io/badge/version-1.1.0-green)](https://github.com/augmentedstartups/AS-One)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 
-[<img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151476941/settings_images/65d82-0d84-6171-a7e0-5aa180b657d5_Black_with_Logo.jpg" width="100%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
+</div>
 
-#### Table of Contents
-
-1. Introduction
-2. Prerequisites
-3. Clone the Repo
-4. Installation
-   - [Linux](#4-installation)
-   - [Windows 10/11](#4-installation)
-   - [MacOS](#4-installation)
-5. Running AS-One
-6. [Sample Code Snippets](#6-sample-code-snippets)
-7. [Model Zoo](asone/linux/Instructions/Benchmarking.md)
-
-## 1. Introduction
+## 👋 Hello
 
 ==UPDATE: YOLO-NAS is OUT==
 
@@ -31,15 +38,15 @@ If you would like to dive deeper into YOLO Object Detection and Tracking, then c
 
 [<img src="https://s3.amazonaws.com/kajabi-storefronts-production/blogs/22606/images/0FDx83VXSYOY0NAO2kMc_ASOne_Windows_Play.jpg" width="50%">](https://www.youtube.com/watch?v=K-VcpPwcM8k)
 
-Watch the step-by-step tutorial
+Watch the step-by-step tutorial 🤝
 
-## 2. Prerequisites
+## 🔥 Prerequisites
 
 - Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
 - Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows.
 - [Download git for windows](https://git-scm.com/download/win) if not installed.
 
-## 3. Clone the Repo
+## 💾 Clone the Repository
 
 Navigate to an empty folder of your choice.
 
@@ -49,10 +56,18 @@ Change Directory to AS-One
 
 `cd AS-One`
 
-## 4. Installation
+## 💻 Install
+
+```bash
+pip install asone
+```
+<details>
+<summary> 👉 Install from Source</summary>
+
 
 <details open>
-<summary>For Linux</summary>
+<summary> 👉 For Linux</summary>
+
 
 ```shell
 python3 -m venv .env
@@ -66,10 +81,11 @@ pip install torch torchvision
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 
+
 </details>
 
 <details>
-<summary> For Windows 10/11</summary>
+<summary> 👉 For Windows 10/11</summary>
 
 ```shell
 python -m venv .env
@@ -92,7 +108,7 @@ pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu
 
 </details>
 <details>
-<summary>For MacOS</summary>
+<summary> 👉 For MacOS</summary>
 
 ```shell
 python3 -m venv .env
@@ -106,23 +122,24 @@ pip install torch torchvision
 ```
 
 </details>
+</details>
 
-## 5. Running AS-One
+##  Running AS-One 🏃‍♂️
 
 Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
 
 ```
 python main.py data/sample_videos/test.mp4
 ```
+### Run in `Google Colab` 💻
 
-### Run in `Google Colab`
 
 <a href="https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 
-## 6. Sample Code Snippets
+##  Sample Code Snippets 📃
 
 <details>
-<summary>6.1. Object Detection</summary>
+<summary>6.1 👉 Object Detection</summary>
 
 ```python
 from asone import ASOne, VideoReader, YOLOV7_PYTORCH
@@ -145,9 +162,9 @@ python -m asone.demo_detector data/sample_videos/test.mp4
 python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
 ```
 
-<details>
-<summary>6.1.1 Use Custom Trained Weights for Detector</summary>
 
+<details>
+<summary>6.1.1 👉 Use Custom Trained Weights for Detector</summary>
 <!-- ### 6.1.2 Use Custom Trained Weights -->
 
 Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
@@ -166,7 +183,7 @@ for frame in cap:
 </details>
 
 <details>
-<summary>6.1.2. Changing Detector Models </summary>
+<summary>6.1.2 👉 Changing Detector Models </summary>
 
 Change detector by simply changing detector flag. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
@@ -190,7 +207,7 @@ detector = ASOne(detector=asone.YOLOV8L_MLMODEL)
 </details>
 
 <details>
-<summary>6.2. Object Tracking </summary>
+<summary>6.2 👉 Object Tracking </summary>
 
 Use tracker on sample video.
 
@@ -211,7 +228,7 @@ for bbox_details, frame_details in track:
 [Note] Use can use custom weights for a detector model by simply providing path of the weights file. in `ASOne` class.
 
 <details>
-<summary>6.2.1 Changing Detector and Tracking Models</summary>
+<summary>6.2.1 👉 Changing Detector and Tracking Models</summary>
 
 <!-- ### Changing Detector and Tracking Models -->
 
@@ -244,8 +261,7 @@ python -m asone.demo_tracker data/sample_videos/test.mp4 --cpu
 
 </details>
 <details>
-<summary>6.3. Text Detection</summary>
-
+<summary>6.3 👉 Text Detection</summary>
 Sample code to detect text on an image
 
 ```python
@@ -289,7 +305,8 @@ Run the `asone/demo_ocr.py` to test ocr.
 </details>
 
 <details>
-<summary>6.4. Pose Estimation</summary>
+<summary>6.4 👉 Pose Estimation</summary>
+
 
 Sample code to estimate pose on an image
 
@@ -331,7 +348,8 @@ Run the `asone/demo_pose_estimator.py` to test Pose estimation.
 </details>
 
 <details>
-<summary>6.5. Segmentation</summary>
+<summary>6.5 👉 Segmentation</summary>
+
 
 ```python
 
@@ -346,9 +364,9 @@ for bbox_details, frame_details in track:
 ```
 </details>
 
-To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md)
+To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md)🐳
 
-# ToDo
+### ToDo 📝
 
 - [x] First Release
 - [x] Import trained models
@@ -361,6 +379,7 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] YOLO-NAS
 - [x] SAM Integration
 
-| Offered By:                                                                                                                                                  | Maintained By:                                                                                                                                    |
+
+| Offered By 💼 :                                                                                                                                                  | Maintained By 👨‍💻 :                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![AugmentedStarups](https://user-images.githubusercontent.com/107035454/195115263-d3271ef3-973b-40a4-83c8-0ade8727dd40.png)](https://augmentedstartups.com) | [![AxcelerateAI](https://user-images.githubusercontent.com/107035454/195114870-691c8a52-fcf0-462e-9e02-a720fc83b93f.png)](https://axcelerate.ai/) |
