@@ -165,7 +165,7 @@ class Colors:
 colors = Colors()  # create instance for 'from utils.plots import colors'
 
 
-def draw_kpts(image ,keypoints, shape=(640, 640), radius=5, kpt_line=True):
+def draw_kpts(image, keypoints, shape=(640, 640), radius=5, kpt_line=True):
         """Plot keypoints on the image.
         Args:
             kpts (tensor): Predicted keypoints with shape [17, 3]. Each keypoint has (x, y, confidence).
@@ -186,7 +186,7 @@ def draw_kpts(image ,keypoints, shape=(640, 640), radius=5, kpt_line=True):
                 skeleton = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8], [7, 9],
                                 [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
                 nkpt, ndim = kpts.shape
-                is_pose = nkpt == 17 and ndim == 3
+                is_pose = nkpt == 17 and ndim in [2, 3]
                 kpt_line &= is_pose  # `kpt_line=True` for now only supports human pose plotting
                 for i, k in enumerate(kpts):
                     color_k = [int(x) for x in kpt_color[i]] if is_pose else colors(i)

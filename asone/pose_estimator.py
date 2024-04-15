@@ -33,7 +33,7 @@ class PoseEstimator:
     def estimate_image(self, frame):
     
         keypoints = self.estimator.estimate(frame)
-        return keypoints
+        return keypoints.cpu().numpy().xy
     
     def estimate_video(self, video_path, save=True, conf_thresh=0.5, display=True):
        
