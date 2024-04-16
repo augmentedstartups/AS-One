@@ -40,13 +40,24 @@ If you would like to dive deeper into YOLO Object Detection and Tracking, then c
 
 Watch the step-by-step tutorial 🤝
 
-## 🔥 Prerequisites
+
+
+## 💻 Install
+<details><summary> 🔥 Prerequisites</summary>
 
 - Make sure to install `GPU` drivers in your system if you want to use `GPU` . Follow [driver installation](asone/linux/Instructions/Driver-Installations.md) for further instructions.
 - Make sure you have [MS Build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe) installed in system if using windows.
 - [Download git for windows](https://git-scm.com/download/win) if not installed.
+</details>
 
-## 💾 Clone the Repository
+```bash
+pip install asone
+```
+
+<details>
+<summary> 👉 Install from Source</summary>
+
+### 💾 Clone the Repository
 
 Navigate to an empty folder of your choice.
 
@@ -55,15 +66,6 @@ Navigate to an empty folder of your choice.
 Change Directory to AS-One
 
 `cd AS-One`
-
-## 💻 Install
-
-```bash
-pip install asone
-```
-<details>
-<summary> 👉 Install from Source</summary>
-
 
 <details open>
 <summary> 👉 For Linux</summary>
@@ -124,13 +126,25 @@ pip install torch torchvision
 </details>
 </details>
 
-##  Running AS-One 🏃‍♂️
+##  Quick Start 🏃‍♂️
 
-Run `main.py` to test tracker on `data/sample_videos/test.mp4` video
+Use tracker on sample video.
 
+```python
+from asone import ASOne, BYTETRACK, YOLOV7_PYTORCH
+
+# Instantiate Asone object
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
+track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+
+# Loop over track to retrieve outputs of each frame
+for bbox_details, frame_details in track:
+    frame, _ , _ = frame_details
+    frame = ASOne.draw_bboxes(frame, bbox_details)
+    # Do anything with bboxes here
 ```
-python main.py data/sample_videos/test.mp4
-```
+
+
 ### Run in `Google Colab` 💻
 
 
@@ -262,6 +276,7 @@ python -m asone.demo_tracker data/sample_videos/test.mp4 --cpu
 </details>
 <details>
 <summary>6.3 👉 Text Detection</summary>
+  
 Sample code to detect text on an image
 
 ```python
