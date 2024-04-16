@@ -133,15 +133,12 @@ Use tracker on sample video.
 ```python
 from asone import ASOne, BYTETRACK, YOLOV7_PYTORCH
 
-# Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
 track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
-# Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _ , _ = frame_details
     frame = ASOne.draw_bboxes(frame, bbox_details)
-    # Do anything with bboxes here
 ```
 
 
