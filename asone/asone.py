@@ -181,7 +181,7 @@ class ASOne:
         draw_trails = config.pop('draw_trails')
         class_names = config.pop('class_names')
 
-        cap = self.video_reader(stream_path)
+        cap = self.read_video(stream_path)
         width, height = cap.frame_size
         frame_count = cap.frame_counts
 
@@ -225,7 +225,8 @@ class ASOne:
                 im0 = self.draw(im0,
                                     (bboxes_xyxy, ids, scores, class_ids),
                                     draw_trails=draw_trails,
-                                    class_names=class_names)
+                                    class_names=class_names,
+                                    display=display)
 
             currTime = time.time()
             fps = 1 / (currTime - prevTime)
@@ -239,8 +240,8 @@ class ASOne:
                 masks = self.segmentor.create_mask(np.array(bboxes_xyxy), frame)
                 im0 = self.draw_masks(im0, masks)
                 bboxes_xyxy = (bboxes_xyxy, masks) 
-            if display:
-                cv2.imshow(' Sample', im0)
+            # if display:
+            #     cv2.imshow(' Sample', im0)
             if save_result:
                 video_writer.write(im0)
 
@@ -256,7 +257,7 @@ class ASOne:
         print(f'Total Time Taken: {tac - tic:.2f}')
 
     @staticmethod
-    def draw(img, dets, **kwargs):
+    def draw(img, dets, display, **kwargs):
         draw_trails = kwargs.get('draw_trails', False)
         class_names = kwargs.get('class_names', None)
         if isinstance(dets, tuple):
@@ -269,12 +270,19 @@ class ASOne:
             scores = dets[:, 4]
             class_ids = dets[:, 5]
             ids = None
-        return utils.draw_boxes(img,
+        
+        img = utils.draw_boxes(img,
                                 bbox_xyxy=bboxes_xyxy,
                                 class_ids=class_ids,
                                 identities=ids,
                                 draw_trails=draw_trails,
                                 class_names=class_names)
+        
+        if display:
+            cv2.imshow(' Sample', img)
+        
+        return img
+    
     @staticmethod      
     def draw_masks(img, dets, **kwargs):
         color = [0, 255, 0]
@@ -298,8 +306,7 @@ class ASOne:
         masked_image = masked_image.astype(np.uint8)
         return cv2.addWeighted(img, 0.5, masked_image, 0.5, 0)
     
-    def video_reader(self,
-                     video_path):
+    def read_video(self, video_path):
         vid = VideoReader(video_path)
         
         return vid
