@@ -131,14 +131,15 @@ pip install torch torchvision
 Use tracker on sample video.
 
 ```python
-from asone import ASOne, BYTETRACK, YOLOV7_PYTORCH
+import asone
+from asone import ASOne
 
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
 track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 for bbox_details, frame_details in track:
     frame, _ , _ = frame_details
-    frame = ASOne.draw_bboxes(frame, bbox_details)
+    frame = ASOne.draw(frame, bbox_details)
 ```
 
 
@@ -153,14 +154,15 @@ for bbox_details, frame_details in track:
 <summary>6.1 👉 Object Detection</summary>
 
 ```python
-from asone import ASOne, VideoReader, YOLOV7_PYTORCH
+import asone
+from asone import ASOne
 
-detector = ASOne(detector=YOLOV7_PYTORCH, use_cuda=True) # Set use_cuda to False for cpu
-cap = VideoReader('data/sample_videos/test.mp4')
+detector = ASOne(detector=asone.YOLOV9_C, use_cuda=True) # Set use_cuda to False for cpu
+vid = detector.video_reader('data/sample_videos/test.mp4')
 
-for frame in cap:
-    dets, img_info = detector.detect(frame)
-    frame = ASOne.draw_bboxes(frame, dets)
+for img in vid:
+    dets, img_info = detector.detect(img)
+    annotations = ASOne.draw(img, dets)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -181,14 +183,15 @@ python -m asone.demo_detector data/sample_videos/test.mp4 --cpu
 Use your custom weights of a detector model trained on custom data by simply providing path of the weights file.
 
 ```python
-from asone import ASOne, VideoReader, YOLOV7_PYTORCH
+import asone
+from asone import ASOne
 
-detector = ASOne(detector=YOLOV7_PYTORCH, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
-cap = VideoReader('data/sample_videos/license_video.mp4')
+detector = ASOne(detector=asone.YOLOV9_C, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
+vid = detector.video_reader('data/sample_videos/license_video.mp4')
 
-for frame in cap:
-    dets, img_info = detector.detect(frame)
-    frame = ASOne.draw_bboxes(frame, dets, class_names=['license_plate'])
+for img in vid:
+    dets, img_info = detector.detect(img)
+    frame = ASOne.draw(img, dets, class_names=['license_plate'])
 ```
 
 </details>
@@ -223,16 +226,17 @@ detector = ASOne(detector=asone.YOLOV8L_MLMODEL)
 Use tracker on sample video.
 
 ```python
-from asone import ASOne, BYTETRACK, YOLOV7_PYTORCH
+import asone
+from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True) #set use_cuda=False to use cpu
 track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _ , _ = frame_details
-    frame = ASOne.draw_bboxes(frame, bbox_details)
+    frame = ASOne.draw(frame, bbox_details)
     # Do anything with bboxes here
 ```
 
@@ -248,9 +252,9 @@ Change Tracker by simply changing the tracker flag.
 The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```python
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
+detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
 # Change tracker
-detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV7_PYTORCH, use_cuda=True)
+detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV9_C, use_cuda=True)
 ```
 
 ```python
@@ -271,17 +275,36 @@ python -m asone.demo_tracker data/sample_videos/test.mp4 --cpu
 ```
 
 </details>
+
 <details>
-<summary>6.3 👉 Text Detection</summary>
+<summary>6.3 👉 Segmentation</summary>
+
+
+```python
+import asone
+from asone import ASOne
+
+detect = ASOne(detector=asone.YOLOV9_C, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
+track = detect.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
+
+for bbox_details, frame_details in track:
+    frame, frame_num, fps = frame_details
+    frame = ASOne.draw_masks(frame, bbox_details) # Draw masks
+```
+</details>
+
+<details>
+<summary>6.4 👉 Text Detection</summary>
   
 Sample code to detect text on an image
 
 ```python
 # Detect and recognize text
-from asone import ASOne, utils, CRAFT, EASYOCR
+import asone
+from asone import ASOne, utils
 import cv2
 
-ocr = ASOne(detector=CRAFT, recognizer=EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
+ocr = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
 img = cv2.imread('data/sample_imgs/sample_text.jpeg')
 results = ocr.detect_text(img)
 img = utils.draw_text(img, results)
@@ -290,16 +313,17 @@ img = utils.draw_text(img, results)
 Use Tracker on Text
 
 ```python
-from asone import ASOne, DEEPSORT, CRAFT, EASYOCR
+import asone
+from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=DEEPSORT, detector=CRAFT, recognizer=EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+detect = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
 track = detect.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _, _ = frame_details
-    frame = ASOne.draw_bboxes(frame, bbox_details)
+    frame = ASOne.draw(frame, bbox_details)
 
     # Do anything with bboxes here
 ```
@@ -317,17 +341,18 @@ Run the `asone/demo_ocr.py` to test ocr.
 </details>
 
 <details>
-<summary>6.4 👉 Pose Estimation</summary>
+<summary>6.5 👉 Pose Estimation</summary>
 
 
 Sample code to estimate pose on an image
 
 ```python
 # Pose Estimation
-from asone import PoseEstimator, YOLOV8M_POSE, utils
+import asone
+from asone import PoseEstimator, utils
 import cv2
 
-pose_estimator = PoseEstimator(estimator_flag=YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
+pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
 img = cv2.imread('data/sample_imgs/test2.jpg')
 kpts = pose_estimator.estimate_image(img)
 img = utils.draw_kpts(img, kpts)
@@ -337,9 +362,10 @@ img = utils.draw_kpts(img, kpts)
 
 ```python
 # Pose Estimation on video
-from asone import PoseEstimator, YOLOV7_W6_POSE, utils
+import asone
+from asone import PoseEstimator, utils
 
-pose_estimator = PoseEstimator(estimator_flag=YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
+pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
 estimator = pose_estimator.estimate_video('data/sample_videos/football1.mp4')
 for kpts, frame_details in estimator:
     frame, _, __ = frame_details
@@ -357,23 +383,6 @@ Run the `asone/demo_pose_estimator.py` to test Pose estimation.
  python -m asone.demo_pose_estimator data/sample_videos/football1.mp4 --cpu
 ```
 
-</details>
-
-<details>
-<summary>6.5 👉 Segmentation</summary>
-
-
-```python
-
-from asone import ASOne, YOLOV7_PYTORCH, SAM
-
-detect = ASOne(detector=YOLOV7_PYTORCH, segmentor=SAM, use_cuda=True) #set use_cuda=False to use cpu
-track = detect.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
-
-for bbox_details, frame_details in track:
-    frame, frame_num, fps = frame_details
-    frame = ASOne.draw_masks(frame, bbox_details) # Draw masks
-```
 </details>
 
 To setup ASOne using Docker follow instructions given in [docker setup](asone/linux/Instructions/Docker-Setup.md)🐳
