@@ -181,7 +181,7 @@ class ASOne:
         draw_trails = config.pop('draw_trails')
         class_names = config.pop('class_names')
 
-        cap = VideoReader(stream_path)
+        cap = self.video_reader(stream_path)
         width, height = cap.frame_size
         frame_count = cap.frame_counts
 
@@ -222,7 +222,7 @@ class ASOne:
                             free_list=[])
                 im0 = utils.draw_text(im0, res)
             else:
-                im0 = self.draw_bboxes(im0,
+                im0 = self.draw(im0,
                                     (bboxes_xyxy, ids, scores, class_ids),
                                     draw_trails=draw_trails,
                                     class_names=class_names)
@@ -246,8 +246,8 @@ class ASOne:
 
             frame_id += 1
 
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                break
+            # if cv2.waitKey(25) & 0xFF == ord('q'):
+            #     break
 
             # yeild required values in form of (bbox_details, frames_details)
             yield (bboxes_xyxy, ids, scores, class_ids), (im0 if display else frame, frame_id-1, fps)
@@ -256,7 +256,7 @@ class ASOne:
         print(f'Total Time Taken: {tac - tic:.2f}')
 
     @staticmethod
-    def draw_bboxes(img, dets, **kwargs):
+    def draw(img, dets, **kwargs):
         draw_trails = kwargs.get('draw_trails', False)
         class_names = kwargs.get('class_names', None)
         if isinstance(dets, tuple):
@@ -297,7 +297,13 @@ class ASOne:
 
         masked_image = masked_image.astype(np.uint8)
         return cv2.addWeighted(img, 0.5, masked_image, 0.5, 0)
-
+    
+    def video_reader(self,
+                     video_path):
+        vid = VideoReader(video_path)
+        
+        return vid
+    
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
     asone = ASOne()
