@@ -27,7 +27,7 @@
 
 ## 👋 Hello
 
-==UPDATE: YOLO-NAS is OUT==
+==UPDATE: YOLOV9 and SAM is OUT==
 
 AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSORT` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides YOLO models in `ONNX`, `PyTorch` & `CoreML` flavors. We plan to offer support for future versions of YOLO when they get released.
@@ -134,12 +134,12 @@ Use tracker on sample video.
 import asone
 from asone import ASOne
 
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
-track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
+track = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 for bbox_details, frame_details in track:
     frame, _ , _ = frame_details
-    frame = ASOne.draw(frame, bbox_details)
+    annotations = ASOne.draw(frame, bbox_details, display=True)
 ```
 
 
@@ -157,12 +157,12 @@ for bbox_details, frame_details in track:
 import asone
 from asone import ASOne
 
-detector = ASOne(detector=asone.YOLOV9_C, use_cuda=True) # Set use_cuda to False for cpu
-vid = detector.video_reader('data/sample_videos/test.mp4')
+model = ASOne(detector=asone.YOLOV9_C, use_cuda=True) # Set use_cuda to False for cpu
+vid = model.read_video('data/sample_videos/test.mp4')
 
 for img in vid:
-    dets, img_info = detector.detect(img)
-    annotations = ASOne.draw(img, dets)
+    dets, _ = model.detect(img)
+    annotations = ASOne.draw(img, dets, display=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -186,12 +186,12 @@ Use your custom weights of a detector model trained on custom data by simply pro
 import asone
 from asone import ASOne
 
-detector = ASOne(detector=asone.YOLOV9_C, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
-vid = detector.video_reader('data/sample_videos/license_video.mp4')
+model = ASOne(detector=asone.YOLOV9_C, weights='data/custom_weights/yolov7_custom.pt', use_cuda=True) # Set use_cuda to False for cpu
+vid = model.read_video('data/sample_videos/license_video.mp4')
 
 for img in vid:
-    dets, img_info = detector.detect(img)
-    frame = ASOne.draw(img, dets, class_names=['license_plate'])
+    dets, img_info = model.detect(img)
+    annotations = ASOne.draw(img, dets, display=True, class_names=['license_plate'])
 ```
 
 </details>
@@ -205,15 +205,15 @@ Change detector by simply changing detector flag. The flags are provided in [ben
 
 ```python
 # Change detector
-detector = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
+model = ASOne(detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 
 # For macOs
 # YOLO5
-detector = ASOne(detector=asone.YOLOV5X_MLMODEL)
+model = ASOne(detector=asone.YOLOV5X_MLMODEL)
 # YOLO7
-detector = ASOne(detector=asone.YOLOV7_MLMODEL)
+model = ASOne(detector=asone.YOLOV7_MLMODEL)
 # YOLO8
-detector = ASOne(detector=asone.YOLOV8L_MLMODEL)
+model = ASOne(detector=asone.YOLOV8L_MLMODEL)
 ```
 
 </details>
@@ -230,13 +230,13 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True) #set use_cuda=False to use cpu
-track = detect.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True) #set use_cuda=False to use cpu
+track = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _ , _ = frame_details
-    frame = ASOne.draw(frame, bbox_details)
+    annotations = ASOne.draw(frame, bbox_details, display=True)
     # Do anything with bboxes here
 ```
 
@@ -252,14 +252,14 @@ Change Tracker by simply changing the tracker flag.
 The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
 
 ```python
-detect = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
+model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
 # Change tracker
-detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV9_C, use_cuda=True)
+model = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOV9_C, use_cuda=True)
 ```
 
 ```python
 # Change Detector
-detect = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
+model = ASOne(tracker=asone.DEEPSORT, detector=asone.YOLOX_S_PYTORCH, use_cuda=True)
 ```
 
 </details>
@@ -284,12 +284,12 @@ python -m asone.demo_tracker data/sample_videos/test.mp4 --cpu
 import asone
 from asone import ASOne
 
-detect = ASOne(detector=asone.YOLOV9_C, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
-track = detect.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
+model = ASOne(detector=asone.YOLOV9_C, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
+track = model.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 for bbox_details, frame_details in track:
-    frame, frame_num, fps = frame_details
-    frame = ASOne.draw_masks(frame, bbox_details) # Draw masks
+    frame, _, _ = frame_details
+    annotations = ASOne.draw_masks(frame, bbox_details) # Draw masks
 ```
 </details>
 
@@ -304,10 +304,10 @@ import asone
 from asone import ASOne, utils
 import cv2
 
-ocr = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
+model = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
 img = cv2.imread('data/sample_imgs/sample_text.jpeg')
-results = ocr.detect_text(img)
-img = utils.draw_text(img, results)
+results = model.detect_text(img)
+annotations = utils.draw_text(img, results)
 ```
 
 Use Tracker on Text
@@ -317,13 +317,13 @@ import asone
 from asone import ASOne
 
 # Instantiate Asone object
-detect = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
-track = detect.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
+model = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
+track = model.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
 
 # Loop over track to retrieve outputs of each frame
 for bbox_details, frame_details in track:
     frame, _, _ = frame_details
-    frame = ASOne.draw(frame, bbox_details)
+    annotations = ASOne.draw(frame, bbox_details, display=Ture)
 
     # Do anything with bboxes here
 ```
@@ -352,10 +352,10 @@ import asone
 from asone import PoseEstimator, utils
 import cv2
 
-pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
+model = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
 img = cv2.imread('data/sample_imgs/test2.jpg')
-kpts = pose_estimator.estimate_image(img)
-img = utils.draw_kpts(img, kpts)
+kpts = model.estimate_image(img)
+annotations = utils.draw_kpts(img, kpts)
 ```
 
 - Now you can use Yolov8 and Yolov7-w6 for pose estimation. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
@@ -365,11 +365,11 @@ img = utils.draw_kpts(img, kpts)
 import asone
 from asone import PoseEstimator, utils
 
-pose_estimator = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
-estimator = pose_estimator.estimate_video('data/sample_videos/football1.mp4')
+model = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
+estimator = model.estimate_video('data/sample_videos/football1.mp4')
 for kpts, frame_details in estimator:
     frame, _, __ = frame_details
-    img = utils.draw_kpts(frame, kpts)
+    annotations = utils.draw_kpts(frame, kpts)
     # Do anything with kpts here
 ```
 
@@ -398,6 +398,8 @@ To setup ASOne using Docker follow instructions given in [docker setup](asone/li
 - [x] M1/2 Apple Silicon Compatibility
 - [x] Pose Estimation YOLOv7/v8
 - [x] YOLO-NAS
+- [x] Updated for YOLOv8.1
+- [x] YOLOV9
 - [x] SAM Integration
 
 
