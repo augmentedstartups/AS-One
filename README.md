@@ -135,11 +135,11 @@ import asone
 from asone import ASOne
 
 model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
-track = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+tracks = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
-for bbox_details, frame_details in track:
-    frame, _ , _ = frame_details
-    annotations = ASOne.draw(frame, bbox_details, display=True)
+for detection_bbox, image_details in tracks:
+    image, _ , _ = image_details
+    annotations = ASOne.draw(image, detection_bbox, display=True)
 ```
 
 
@@ -161,8 +161,8 @@ model = ASOne(detector=asone.YOLOV9_C, use_cuda=True) # Set use_cuda to False fo
 vid = model.read_video('data/sample_videos/test.mp4')
 
 for img in vid:
-    dets, _ = model.detect(img)
-    annotations = ASOne.draw(img, dets, display=True)
+    detection, _ = model.detect(img)
+    annotations = ASOne.draw(img, detection, display=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -190,8 +190,8 @@ model = ASOne(detector=asone.YOLOV9_C, weights='data/custom_weights/yolov7_custo
 vid = model.read_video('data/sample_videos/license_video.mp4')
 
 for img in vid:
-    dets, img_info = model.detect(img)
-    annotations = ASOne.draw(img, dets, display=True, class_names=['license_plate'])
+    detection, img_info = model.detect(img)
+    annotations = ASOne.draw(img, detection, display=True, class_names=['license_plate'])
 ```
 
 </details>
@@ -231,12 +231,12 @@ from asone import ASOne
 
 # Instantiate Asone object
 model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True) #set use_cuda=False to use cpu
-track = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+tracks = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
 # Loop over track to retrieve outputs of each frame
-for bbox_details, frame_details in track:
-    frame, _ , _ = frame_details
-    annotations = ASOne.draw(frame, bbox_details, display=True)
+for detection_bbox, image_details in tracks:
+    image, _ , _ = image_details
+    annotations = ASOne.draw(image, detection_bbox, display=True)
     # Do anything with bboxes here
 ```
 
@@ -285,11 +285,11 @@ import asone
 from asone import ASOne
 
 model = ASOne(detector=asone.YOLOV9_C, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
-track = model.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
+tracks = model.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
 
-for bbox_details, frame_details in track:
-    frame, _, _ = frame_details
-    annotations = ASOne.draw_masks(frame, bbox_details) # Draw masks
+for detection_bbox, image_details in tracks:
+    image, _, _ = image_details
+    annotations = ASOne.draw_masks(image, detection_bbox) # Draw masks
 ```
 </details>
 
@@ -318,12 +318,12 @@ from asone import ASOne
 
 # Instantiate Asone object
 model = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
-track = model.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
+tracks = model.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
 
 # Loop over track to retrieve outputs of each frame
-for bbox_details, frame_details in track:
-    frame, _, _ = frame_details
-    annotations = ASOne.draw(frame, bbox_details, display=Ture)
+for detection_bbox, image_details in tracks:
+    image, _, _ = image_details
+    annotations = ASOne.draw(image, detection_bbox, display=Ture)
 
     # Do anything with bboxes here
 ```
@@ -367,9 +367,9 @@ from asone import PoseEstimator, utils
 
 model = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
 estimator = model.estimate_video('data/sample_videos/football1.mp4')
-for kpts, frame_details in estimator:
-    frame, _, __ = frame_details
-    annotations = utils.draw_kpts(frame, kpts)
+for kpts, image_details in estimator:
+    image, _, __ = image_details
+    annotations = utils.draw_kpts(image, kpts)
     # Do anything with kpts here
 ```
 
