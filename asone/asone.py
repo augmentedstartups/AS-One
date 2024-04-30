@@ -12,6 +12,7 @@ from asone.segmentors import Segmentor
 from asone.utils.default_cfg import config
 from asone.utils.video_reader import VideoReader
 from asone.utils import compute_color_for_labels
+from asone.schemas.output_schemas import ModelOutput
 
 import numpy as np
 
@@ -31,6 +32,7 @@ class ASOne:
 
         self.use_cuda = use_cuda
         self.use_segmentation = False
+        self.model_output = ModelOutput()
         
         # Check if user want to use segmentor
         if segmentor != -1:
@@ -84,6 +86,11 @@ class ASOne:
                     stream_url,
                     **kwargs
                     ):
+        
+        # Emit the warning for DeprecationWarning
+        with warnings.catch_warnings():
+            warnings.simplefilter("always", DeprecationWarning)
+            warnings.warn("track_stream function is deprecated. Kindly use stream_tracker instead", DeprecationWarning)
 
         output_filename = 'result.mp4'
         kwargs['filename'] = output_filename
@@ -92,11 +99,30 @@ class ASOne:
         for (bbox_details, frame_details) in self._start_tracking(stream_url, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
+    
+    def stream_tracker(self,
+                    stream_url,
+                    **kwargs
+                    ):
+
+        output_filename = 'result.mp4'
+        kwargs['filename'] = output_filename
+        config = self._update_args(kwargs)
+
+        for (bbox_details, frame_details) in self._start_tracking(stream_url, config):
+            # yeild bbox_details, frame_details to main script
+            yield self.format_output(bbox_details, frame_details)
 
     def track_video(self,
                     video_path,
                     **kwargs
                     ):            
+           
+        # Emit the warning for DeprecationWarning
+        with warnings.catch_warnings():
+            warnings.simplefilter("always", DeprecationWarning)
+            warnings.warn("track_video function is deprecated. Kindly use video_tracker instead", DeprecationWarning)
+              
         output_filename = os.path.basename(video_path)
         kwargs['filename'] = output_filename
         config = self._update_args(kwargs)
@@ -104,8 +130,8 @@ class ASOne:
         for (bbox_details, frame_details) in self._start_tracking(video_path, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
-
-    def detect_video(self,
+    
+    def video_tracker(self,
                     video_path,
                     **kwargs
                     ):            
@@ -115,7 +141,37 @@ class ASOne:
 
         for (bbox_details, frame_details) in self._start_tracking(video_path, config):
             # yeild bbox_details, frame_details to main script
+            yield self.format_output(bbox_details, frame_details)
+
+    def detect_video(self,
+                    video_path,
+                    **kwargs
+                    ):            
+        
+        # Emit the warning for DeprecationWarning
+        with warnings.catch_warnings():
+            warnings.simplefilter("always", DeprecationWarning)
+            warnings.warn("detect_video function is deprecated. Kindly use video_detecter instead", DeprecationWarning)
+            
+        output_filename = os.path.basename(video_path)
+        kwargs['filename'] = output_filename
+        config = self._update_args(kwargs)
+
+        for (bbox_details, frame_details) in self._start_tracking(video_path, config):
+            # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
+    
+    def video_detecter(self,
+                    video_path,
+                    **kwargs
+                    ):            
+        output_filename = os.path.basename(video_path)
+        kwargs['filename'] = output_filename
+        config = self._update_args(kwargs)
+
+        for (bbox_details, frame_details) in self._start_tracking(video_path, config):
+            # yeild bbox_details, frame_details to main script
+            yield self.format_output(bbox_details, frame_details)
     
     def detect(self, source, **kwargs)->np.ndarray:
         """ Function to perform detection on an img
@@ -155,6 +211,11 @@ class ASOne:
     def track_webcam(self,
                      cam_id=0,
                      **kwargs):
+        # Emit the warning for DeprecationWarning
+        with warnings.catch_warnings():
+            warnings.simplefilter("always", DeprecationWarning)
+            warnings.warn("track_webcam function is deprecated. Kindly use webcam_tracker instead", DeprecationWarning)
+            
         output_filename = 'results.mp4'
 
         kwargs['filename'] = output_filename
@@ -165,6 +226,20 @@ class ASOne:
         for (bbox_details, frame_details) in self._start_tracking(cam_id, config):
             # yeild bbox_details, frame_details to main script
             yield bbox_details, frame_details
+    
+    def webcam_tracker(self,
+                     cam_id=0,
+                     **kwargs):
+        output_filename = 'results.mp4'
+
+        kwargs['filename'] = output_filename
+        kwargs['fps'] = 29
+        config = self._update_args(kwargs)
+
+
+        for (bbox_details, frame_details) in self._start_tracking(cam_id, config):
+            # yeild bbox_details, frame_details to main script
+            yield self.format_output(bbox_details, frame_details)
         
     def _start_tracking(self,
                         stream_path: str,
@@ -236,10 +311,11 @@ class ASOne:
                         225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
             
             if self.use_segmentation:
-                # Will generate mask using SAM
-                masks = self.segmentor.create_mask(np.array(bboxes_xyxy), frame)
-                im0 = self.draw_masks(im0, masks)
-                bboxes_xyxy = (bboxes_xyxy, masks) 
+                if len(bboxes_xyxy) > 0: # Check if bounding box is present or not
+                    # Will generate mask using SAM
+                    masks = self.segmentor.create_mask(np.array(bboxes_xyxy), frame)
+                    im0 = self.draw_masks(im0, masks)
+                    bboxes_xyxy = (bboxes_xyxy, masks) 
             # if display:
             #     cv2.imshow(' Sample', im0)
             if save_result:
@@ -247,8 +323,8 @@ class ASOne:
 
             frame_id += 1
 
-            if cv2.waitKey(25) & 0xFF == ord('q'):
-                break
+            # if cv2.waitKey(25) & 0xFF == ord('q'):
+            #     break
 
             # yeild required values in form of (bbox_details, frames_details)
             yield (bboxes_xyxy, ids, scores, class_ids), (im0 if display else frame, frame_id-1, fps)
@@ -283,8 +359,35 @@ class ASOne:
         
         return img
     
+    @staticmethod
+    def draw_bbox(model_output, display, **kwargs):
+        draw_trails = kwargs.get('draw_trails', False)
+        class_names = kwargs.get('class_names', None)
+        
+        bbox = model_output.dets.bbox
+        ids = model_output.dets.ids
+        score = model_output.dets.score
+        class_ids = model_output.dets.class_ids
+        image = model_output.info.image
+        frame_no = model_output.info.frame_no
+        fps = model_output.info.fps
+        
+        img = utils.draw_boxes(image,
+                                bbox_xyxy=bbox,
+                                class_ids=class_ids,
+                                identities=ids,
+                                draw_trails=draw_trails,
+                                class_names=class_names)
+        
+        if display:
+            cv2.imshow(' Sample', img)
+        
+        return img
+    
     @staticmethod      
     def draw_masks(img, dets, **kwargs):
+        if isinstance(dets, tuple) and len(dets) > 0 and len(dets[0]) == 0:
+            return img
         color = [0, 255, 0]
         if isinstance(dets, tuple):
             bboxes_xyxy, ids, scores, class_ids = dets
@@ -306,10 +409,56 @@ class ASOne:
         masked_image = masked_image.astype(np.uint8)
         return cv2.addWeighted(img, 0.5, masked_image, 0.5, 0)
     
+    # TO-D0: Merge both draw_mask functions
+    @staticmethod      
+    def draw_mask(model_output, **kwargs):
+        bbox = model_output.dets.bbox
+        ids = model_output.dets.ids
+        score = model_output.dets.score
+        class_ids = model_output.dets.class_ids
+        image = model_output.info.image
+        frame_no = model_output.info.frame_no
+        fps = model_output.info.fps
+        
+        color = [0, 255, 0]
+        if isinstance(bbox, np.ndarray):
+            return image
+        
+        if isinstance(bbox, tuple):
+            bboxes_xyxy, masks = bbox
+        
+        masked_image = image.copy()
+        for idx in range(len(masks)):
+            mask = masks[idx].squeeze()  # Squeeze to remove singleton dimension
+            if class_ids is not None:
+                color = compute_color_for_labels(int(class_ids[idx]))
+            color = np.asarray(color, dtype='uint8')
+            mask_color = np.expand_dims(mask, axis=-1) * color  # Apply color to the mask
+            # Apply the mask to the image
+            masked_image = np.where(mask_color > 0, mask_color, masked_image)
+
+        masked_image = masked_image.astype(np.uint8)
+        return cv2.addWeighted(image, 0.5, masked_image, 0.5, 0)
+
     def read_video(self, video_path):
         vid = VideoReader(video_path)
         
         return vid
+    
+    def format_output(self, bbox_details, frame_details):
+
+        # Set detections
+        self.model_output.dets.bbox = bbox_details[0]
+        self.model_output.dets.ids = bbox_details[1]
+        self.model_output.dets.score = bbox_details[2]
+        self.model_output.dets.class_ids = bbox_details[3]
+
+        # Set image info
+        self.model_output.info.image = frame_details[0]
+        self.model_output.info.frame_no = frame_details[1]
+        self.model_output.info.fps = frame_details[2]
+
+        return self.model_output
     
 if __name__ == '__main__':
     # asone = ASOne(tracker='norfair')
