@@ -135,11 +135,10 @@ import asone
 from asone import ASOne
 
 model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True)
-tracks = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+tracks = model.video_tracker('data/sample_videos/test.mp4', filter_classes=['car'])
 
-for detection_bbox, image_details in tracks:
-    image, _ , _ = image_details
-    annotations = ASOne.draw(image, detection_bbox, display=True)
+for model_output in tracks:
+    annotations = ASOne.draw(model_output, display=False)
 ```
 
 
@@ -161,8 +160,8 @@ model = ASOne(detector=asone.YOLOV9_C, use_cuda=True) # Set use_cuda to False fo
 vid = model.read_video('data/sample_videos/test.mp4')
 
 for img in vid:
-    detection, _ = model.detect(img)
-    annotations = ASOne.draw(img, detection, display=True)
+    detection = model.detecter(img)
+    annotations = ASOne.draw(detection, img=img, display=True)
 ```
 
 Run the `asone/demo_detector.py` to test detector.
@@ -190,8 +189,8 @@ model = ASOne(detector=asone.YOLOV9_C, weights='data/custom_weights/yolov7_custo
 vid = model.read_video('data/sample_videos/license_video.mp4')
 
 for img in vid:
-    detection, img_info = model.detect(img)
-    annotations = ASOne.draw(img, detection, display=True, class_names=['license_plate'])
+    detection = model.detecter(img)
+    annotations = ASOne.draw(detection, img=img, display=True, class_names=['license_plate'])
 ```
 
 </details>
@@ -231,12 +230,11 @@ from asone import ASOne
 
 # Instantiate Asone object
 model = ASOne(tracker=asone.BYTETRACK, detector=asone.YOLOV9_C, use_cuda=True) #set use_cuda=False to use cpu
-tracks = model.track_video('data/sample_videos/test.mp4', filter_classes=['car'])
+tracks = model.video_tracker('data/sample_videos/test.mp4', filter_classes=['car'])
 
 # Loop over track to retrieve outputs of each frame
-for detection_bbox, image_details in tracks:
-    image, _ , _ = image_details
-    annotations = ASOne.draw(image, detection_bbox, display=True)
+for model_output in tracks:
+    annotations = ASOne.draw(model_output, display=True)
     # Do anything with bboxes here
 ```
 
@@ -285,11 +283,10 @@ import asone
 from asone import ASOne
 
 model = ASOne(detector=asone.YOLOV9_C, segmentor=asone.SAM, use_cuda=True) #set use_cuda=False to use cpu
-tracks = model.detect_video('data/sample_videos/test.mp4', filter_classes=['car'])
+tracks = model.video_detecter('data/sample_videos/test.mp4', filter_classes=['car'])
 
-for detection_bbox, image_details in tracks:
-    image, _, _ = image_details
-    annotations = ASOne.draw_masks(image, detection_bbox) # Draw masks
+for model_output in tracks:
+    annotations = ASOne.draw_masks(model_output, display=True) # Draw masks
 ```
 </details>
 
@@ -318,12 +315,11 @@ from asone import ASOne
 
 # Instantiate Asone object
 model = ASOne(tracker=asone.DEEPSORT, detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) #set use_cuda=False to use cpu
-tracks = model.track_video('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
+tracks = model.video_tracker('data/sample_videos/GTA_5-Unique_License_Plate.mp4')
 
 # Loop over track to retrieve outputs of each frame
-for detection_bbox, image_details in tracks:
-    image, _, _ = image_details
-    annotations = ASOne.draw(image, detection_bbox, display=Ture)
+for model_output in tracks:
+    annotations = ASOne.draw(model_output, display=True)
 
     # Do anything with bboxes here
 ```
