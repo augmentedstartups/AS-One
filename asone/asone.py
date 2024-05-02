@@ -374,7 +374,7 @@ class ASOne:
         print(f'Total Time Taken: {tac - tic:.2f}')
 
     @staticmethod
-    def draw(dets, display, img=None, **kwargs):            
+    def draw(dets, display=False, img=None, **kwargs):            
         draw_trails = kwargs.get('draw_trails', False)
         class_names = kwargs.get('class_names', None)
         if isinstance(dets, tuple):
