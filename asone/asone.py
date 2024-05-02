@@ -182,9 +182,33 @@ class ASOne:
         Returns:
             _type_: ndarray of detection
         """
+        # Emit the warning for DeprecationWarning
+        with warnings.catch_warnings():
+            warnings.simplefilter("always", DeprecationWarning)
+            warnings.warn("detect function is deprecated. Kindly use detecter instead", DeprecationWarning)
+            
         if isinstance(source, str):
             source = cv2.imread(source)
         return self.detector.detect(source, **kwargs)
+    
+    def detecter(self, source, **kwargs):
+        """ Function to perform detection on an img
+
+        Args:
+            source (_type_): if str read the image. if nd.array pass it directly to detect
+
+        Returns:
+            _type_: ndarray of detection
+        """
+        if isinstance(source, str):
+            source = cv2.imread(source)
+        dets, _ = self.detector.detect(source, **kwargs)
+        bboxes_xyxy = dets[:, :4]
+        scores = dets[:, 4]
+        class_ids = dets[:, 5]
+        ids = None
+        info = None
+        return self.format_output((bboxes_xyxy, ids, scores, class_ids), info)
 
     def detect_and_track(self, frame, **kwargs):
         if self.tracker:
@@ -196,6 +220,22 @@ class ASOne:
             bboxes_xyxy = dets[:, :4]
             scores = dets[:, 4]
             class_ids = dets[:, 5]
+            ids = None
+
+        return (bboxes_xyxy, ids, scores, class_ids), info
+    
+    def detect_track_manager(self, frame, **kwargs):
+        if self.tracker:
+            bboxes_xyxy, ids, scores, class_ids = self.tracker.detect_and_track(
+                frame, kwargs)
+            info = None
+        else:
+            model_output = self.detecter(source=frame, **kwargs)
+            
+            info = model_output.info            
+            bboxes_xyxy = model_output.dets.bbox
+            scores = model_output.dets.score
+            class_ids = model_output.dets.class_ids
             ids = None
 
         return (bboxes_xyxy, ids, scores, class_ids), info
@@ -283,8 +323,10 @@ class ASOne:
             start_time = time.time()
 
             im0 = copy.deepcopy(frame)
-            
-            (bboxes_xyxy, ids, scores, class_ids), _ = self.detect_and_track(frame, **config)
+            try:
+                (bboxes_xyxy, ids, scores, class_ids), _ = self.detect_track_manager(frame, **config)
+            except:
+                (bboxes_xyxy, ids, scores, class_ids), _ = self.detect_and_track(frame, **config)
 
             elapsed_time = time.time() - start_time
 
@@ -297,8 +339,8 @@ class ASOne:
                             free_list=[])
                 im0 = utils.draw_text(im0, res)
             else:
-                im0 = self.draw(im0,
-                                    (bboxes_xyxy, ids, scores, class_ids),
+                im0 = self.draw((bboxes_xyxy, ids, scores, class_ids),
+                                    img=im0,
                                     draw_trails=draw_trails,
                                     class_names=class_names,
                                     display=display)
@@ -314,7 +356,7 @@ class ASOne:
                 if len(bboxes_xyxy) > 0: # Check if bounding box is present or not
                     # Will generate mask using SAM
                     masks = self.segmentor.create_mask(np.array(bboxes_xyxy), frame)
-                    im0 = self.draw_masks(im0, masks)
+                    im0 = self.draw_masks(masks, img=im0, display=display)
                     bboxes_xyxy = (bboxes_xyxy, masks) 
             
             if save_result:
@@ -332,7 +374,7 @@ class ASOne:
         print(f'Total Time Taken: {tac - tic:.2f}')
 
     @staticmethod
-    def draw(img, dets, display, **kwargs):
+    def draw(dets, display, img=None, **kwargs):            
         draw_trails = kwargs.get('draw_trails', False)
         class_names = kwargs.get('class_names', None)
         if isinstance(dets, tuple):
@@ -346,6 +388,15 @@ class ASOne:
             class_ids = dets[:, 5]
             ids = None
         
+        elif isinstance(dets, ModelOutput):
+            bboxes_xyxy = dets.dets.bbox
+            ids = dets.dets.ids
+            score = dets.dets.score
+            class_ids = dets.dets.class_ids
+            img = dets.info.image if dets.info.image is not None else img
+            frame_no = dets.info.frame_no
+            fps = dets.info.fps
+        
         img = utils.draw_boxes(img,
                                 bbox_xyxy=bboxes_xyxy,
                                 class_ids=class_ids,
@@ -358,43 +409,34 @@ class ASOne:
         
         return img
     
-    @staticmethod
-    def draw_bbox(model_output, display, **kwargs):
-        draw_trails = kwargs.get('draw_trails', False)
-        class_names = kwargs.get('class_names', None)
-        
-        bbox = model_output.dets.bbox
-        ids = model_output.dets.ids
-        score = model_output.dets.score
-        class_ids = model_output.dets.class_ids
-        image = model_output.info.image
-        frame_no = model_output.info.frame_no
-        fps = model_output.info.fps
-        
-        img = utils.draw_boxes(image,
-                                bbox_xyxy=bbox,
-                                class_ids=class_ids,
-                                identities=ids,
-                                draw_trails=draw_trails,
-                                class_names=class_names)
-        
-        if display:
-            cv2.imshow(' Sample', img)
-        
-        return img
-    
     @staticmethod      
-    def draw_masks(img, dets, **kwargs):
+    def draw_masks(dets, display, img=None, **kwargs):
+        # Check if bounding box are present
         if isinstance(dets, tuple) and len(dets) > 0 and len(dets[0]) == 0:
             return img
-        color = [0, 255, 0]
-        if isinstance(dets, tuple):
+        
+        elif isinstance(dets, ModelOutput):
+            masks = dets.dets.bbox
+            ids = dets.dets.ids
+            score = dets.dets.score
+            class_ids = dets.dets.class_ids
+            img = dets.info.image if dets.info.image is not None else img
+            frame_no = dets.info.frame_no
+            fps = dets.info.fps
+            if isinstance(masks, tuple):
+                bboxes_xyxy, masks = masks
+            if isinstance(masks, np.ndarray):
+                return img
+        
+        elif isinstance(dets, tuple):
             bboxes_xyxy, ids, scores, class_ids = dets
             if isinstance(bboxes_xyxy, tuple):
                 bboxes_xyxy, masks = bboxes_xyxy
         else:
             masks = dets
-            class_ids = None    
+            class_ids = None
+                
+        color = [0, 255, 0]
         masked_image = img.copy()
         for idx in range(len(masks)):
             mask = masks[idx].squeeze()  # Squeeze to remove singleton dimension
@@ -406,38 +448,11 @@ class ASOne:
             masked_image = np.where(mask_color > 0, mask_color, masked_image)
 
         masked_image = masked_image.astype(np.uint8)
-        return cv2.addWeighted(img, 0.5, masked_image, 0.5, 0)
-    
-    # TO-D0: Merge both draw_mask functions
-    @staticmethod      
-    def draw_mask(model_output, **kwargs):
-        bbox = model_output.dets.bbox
-        ids = model_output.dets.ids
-        score = model_output.dets.score
-        class_ids = model_output.dets.class_ids
-        image = model_output.info.image
-        frame_no = model_output.info.frame_no
-        fps = model_output.info.fps
+        img = cv2.addWeighted(img, 0.5, masked_image, 0.5, 0)
         
-        color = [0, 255, 0]
-        if isinstance(bbox, np.ndarray):
-            return image
-        
-        if isinstance(bbox, tuple):
-            bboxes_xyxy, masks = bbox
-        
-        masked_image = image.copy()
-        for idx in range(len(masks)):
-            mask = masks[idx].squeeze()  # Squeeze to remove singleton dimension
-            if class_ids is not None:
-                color = compute_color_for_labels(int(class_ids[idx]))
-            color = np.asarray(color, dtype='uint8')
-            mask_color = np.expand_dims(mask, axis=-1) * color  # Apply color to the mask
-            # Apply the mask to the image
-            masked_image = np.where(mask_color > 0, mask_color, masked_image)
-
-        masked_image = masked_image.astype(np.uint8)
-        return cv2.addWeighted(image, 0.5, masked_image, 0.5, 0)
+        if display:
+            cv2.imshow(' Sample', img)
+        return img
 
     def read_video(self, video_path):
         vid = VideoReader(video_path)
@@ -451,11 +466,11 @@ class ASOne:
         self.model_output.dets.ids = bbox_details[1]
         self.model_output.dets.score = bbox_details[2]
         self.model_output.dets.class_ids = bbox_details[3]
-
-        # Set image info
-        self.model_output.info.image = frame_details[0]
-        self.model_output.info.frame_no = frame_details[1]
-        self.model_output.info.fps = frame_details[2]
+        if frame_details:
+            # Set image info
+            self.model_output.info.image = frame_details[0]
+            self.model_output.info.frame_no = frame_details[1]
+            self.model_output.info.fps = frame_details[2]
 
         return self.model_output
     
