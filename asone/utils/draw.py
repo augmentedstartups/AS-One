@@ -4,6 +4,7 @@ import numpy as np
 from asone.utils import compute_color_for_labels
 from asone.utils import get_names
 from collections import deque
+from asone.schemas.output_schemas import ModelOutput
 
 names = get_names()
 data_deque = {}
@@ -165,7 +166,7 @@ class Colors:
 colors = Colors()  # create instance for 'from utils.plots import colors'
 
 
-def draw_kpts(image, keypoints, shape=(640, 640), radius=5, kpt_line=True):
+def draw_kpts(keypoints, image=None, shape=(640, 640), radius=5, kpt_line=True):
         """Plot keypoints on the image.
         Args:
             kpts (tensor): Predicted keypoints with shape [17, 3]. Each keypoint has (x, y, confidence).
@@ -178,6 +179,9 @@ def draw_kpts(image, keypoints, shape=(640, 640), radius=5, kpt_line=True):
         # if self.pil:
         #     # Convert to numpy first
         #     self.im = np.asarray(self.im).copy()
+        if isinstance(keypoints, ModelOutput):
+            image = keypoints.info.image
+            keypoints = keypoints.dets.bbox
         if keypoints is not None:
             for kpts in reversed(keypoints):
                 
