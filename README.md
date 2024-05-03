@@ -351,7 +351,7 @@ import cv2
 model = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
 img = cv2.imread('data/sample_imgs/test2.jpg')
 kpts = model.estimate_image(img)
-annotations = utils.draw_kpts(img, kpts)
+annotations = utils.draw_kpts(kpts, image=img)
 ```
 
 - Now you can use Yolov8 and Yolov7-w6 for pose estimation. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
@@ -362,10 +362,9 @@ import asone
 from asone import PoseEstimator, utils
 
 model = PoseEstimator(estimator_flag=asone.YOLOV7_W6_POSE, use_cuda=True) #set use_cuda=False to use cpu
-estimator = model.estimate_video('data/sample_videos/football1.mp4')
-for kpts, image_details in estimator:
-    image, _, __ = image_details
-    annotations = utils.draw_kpts(image, kpts)
+estimator = model.video_estimator('data/sample_videos/football1.mp4')
+for model_output in estimator:
+    annotations = utils.draw_kpts(model_output)
     # Do anything with kpts here
 ```
 
