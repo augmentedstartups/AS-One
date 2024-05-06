@@ -304,7 +304,7 @@ import cv2
 model = ASOne(detector=asone.CRAFT, recognizer=asone.EASYOCR, use_cuda=True) # Set use_cuda to False for cpu
 img = cv2.imread('data/sample_imgs/sample_text.jpeg')
 results = model.detect_text(img)
-annotations = utils.draw_text(img, results)
+annotations = utils.draw_text(img, results, display=True)
 ```
 
 Use Tracker on Text
@@ -351,7 +351,7 @@ import cv2
 model = PoseEstimator(estimator_flag=asone.YOLOV8M_POSE, use_cuda=True) #set use_cuda=False to use cpu
 img = cv2.imread('data/sample_imgs/test2.jpg')
 kpts = model.estimate_image(img)
-annotations = utils.draw_kpts(kpts, image=img)
+annotations = utils.draw_kpts(kpts, image=img, display=True)
 ```
 
 - Now you can use Yolov8 and Yolov7-w6 for pose estimation. The flags are provided in [benchmark](asone/linux/Instructions/Benchmarking.md) tables.
