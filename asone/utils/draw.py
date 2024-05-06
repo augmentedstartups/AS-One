@@ -29,7 +29,7 @@ def draw_ui_box(x, img, label=None, color=None, line_thickness=None):
         # cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
         cv2.putText(img, str(label), (c1[0], c1[1] - 2), 0, tl / 3,
                     [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
-
+    return img
 
 def draw_border(img, pt1, pt2, color, thickness, r, d):
     x1, y1 = pt1
@@ -120,7 +120,7 @@ def drawtrails(data_deque, id, color, img):
         # draw trails
         cv2.line(img, data_deque[id][i - 1], data_deque[id][i], color, thickness)
 
-def draw_text(img, results, offset=(0, 0)):
+def draw_text(img, results, offset=(0, 0), display: bool = False):
     color = compute_color_for_labels(int(0))
     for res in results:
         box = res[:4]
@@ -132,9 +132,11 @@ def draw_text(img, results, offset=(0, 0)):
         y2 += offset[1]
         label = text
 
-        draw_ui_box(box, img, label=label, color=color, line_thickness=2)
+        img = draw_ui_box(box, img, label=label, color=color, line_thickness=2)
         center = (int((x2+x1) / 2), int((y2+y2)/2))
- 
+    if display:
+        cv2.imshow(' Sample', img)
+        
     return img
 
 # Utils for code estimation 
@@ -166,7 +168,8 @@ class Colors:
 colors = Colors()  # create instance for 'from utils.plots import colors'
 
 
-def draw_kpts(keypoints, image=None, shape=(640, 640), radius=5, kpt_line=True):
+def draw_kpts(keypoints, image=None, shape=(640, 640), radius=5, kpt_line=True,
+              display: bool=True):
         """Plot keypoints on the image.
         Args:
             kpts (tensor): Predicted keypoints with shape [17, 3]. Each keypoint has (x, y, confidence).
@@ -217,7 +220,8 @@ def draw_kpts(keypoints, image=None, shape=(640, 640), radius=5, kpt_line=True):
                         if pos2[0] % shape[1] == 0 or pos2[1] % shape[0] == 0 or pos2[0] < 0 or pos2[1] < 0:
                             continue
                         cv2.line(image, pos1, pos2, [int(x) for x in limb_color[i]], thickness=2, lineType=cv2.LINE_AA)
-                
+        if display:
+            cv2.imshow(' Sample', image)
         return image
 
 def plot_skeleton_kpts(im, kpts, steps, orig_shape=None):
