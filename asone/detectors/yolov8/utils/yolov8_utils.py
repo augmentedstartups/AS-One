@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-from ultralytics.yolo.utils import ops
+from ultralytics.utils import ops
 import torch
-from ultralytics.yolo.data.augment import LetterBox
+from ultralytics.data.augment import LetterBox
 
 def prepare_input(image, input_shape, stride, pt):
     input_tensor = LetterBox(input_shape, auto=pt, stride=stride)(image=image)

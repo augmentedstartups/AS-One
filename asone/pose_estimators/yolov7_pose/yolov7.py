@@ -4,11 +4,11 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from torchvision import transforms
-from .utils.datasets import letterbox
-from .utils.torch_utils import select_device
-from .models.experimental import attempt_load
-from .utils.general import non_max_suppression_kpt,strip_optimizer,xyxy2xywh
-from .utils.plots import output_to_keypoint, plot_skeleton_kpts,colors,plot_one_box_kpt
+from asone.pose_estimators.yolov7_pose.utils.datasets import letterbox
+from asone.pose_estimators.yolov7_pose.utils.torch_utils import select_device
+from asone.pose_estimators.yolov7_pose.models.experimental import attempt_load
+from asone.pose_estimators.yolov7_pose.utils.general import non_max_suppression_kpt,strip_optimizer,xyxy2xywh
+from asone.pose_estimators.yolov7_pose.utils.plots import output_to_keypoint, plot_skeleton_kpts,colors,plot_one_box_kpt
 import os
 import sys
 

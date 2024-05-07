@@ -9,7 +9,7 @@ import torch
 import torch.distributed as dist
 import torch.nn as nn
 
-from .base_exp import BaseExp
+from asone.detectors.yolox.yolox.exp.base_exp import BaseExp
 
 
 class Exp(BaseExp):
@@ -128,7 +128,7 @@ class Exp(BaseExp):
         return self.model
 
     def get_data_loader(self, batch_size, is_distributed, no_aug=False, cache_img=False):
-        from yolox.data import (
+        from asone.detectors.yolox.yolox.data import (
             COCODataset,
             TrainTransform,
             YoloBatchSampler,
@@ -137,7 +137,7 @@ class Exp(BaseExp):
             MosaicDetection,
             worker_init_reset_seed,
         )
-        from yolox.utils import wait_for_the_master
+        from asone.detectors.yolox.yolox.utils import wait_for_the_master
 
         with wait_for_the_master():
             dataset = COCODataset(
@@ -255,7 +255,7 @@ class Exp(BaseExp):
         return self.optimizer
 
     def get_lr_scheduler(self, lr, iters_per_epoch):
-        from yolox.utils import LRScheduler
+        from asone.detectors.yolox.yolox.utils import LRScheduler
 
         scheduler = LRScheduler(
             self.scheduler,
@@ -270,7 +270,7 @@ class Exp(BaseExp):
         return scheduler
 
     def get_eval_loader(self, batch_size, is_distributed, testdev=False, legacy=False):
-        from yolox.data import COCODataset, ValTransform
+        from asone.detectors.yolox.yolox.data import COCODataset, ValTransform
 
         valdataset = COCODataset(
             data_dir=self.data_dir,
@@ -299,7 +299,7 @@ class Exp(BaseExp):
         return val_loader
 
     def get_evaluator(self, batch_size, is_distributed, testdev=False, legacy=False):
-        from yolox.evaluators import COCOEvaluator
+        from asone.detectors.yolox.yolox.evaluators import COCOEvaluator
 
         val_loader = self.get_eval_loader(batch_size, is_distributed, testdev, legacy)
         evaluator = COCOEvaluator(
@@ -313,7 +313,7 @@ class Exp(BaseExp):
         return evaluator
 
     def get_trainer(self, args):
-        from yolox.core import Trainer
+        from asone.detectors.yolox.yolox.core import Trainer
         trainer = Trainer(self, args)
         # NOTE: trainer shouldn't be an attribute of exp object
         return trainer

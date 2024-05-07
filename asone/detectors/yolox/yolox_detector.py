@@ -12,6 +12,8 @@ from asone.detectors.yolox.yolox.utils import fuse_model, postprocess
 from asone.detectors.yolox.yolox.exp import get_exp
 from asone.detectors.yolox.yolox_utils import preprocess, multiclass_nms, demo_postprocess
 
+from asone.utils.utils import PathResolver
+
 
 class YOLOxDetector:
     def __init__(self,
@@ -35,11 +37,12 @@ class YOLOxDetector:
 
         if exp_file is None:
             exp_file = os.path.join("exps", "default", "yolox_s.py")
-        # Load Model
-        if self.use_onnx:
-            self.model = self.load_onnx_model(use_cuda, weights)
-        else:
-            self.model = self.load_torch_model(weights, exp_file, model_name)
+        with PathResolver():
+            # Load Model
+            if self.use_onnx:
+                self.model = self.load_onnx_model(use_cuda, weights)
+            else:
+                self.model = self.load_torch_model(weights, exp_file, model_name)
 
     def load_onnx_model(self, use_cuda, weights):
         # Load onnx

@@ -86,7 +86,7 @@ def fuse_model(model: nn.Module) -> nn.Module:
     Returns:
         nn.Module: fused model
     """
-    from yolox.models.network_blocks import BaseConv
+    from asone.detectors.yolox.yolox.models.network_blocks import BaseConv
 
     for m in model.modules():
         if type(m) is BaseConv and hasattr(m, "bn"):

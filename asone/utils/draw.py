@@ -4,6 +4,7 @@ import numpy as np
 from asone.utils import compute_color_for_labels
 from asone.utils import get_names
 from collections import deque
+from asone.schemas.output_schemas import ModelOutput
 
 names = get_names()
 data_deque = {}
@@ -28,7 +29,7 @@ def draw_ui_box(x, img, label=None, color=None, line_thickness=None):
         # cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
         cv2.putText(img, str(label), (c1[0], c1[1] - 2), 0, tl / 3,
                     [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
-
+    return img
 
 def draw_border(img, pt1, pt2, color, thickness, r, d):
     x1, y1 = pt1
@@ -119,7 +120,7 @@ def drawtrails(data_deque, id, color, img):
         # draw trails
         cv2.line(img, data_deque[id][i - 1], data_deque[id][i], color, thickness)
 
-def draw_text(img, results, offset=(0, 0)):
+def draw_text(img, results, offset=(0, 0), display: bool = False):
     color = compute_color_for_labels(int(0))
     for res in results:
         box = res[:4]
@@ -131,9 +132,11 @@ def draw_text(img, results, offset=(0, 0)):
         y2 += offset[1]
         label = text
 
-        draw_ui_box(box, img, label=label, color=color, line_thickness=2)
+        img = draw_ui_box(box, img, label=label, color=color, line_thickness=2)
         center = (int((x2+x1) / 2), int((y2+y2)/2))
- 
+    if display:
+        cv2.imshow(' Sample', img)
+        
     return img
 
 # Utils for code estimation 
@@ -165,7 +168,8 @@ class Colors:
 colors = Colors()  # create instance for 'from utils.plots import colors'
 
 
-def draw_kpts(image ,keypoints, shape=(640, 640), radius=5, kpt_line=True):
+def draw_kpts(keypoints, image=None, shape=(640, 640), radius=5, kpt_line=True,
+              display: bool=True):
         """Plot keypoints on the image.
         Args:
             kpts (tensor): Predicted keypoints with shape [17, 3]. Each keypoint has (x, y, confidence).
@@ -178,6 +182,9 @@ def draw_kpts(image ,keypoints, shape=(640, 640), radius=5, kpt_line=True):
         # if self.pil:
         #     # Convert to numpy first
         #     self.im = np.asarray(self.im).copy()
+        if isinstance(keypoints, ModelOutput):
+            image = keypoints.info.image
+            keypoints = keypoints.dets.bbox
         if keypoints is not None:
             for kpts in reversed(keypoints):
                 
@@ -186,7 +193,7 @@ def draw_kpts(image ,keypoints, shape=(640, 640), radius=5, kpt_line=True):
                 skeleton = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8], [7, 9],
                                 [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
                 nkpt, ndim = kpts.shape
-                is_pose = nkpt == 17 and ndim == 3
+                is_pose = nkpt == 17 and ndim in [2, 3]
                 kpt_line &= is_pose  # `kpt_line=True` for now only supports human pose plotting
                 for i, k in enumerate(kpts):
                     color_k = [int(x) for x in kpt_color[i]] if is_pose else colors(i)
@@ -213,7 +220,8 @@ def draw_kpts(image ,keypoints, shape=(640, 640), radius=5, kpt_line=True):
                         if pos2[0] % shape[1] == 0 or pos2[1] % shape[0] == 0 or pos2[0] < 0 or pos2[1] < 0:
                             continue
                         cv2.line(image, pos1, pos2, [int(x) for x in limb_color[i]], thickness=2, lineType=cv2.LINE_AA)
-                
+        if display:
+            cv2.imshow(' Sample', image)
         return image
 
 def plot_skeleton_kpts(im, kpts, steps, orig_shape=None):

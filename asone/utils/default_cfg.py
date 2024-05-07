@@ -3,7 +3,7 @@ config = {
     "filename": None,
     "fps": None,
     "save_result": True,
-    "display": True,
+    "display": False,
     "draw_trails": False,
     "filter_classes": None,
     "class_names": None,

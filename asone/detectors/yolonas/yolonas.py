@@ -11,6 +11,8 @@ from super_gradients.training.processing import DetectionCenterPadding, Standard
 from super_gradients.training import models
 from super_gradients.common.object_names import Models
 
+from asone.utils.utils import PathResolver
+
 
 class_names = [""]
 
@@ -36,8 +38,9 @@ class YOLOnasDetector:
         self.device = 'cuda' if use_cuda and torch.cuda.is_available() else 'cpu'
         self.use_onnx = use_onnx
 
-        # Load Model
-        self.model = self.load_model(weights=weights)
+        with PathResolver():
+            # Load Model
+            self.model = self.load_model(weights=weights)
 
     def load_model(self, weights):
         

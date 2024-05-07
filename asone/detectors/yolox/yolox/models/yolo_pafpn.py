@@ -5,8 +5,8 @@
 import torch
 import torch.nn as nn
 
-from .darknet import CSPDarknet
-from .network_blocks import BaseConv, CSPLayer, DWConv
+from asone.detectors.yolox.yolox.models.darknet import CSPDarknet
+from asone.detectors.yolox.yolox.models.network_blocks import BaseConv, CSPLayer, DWConv
 
 
 class YOLOPAFPN(nn.Module):

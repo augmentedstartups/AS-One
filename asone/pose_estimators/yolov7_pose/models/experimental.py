@@ -3,7 +3,7 @@ import random
 import torch
 import torch.nn as nn
 
-from .common import Conv, DWConv
+from asone.pose_estimators.yolov7_pose.models.common import Conv, DWConv
 from asone.pose_estimators.yolov7_pose.utils.google_utils import attempt_download
 from asone.pose_estimators.yolov7_pose.utils.yolov7_pose_utils import yolov7_in_syspath
 

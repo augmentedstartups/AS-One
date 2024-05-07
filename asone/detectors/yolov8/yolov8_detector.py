@@ -3,7 +3,7 @@ from asone import utils
 from asone.utils import get_names
 import onnxruntime
 import torch
-from .utils.yolov8_utils import prepare_input, process_output
+from asone.detectors.yolov8.utils.yolov8_utils import prepare_input, process_output
 import numpy as np
 import warnings
 from ultralytics.nn.autobackend import AutoBackend
@@ -11,6 +11,8 @@ from ultralytics.nn.tasks import DetectionModel, attempt_load_one_weight
 import coremltools as ct
 from PIL import Image
 from asone.detectors.utils.coreml_utils import yolo_to_xyxy, generalize_output_format, scale_bboxes
+
+from asone.utils.utils import PathResolver
 
 
 class YOLOv8Detector:
@@ -30,8 +32,9 @@ class YOLOv8Detector:
         if not os.path.exists(weights):
             utils.download_weights(weights)
 
-        # Load Model
-        self.model = self.load_model(use_cuda, weights)
+        with PathResolver():
+            # Load Model
+            self.model = self.load_model(use_cuda, weights)
 
     def load_model(self, use_cuda, weights, fp16=False):
 

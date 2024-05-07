@@ -37,7 +37,7 @@ def main(args):
     
     # Loop over track_fn to retrieve outputs of each frame 
     for bbox_details, frame_details in track:
-        bbox_xyxy, scores, class_ids = bbox_details
+        bbox_xyxy, ids, scores, class_ids = bbox_details
         frame, frame_num, fps = frame_details
         print(frame_num)
         

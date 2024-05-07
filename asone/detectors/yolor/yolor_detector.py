@@ -6,11 +6,13 @@ import warnings
 import torch
 import onnxruntime
 
-from .models.models import *
+from asone.detectors.yolor.models.models import *
 from asone import utils
 from asone.detectors.yolor.utils.yolor_utils import (non_max_suppression,
                                                      scale_coords,
                                                      letterbox)
+
+from asone.utils.utils import PathResolver
 
 
 class YOLOrDetector:
@@ -31,8 +33,9 @@ class YOLOrDetector:
             cfg = os.path.join("cfg", "yolor_p6.cfg")
         # If incase weighst is a list of paths then select path at first index
         weights = str(weights[0] if isinstance(weights, list) else weights)
-        # Load Model
-        self.model = self.load_model(use_cuda, weights, cfg=cfg, img_size=640)
+        with PathResolver():
+            # Load Model
+            self.model = self.load_model(use_cuda, weights, cfg=cfg, img_size=640)
 
     def load_model(self, use_cuda, weights, cfg, img_size, fp16=False):
         # Device: CUDA and if fp16=True only then half precision floating point works

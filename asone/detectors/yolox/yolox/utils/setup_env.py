@@ -8,7 +8,7 @@ from loguru import logger
 
 import cv2
 
-from .dist import get_world_size, is_main_process
+from asone.detectors.yolox.yolox.utils.dist import get_world_size, is_main_process
 
 __all__ = ["configure_nccl", "configure_module", "configure_omp"]
 

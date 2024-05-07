@@ -2,7 +2,9 @@ from .asone import ASOne
 import asone.detectors
 import asone.trackers
 import asone.recognizers
+import asone.segmentors
 from .pose_estimator import PoseEstimator
+from asone.utils.video_reader import VideoReader
 
 BYTETRACK = 0
 DEEPSORT = 1
@@ -153,6 +155,18 @@ YOLOV7_W6_POSE = 149
 YOLONAS_S_PYTORCH = 160
 YOLONAS_M_PYTORCH = 161
 YOLONAS_L_PYTORCH = 162
+
+# YOLOv9
+YOLOV9_C_CONVERTED = 164
+YOLOV9_E_CONVERTED = 165
+YOLOV9_C = 166
+YOLOV9_E = 167
+GELAN_C = 168
+GELAN_E = 169
+
+# Segmentors
+SAM = 171
+
 # Text Detectors
 # easyocr
 CRAFT = 82
@@ -163,4 +177,4 @@ EASYOCR = 200
 
 
 
-__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers', 'PoseEstimator'] 
+__all__ = ['ASOne', 'detectors', 'trackers', 'recognizers', 'segmentors', 'PoseEstimator'] 
