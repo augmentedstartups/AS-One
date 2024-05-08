@@ -20,7 +20,7 @@
 [![PyPI version](https://badge.fury.io/py/asone.svg)](https://badge.fury.io/py/asone)
 [![python-version](https://img.shields.io/pypi/pyversions/supervision)](https://badge.fury.io/py/asone)
 [![colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1xy5P9WGI19-PzRH3ceOmoCgp63K6J_Ls/view?usp=sharing)
-[![start with why](https://img.shields.io/badge/version-1.1.0-green)](https://github.com/augmentedstartups/AS-One)
+[![start with why](https://img.shields.io/badge/version-2.0.0-green)](https://github.com/augmentedstartups/AS-One)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 
 </div>
