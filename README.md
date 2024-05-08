@@ -7,7 +7,7 @@
     <a align="center" href="" target="https://badge.fury.io/py/asone">
       <img
         width="100%"
-        src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151400015/settings_images/f217ed5-b886-b5f-074-051733aa5bc3_Screenshot_2024-05-08_at_13.41.48.jpg" width="100%">
+        src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2151400015/settings_images/747367e-1d78-eead-2a2-7e5b336a775_Screenshot_2024-05-08_at_13.48.08.jpg" width="100%">
       <a href="https://www.youtube.com/watch?v=K-VcpPwcM8k" style="display:inline-block;padding:10px 20px;background-color:red;color:white;text-decoration:none;font-size:16px;font-weight:bold;border-radius:5px;transition:background-color 0.3s;" target="_blank">Watch Video</a>
 
     
