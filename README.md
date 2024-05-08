@@ -1,4 +1,4 @@
-# AS-One : A Modular Library for YOLO Object Detection and Object Tracking
+# AS-One v2 : A Modular Library for YOLO Object Detection, Segmentation, Tracking & Pose
 
 
 
@@ -27,7 +27,7 @@
 
 ## 👋 Hello
 
-==UPDATE: YOLOV9 and SAM is OUT==
+==UPDATE: ASOne v2 is now out! We've updated with YOLOV9 and SAM==
 
 AS-One is a python wrapper for multiple detection and tracking algorithms all at one place. Different trackers such as `ByteTrack`, `DeepSORT` or `NorFair` can be integrated with different versions of `YOLO` with minimum lines of code.
 This python wrapper provides YOLO models in `ONNX`, `PyTorch` & `CoreML` flavors. We plan to offer support for future versions of YOLO when they get released.
