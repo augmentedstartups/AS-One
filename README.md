@@ -54,6 +54,7 @@ Watch the step-by-step tutorial 🤝
 pip install asone
 ```
 
+For windows machine, you will need to install from source to run `asone` library. Check out instructions in `👉 Install from Source` section below to install on windows.
 <details>
 <summary> 👉 Install from Source</summary>
 
