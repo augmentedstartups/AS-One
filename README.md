@@ -59,20 +59,16 @@ For windows machine, you will need to install from source to run `asone` library
 <summary> 👉 Install from Source</summary>
 
 ### 💾 Clone the Repository
-
-Navigate to an empty folder of your choice.
-
-`git clone https://github.com/augmentedstartups/AS-One.git`
-
-Change Directory to AS-One
-
-`cd AS-One`
-
 <details open>
 <summary> 👉 For Linux</summary>
 
 
 ```shell
+# Navigate to an empty folder of your choice.
+git clone https://github.com/augmentedstartups/AS-One.git
+# Change Directory to AS-One
+cd AS-One
+
 python3 -m venv .env
 source .env/bin/activate
 
@@ -97,7 +93,7 @@ pip install numpy Cython
 pip install lap
 pip install -e git+https://github.com/samson-wang/cython_bbox.git#egg=cython-bbox
 
-pip install asone onnxruntime-gpu==1.12.1
+pip install onnxruntime-gpu==1.12.1
 pip install typing_extensions==4.7.1
 pip install super-gradients==3.1.3
 # for CPU
@@ -105,8 +101,9 @@ pip install torch torchvision
 
 # for GPU
 pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113
-or
+# or
 pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+pip install asone
 ```
 
 </details>
